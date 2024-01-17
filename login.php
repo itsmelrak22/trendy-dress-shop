@@ -64,47 +64,53 @@ if (isset($_SESSION['id_user'])) {
                 <button type="button" class="btn-close text-white bg-white" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <!-- <label for="">
-                        <img src="exampleImage.jpg" class="card-image round">
-                    </label>
-                    <label>PROFILE PICTURE</label>
-                    <input type="file" class="form-control" /> -->
-                <label>NAME</label>
+                <label for="name_text">NAME</label>
                 <input id="name_text" class="form-control" type="text" placeholder="Enter your name here" />
-                <label>Email</label>
+                <label for="username1_text">Email</label>
                 <input id="username1_text" class="form-control" type="email" placeholder="Enter your email here" />
-                <label>Password</label>
+                <label for="pass1_text">Password</label>
                 <input id="pass1_text" class="form-control" type="password" placeholder="Enter your password here" />
-                <!-- <label>Re-Type Password</label>
-                    <input class="form-control" type="password" placeholder="Enter your password here" /> -->
+                <label for="complete_add">Complete Address</label>
+                <input id="complete_add" class="form-control" type="text" placeholder="Enter your password here" />
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button id="loginbtnID1" onclick="toReg()" style="background-color: black;" type="button" class="btn text-white ">REGISTER</button>
+                <button id="registerBtn" onclick="registerAccount()" style="background-color: black;" type="button" class="btn text-white">REGISTER</button>
             </div>
         </div>
     </div>
 </div>
 
 <script>
-    function toReg() {
-        btnDisable("#loginbtnID1", false);
-        $.post(
-            "./assets/register_acc.php", {
-                customer_email: $("#username1_text").val(),
-                customer_password: $("#pass1_text").val(),
-                customer_name:$("#name_text").val()
-            },
-            function(data) {
-                if (data === "success") {
-                    alert("Account Created Successfully");
-                    $("#modalId4").modal('hide');
+    function registerAccount() {
+        var formData = new FormData();
+        formData.append('customer_name', $("#name_text").val());
+        formData.append('customer_email', $("#username1_text").val());
+        formData.append('customer_password', $("#pass1_text").val());
+        formData.append('complete_address', $("#complete_add").val());
+
+        $.ajax({
+            type: 'POST',
+            url: './assets/register_acc.php',
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: function(data) {
+                console.log(data, 'data');
+
+                if (data == 'success') {
+                    alert('Account is not created');
                 } else {
-                    alert("Account is not created.");
-                    btnDisable("#loginbtnID1", false);
+                    alert('Account Created Successfully');
+                    $("#modalId4").modal('hide');
                 }
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                console.error('AJAX Request Failed:', textStatus, errorThrown);
+                alert('Failed to create account. Please try again.');
             }
-        );
+        });
     }
-  
+
+
 </script>

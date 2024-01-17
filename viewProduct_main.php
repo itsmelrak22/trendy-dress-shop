@@ -132,7 +132,14 @@ endif;
                                 <table>
                                     <tbody>
                                         <tr>
+                                            <?php if($product_data['custom_status'] == 0) :?>
                                             <td> <button data-bs-toggle="modal" data-bs-target="#modalId" style="background-color: black;" class="btn form-control text-white"><i class="fa fa-cart-plus" aria-hidden="true"></i> Customize</button></td>
+                                            <?php endif ?>
+                                        </tr>
+                                        <tr>
+                                            <?php if($product_data['custom_status'] == 1) :?>
+                                            <button id="submit_images" type="button" style="background-color: black;" class="btn text-white"><i class="fa fa-cart-plus" aria-hidden="true"></i>Add To Cart</button>
+                                            <?php endif ?>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -192,6 +199,7 @@ endif;
 
 
             </div>
+            
         <?php else : ?>
             <style>
                 #prod_text {
@@ -232,6 +240,13 @@ endif;
     <?php include 'footer_content/footer.php' ?>
 
     <!-- ------SCRIPTS---------- -->
+    <!-- <script>
+        // Use JavaScript to update the browser history
+        if (typeof window.history.replaceState === 'function') {
+            var newUrl = window.location.protocol + '//' + window.location.host + window.location.pathname;
+            window.history.replaceState({}, document.title, newUrl);
+        }
+    </script> -->
     <script src="assets/js/jquery-3.6.3.js"></script>
 
 

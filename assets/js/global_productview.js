@@ -3,6 +3,7 @@ $(document).ready(function () {
   to_footer()
 });
 function to_dashboard() {
+  console.log('test')
   localStorage.clear();
  window.location.href="index.php";
 }

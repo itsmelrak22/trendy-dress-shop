@@ -92,21 +92,21 @@ $c_id = $row_orders['customer_id'];
 
 $invoice_no = $row_orders['invoice_no'];
 
-$product_id = $row_orders['product_id'];
+// $product_id = $row_orders['product_id'];
 
-$qty = $row_orders['qty'];
+// $qty = $row_orders['qty'];
 
-$size = $row_orders['size'];
+// $size = $row_orders['size'];
 
 $order_status = $row_orders['order_status'];
 
-$get_products = "select * from products where product_id='$product_id'";
+// $get_products = "select * from products where product_id='$product_id'";
 
-$run_products = mysqli_query($con,$get_products);
+// $run_products = mysqli_query($con,$get_products);
 
-$row_products = mysqli_fetch_array($run_products);
+// $row_products = mysqli_fetch_array($run_products);
 
-$product_title = $row_products['product_title'];
+// $product_title = $row_products['product_title'];
 
 $i++;
 
@@ -134,11 +134,11 @@ echo $customer_email;
 
 <td bgcolor="orange" ><?php echo $invoice_no; ?></td>
 
-<td><?php echo $product_title; ?></td>
+<!-- <td><?php echo $product_title; ?></td>
 
 <td><?php echo $qty; ?></td>
 
-<td><?php echo $size; ?></td>
+<td><?php echo $size; ?></td> -->
 
 <td>
 <?php
@@ -149,16 +149,16 @@ $run_customer_order = mysqli_query($con,$get_customer_order);
 
 $row_customer_order = mysqli_fetch_array($run_customer_order);
 
-$order_date = $row_customer_order['order_date'];
+// $order_date = $row_customer_order['order_date'];
 
-$due_amount = $row_customer_order['due_amount'];
+// $due_amount = $row_customer_order['due_amount'];
 
-echo $order_date;
+// echo $order_date;
 
 ?>
 </td>
 
-<td>$<?php echo $due_amount; ?></td>
+<!-- <td>$<?php echo $due_amount; ?></td> -->
 
 <td>
 <?php

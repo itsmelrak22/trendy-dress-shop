@@ -459,11 +459,11 @@ $c_id = $row_order['customer_id'];
 
 $invoice_no = $row_order['invoice_no'];
 
-$product_id = $row_order['product_id'];
+// $product_id = $row_order['product_id'];
 
-$qty = $row_order['qty'];
+// $qty = $row_order['qty'];
 
-$size = $row_order['size'];
+// $size = $row_order['size'];
 
 $order_status = $row_order['order_status'];
 
@@ -488,9 +488,9 @@ echo $customer_email;
 </td>
 
 <td><?php echo $invoice_no; ?></td>
-<td><?php echo $product_id; ?></td>
-<td><?php echo $qty; ?></td>
-<td><?php echo $size; ?></td>
+<!-- <td><?php echo $product_id; ?></td> -->
+<!-- <td><?php echo $qty; ?></td> -->
+<!-- <td><?php echo $size; ?></td> -->
 <td>
 <?php
 if($order_status=='pending'){

@@ -43,7 +43,7 @@ session_start();
 
     </div>
     <div id="contents">
-    
+
     </div>
     <!-- ------FOOTER------- -->
     <?php include 'footer_content/footer.php' ?>

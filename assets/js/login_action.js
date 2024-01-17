@@ -15,6 +15,7 @@ function loginAction() {
       pass: $("#pass_text").val(),
     },
     function (data) {
+      console.log(data);
       if (data === "success") {
         alert("Login Successfully");
         to_dashboard()

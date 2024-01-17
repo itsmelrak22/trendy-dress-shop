@@ -22,10 +22,11 @@ if (isset($_SESSION['id_user'])) {
     $id = $_POST['id'];
     $size = $_POST['size'];
     $priceTotal = $_POST['priceTotal'];
+    $status = 0;
     try {
         $conn->beginTransaction();
-        $insert = $conn->prepare('INSERT into cart(product_id,qty,Total_p_price,size,frontImage,backImage,user_id) values(?,?,?,?,?,?,?)');
-        $insert->execute([$id, $quantity, $priceTotal, $size, $dataURLtempFront[1], $dataURLtempBack[1], $userID]);
+        $insert = $conn->prepare('INSERT into cart(product_id,qty,Total_p_price,size,frontImage,backImage,user_id,status) values(?,?,?,?,?,?,?,?)');
+        $insert->execute([$id, $quantity, $priceTotal, $size, $dataURLtempFront[1], $dataURLtempBack[1], $userID, $status]);
         $lastKey = $conn->lastInsertId('p_id');
         if (isset($_POST['tempBack'])) {
             foreach ($tempFront as $row) {

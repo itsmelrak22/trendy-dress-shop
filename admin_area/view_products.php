@@ -116,8 +116,8 @@ $i++;
 
 $get_sold = "select * from pending_orders where product_id='$pro_id'";
 $run_sold = mysqli_query($con,$get_sold);
-$count = mysqli_num_rows($run_sold);
-echo $count;
+// $count = mysqli_num_rows($run_sold);
+// echo $count;
 ?>
 </td>
 

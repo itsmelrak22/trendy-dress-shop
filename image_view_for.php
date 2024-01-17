@@ -261,7 +261,7 @@ $fetchDetails_ = $fetchDetails->fetch();
                         $('#modalId').modal('toggle')
                     } else {
                         alert(data)
-                        $('#modalId').modal('toggle')
+                        // $('#modalId').modal('toggle')
                     }
 
                     //$('#modalId').modal('hide');

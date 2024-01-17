@@ -157,7 +157,6 @@ if (isset($_SESSION['id_user'])) {
 
     function fetchCartDetails() {
         $.post("pages/cart_details/cart_details.php", {
-
             },
             function(data) {
                 if (data === 'No User') {

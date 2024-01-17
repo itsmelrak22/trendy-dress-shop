@@ -27,6 +27,12 @@
                 <p>Visit our Facebook page for updates and news.</p>
                 <a href="https://www.facebook.com/SlayAndWearItFashionable?mibextid=LQQJ4d" target="_blank">Trendy Threads Apparel Facebook</a>
             </div>
+
+            <div class="col-md-4">
+                <p class="float-end mb-1">
+                    <a href="#">Back to top</a>
+                </p>
+            </div>
         </div>
     </div>
 </footer>
