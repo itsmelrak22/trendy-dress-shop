@@ -12,17 +12,17 @@ $fetch_ = $conn->prepare('SELECT count(a.order_id) as countedInvoice from pendin
 $fetch_->execute();
 $count_ = $fetch_->fetch();
 
-
+$selectedPaymentMethod = $_POST['paymentMethod'] ?? '';
 $temp = $listOfItems['list_'];
 try {
     $conn->beginTransaction();
 
 
-    $insert = $conn->prepare("INSERT INTO pending_orders(customer_id,invoice_no, cartItems,order_status) VALUES (?,?,?,?)");
-    $insert->execute([$userID, (intval($count_['countedInvoice']) + 1), $temp, 'pending']);
+    $insert = $conn->prepare("INSERT INTO pending_orders(customer_id,invoice_no, cartItems,order_status, mop) VALUES (?,?,?,?,?)");
+    $insert->execute([$userID, (intval($count_['countedInvoice']) + 1), $temp, 'pending', $selectedPaymentMethod]);
 
-    $update = $conn->prepare("UPDATE  cart  SET  status=1  where user_id=?");
-    $update->execute([$userID]);
+    $update = $conn->prepare("UPDATE  cart  SET  status=1, mop=?  where user_id=? and status=0");
+    $update->execute([$selectedPaymentMethod,$userID]);
 
     echo "Successfully Checked out!";
     $conn->commit();

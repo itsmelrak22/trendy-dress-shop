@@ -17,6 +17,10 @@ if (!isset($_SESSION['id_user'])) {
     $fetchCart_ = $fetchCart->fetchAll();
 }
 
+$paymentMethods = array(
+    array('id' => 1, 'name' => 'COD'),
+    array('id' => 2, 'name' => 'Online Banking'),
+);
 ?>
 <!-- <style>
     .cart-container {
@@ -246,8 +250,21 @@ if (!isset($_SESSION['id_user'])) {
         <h5>Your Order Summary</h5>
         <div class="order-summary">
         </div>
-        <button onclick="placeOrder()" class="btn btn-primary">Confirm Order</button>
+        <div class="d-flex justify-content-between align-items-center mt-3">
+            <div>
+                <label for="orderOption" class="form-label">Select Option:</label>
+            </div>
+            <div style="margin-right: 380px;"> <!-- Adjust the margin as needed -->
+                <select class="form-select" id="orderOption" name="orderOption">
+                    <?php foreach ($paymentMethods as $method) : ?>
+                        <option value="<?php echo $method['id']; ?>"><?php echo $method['name']; ?></option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
+            <button onclick="placeOrder()" class="btn btn-primary">Confirm Order</button>
+        </div>
     </div>
+
 
     <div id="confirmation" style="display: none;">
         <h5>Order Confirmed</h5>
@@ -303,9 +320,12 @@ if (!isset($_SESSION['id_user'])) {
 
     function placeOrder() {
 
+        let selectedPaymentMethod = document.getElementById('orderOption').value;
         let answer = confirm("Are you sure to checkout now?");
             if (answer) {
-                $.post("pages/cart_details/actions/check_out.php", {},
+                $.post("pages/cart_details/actions/check_out.php", {
+                    paymentMethod: selectedPaymentMethod
+                },
                     function(data) {
                         alert(data);
                         fetchCartDetails_();
@@ -319,39 +339,102 @@ if (!isset($_SESSION['id_user'])) {
     }
 
 
+    // function populateOrderSummary() {
+    //     let orderSummaryContainer = document.querySelector('.order-summary');
+
+    //     orderSummaryContainer.innerHTML = "";
+
+    //     let address = "<?php echo $row['complete_address'] ?? null; ?>";
+    //     let addressElement = document.createElement('div');
+    //     addressElement.className = 'user-address';
+
+    //     if (address.trim() !== "") {
+    //         addressElement.innerHTML = `
+    //             <h6>Shipping Address:</h6>
+    //             <p>${address}</p>
+    //         `;
+    //     } else {
+    //         addressElement.innerHTML = `
+    //             <h6>Shipping Address:</h6>
+    //             <form id="addressForm">
+    //                 <textarea name="newAddress" placeholder="Enter your address"></textarea>
+    //                 <button type="button" onclick="updateAddress()">Update Address</button>
+    //             </form>
+    //         `;
+    //     }
+
+    //     orderSummaryContainer.appendChild(addressElement);
+
+    //     let orderItem;
+
+    //     <?php foreach ($fetchCart_ as $row) : ?>
+    //         orderItem = document.createElement('div');
+    //         orderItem.className = 'order-item';
+
+    //         orderItem.innerHTML = `
+    //             <span class="product-id">Product ID: <?php echo $row['product_id'] ?></span>
+    //             <span class="product-id">Description: <?php echo $row['product_title'] ?></span>
+    //             <span class="quantity">Quantity: <?php echo $row['qty'] ?></span>
+    //             <span class="total-price">Total Price: &#8369; <?php echo $row['Total_p_price'] ?></span>
+    //             <span class="size">Size: <?php echo $row['size'] ?></span>
+    //         `;
+
+    //         orderSummaryContainer.appendChild(orderItem);
+    //     <?php endforeach ?>
+    // }
+
     function populateOrderSummary() {
-        let orderSummaryContainer = document.querySelector('.order-summary');
+    let orderSummaryContainer = document.querySelector('.order-summary');
 
-        orderSummaryContainer.innerHTML = "";
+    orderSummaryContainer.innerHTML = "";
 
-        let address = "<?php echo $row['complete_address'] ?? null; ?>";
-        let addressElement = document.createElement('div');
-        addressElement.className = 'user-address';
+    let address = "<?php echo $row['complete_address'] ?? null; ?>";
+    let addressElement = document.createElement('div');
+    addressElement.className = 'user-address';
 
-        if (address.trim() !== "") {
-            addressElement.innerHTML = `
-                <h6>Shipping Address:</h6>
-                <p>${address}</p>
-            `;
-        } else {
-            addressElement.innerHTML = `
-                <h6>Shipping Address:</h6>
-                <form id="addressForm">
-                    <textarea name="newAddress" placeholder="Enter your address"></textarea>
-                    <button type="button" onclick="updateAddress()">Update Address</button>
-                </form>
-            `;
-        }
+    if (address.trim() !== "") {
+        addressElement.innerHTML = `
+            <h6>Shipping Address:</h6>
+            <p>${address}</p>
+        `;
+    } else {
+        addressElement.innerHTML = `
+            <h6>Shipping Address:</h6>
+            <form id="addressForm">
+                <textarea name="newAddress" placeholder="Enter your address"></textarea>
+                <button type="button" onclick="updateAddress()">Update Address</button>
+            </form>
+        `;
+    }
 
-        orderSummaryContainer.appendChild(addressElement);
+    orderSummaryContainer.appendChild(addressElement);
 
-        let orderItem;
-
-        <?php foreach ($fetchCart_ as $row) : ?>
-            orderItem = document.createElement('div');
+    <?php foreach ($fetchCart_ as $row) : ?>
+        {
+            let orderItem = document.createElement('div');
             orderItem.className = 'order-item';
 
-            orderItem.innerHTML = `
+            let productImageFrontSrc = 'data:image/png;base64,' + <?php echo json_encode($row['frontImage']); ?>;
+            // let productImageBackSrc = 'data:image/png;base64,' + <?php echo json_encode($row['backImage']); ?>;
+            
+            let productImageFrontElement = document.createElement('img');
+            productImageFrontElement.src = productImageFrontSrc;
+            productImageFrontElement.alt = 'Product Front Image';
+            productImageFrontElement.className = 'cart-item-image';
+            productImageFrontElement.style.width = '50px';
+
+            // let productImageBackElement = document.createElement('img');
+            // productImageBackElement.src = productImageBackSrc;
+            // productImageBackElement.alt = 'Product Back Image';
+            // productImageBackElement.className = 'cart-item-image';
+
+            orderItem.appendChild(productImageFrontElement);
+            // orderItem.appendChild(productImageBackElement);
+
+            let orderItemDetails = document.createElement('div');
+            orderItemDetails.className = 'cart-item-details';
+            
+            orderItemDetails.innerHTML = `
                 <span class="product-id">Product ID: <?php echo $row['product_id'] ?></span>
                 <span class="product-id">Description: <?php echo $row['product_title'] ?></span>
                 <span class="quantity">Quantity: <?php echo $row['qty'] ?></span>
@@ -359,9 +442,15 @@ if (!isset($_SESSION['id_user'])) {
                 <span class="size">Size: <?php echo $row['size'] ?></span>
             `;
 
+            orderItem.appendChild(orderItemDetails);
             orderSummaryContainer.appendChild(orderItem);
-        <?php endforeach ?>
-    }
+        }
+    <?php endforeach ?>
+}
+
+
+
+
 
     function updateAddress() {
         // fetchCartDetails_();
