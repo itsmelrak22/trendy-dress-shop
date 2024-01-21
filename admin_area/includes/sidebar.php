@@ -188,50 +188,50 @@ else {
 
 </li><!-- Bundles Li Ends --->
 
-<li><!-- relations li Starts -->
+<!-- <li>
 
-<a href="#" data-toggle="collapse" data-target="#relations"><!-- anchor Starts -->
+    <a href="#" data-toggle="collapse" data-target="#relations">
 
-<i class="fa fa-fw fa-retweet"></i> Assign Products To Bundles Relations
+    <i class="fa fa-fw fa-retweet"></i> Assign Products To Bundles Relations
 
-<i class="fa fa-fw fa-caret-down"></i>
+    <i class="fa fa-fw fa-caret-down"></i>
 
-</a><!-- anchor Ends -->
+    </a>
 
-<ul id="relations" class="collapse"><!-- collapse Starts -->
+    <ul id="relations" class="collapse">
 
+    <li>
+
+    <a href="index.php?insert_rel"> Insert Relation </a>
+
+    </li>
+
+
+    <li>
+
+    <a href="index.php?view_rel"> View Relations </a>
+
+    </li>
+
+    </ul>
+
+
+</li> -->
+
+
+<!-- 
 <li>
 
-<a href="index.php?insert_rel"> Insert Relation </a>
-
-</li>
-
-
-<li>
-
-<a href="index.php?view_rel"> View Relations </a>
-
-</li>
-
-</ul><!-- collapse Ends -->
-
-
-</li><!-- relations li Ends -->
-
-
-
-<li><!-- manufacturer li Starts -->
-
-<a href="#" data-toggle="collapse" data-target="#manufacturers"><!-- anchor Starts -->
+<a href="#" data-toggle="collapse" data-target="#manufacturers">
 
 <i class="fa fa-fw fa-briefcase"></i> Manufacturers
 
 <i class="fa fa-fw fa-caret-down"></i>
 
 
-</a><!-- anchor Ends -->
+</a>
 
-<ul id="manufacturers" class="collapse"><!-- ul collapse Starts -->
+<ul id="manufacturers" class="collapse">
 
 <li>
 <a href="index.php?insert_manufacturer"> Insert Manufacturer </a>
@@ -241,10 +241,10 @@ else {
 <a href="index.php?view_manufacturers"> View Manufacturers </a>
 </li>
 
-</ul><!-- ul collapse Ends -->
+</ul>
 
 
-</li><!-- manufacturer li Ends -->
+</li> -->
 
 
 <li><!-- li Starts -->
