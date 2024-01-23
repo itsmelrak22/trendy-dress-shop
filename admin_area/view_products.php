@@ -2,168 +2,183 @@
 
 
 
-if(!isset($_SESSION['admin_email'])){
+if (!isset($_SESSION['admin_email'])) {
 
-echo "<script>window.open('login.php','_self')</script>";
+    echo "<script>window.open('login.php','_self')</script>";
+} else {
 
-}
+    ?>
 
-else {
 
-?>
+    <div class="row">
+        <!--  1 row Starts -->
 
+        <div class="col-lg-12">
+            <!-- col-lg-12 Starts -->
 
-<div class="row"><!--  1 row Starts -->
+            <ol class="breadcrumb">
+                <!-- breadcrumb Starts -->
 
-<div class="col-lg-12" ><!-- col-lg-12 Starts -->
+                <li class="active">
 
-<ol class="breadcrumb" ><!-- breadcrumb Starts -->
+                    <i class="fa fa-dashboard"></i> Dashboard / View Products
 
-<li class="active" >
+                </li>
 
-<i class="fa fa-dashboard"></i> Dashboard / View Products
+            </ol><!-- breadcrumb Ends -->
 
-</li>
+        </div><!-- col-lg-12 Ends -->
 
-</ol><!-- breadcrumb Ends -->
+    </div><!--  1 row Ends -->
 
-</div><!-- col-lg-12 Ends -->
+    <div class="row">
+        <!-- 2 row Starts -->
 
-</div><!--  1 row Ends -->
+        <div class="col-lg-12">
+            <!-- col-lg-12 Starts -->
 
-<div class="row" ><!-- 2 row Starts -->
+            <div class="panel panel-default">
+                <!-- panel panel-default Starts -->
 
-<div class="col-lg-12" ><!-- col-lg-12 Starts -->
+                <div class="panel-heading">
+                    <!-- panel-heading Starts -->
 
-<div class="panel panel-default" ><!-- panel panel-default Starts -->
+                    <h3 class="panel-title">
+                        <!-- panel-title Starts -->
 
-<div class="panel-heading" ><!-- panel-heading Starts -->
+                        <i class="fa fa-money fa-fw"></i> View Products
 
-<h3 class="panel-title" ><!-- panel-title Starts -->
+                    </h3><!-- panel-title Ends -->
 
-<i class="fa fa-money fa-fw" ></i> View Products
 
-</h3><!-- panel-title Ends -->
+                </div><!-- panel-heading Ends -->
 
+                <div class="panel-body">
+                    <!-- panel-body Starts -->
 
-</div><!-- panel-heading Ends -->
+                    <div class="table-responsive">
+                        <!-- table-responsive Starts -->
 
-<div class="panel-body" ><!-- panel-body Starts -->
+                        <table class="table table-bordered table-hover table-striped">
+                            <!-- table table-bordered table-hover table-striped Starts -->
 
-<div class="table-responsive" ><!-- table-responsive Starts -->
+                            <thead>
 
-<table class="table table-bordered table-hover table-striped" ><!-- table table-bordered table-hover table-striped Starts -->
+                                <tr>
+                                    <th>#</th>
+                                    <th>Title</th>
+                                    <th>Image</th>
+                                    <th>Price</th>
+                                    <th>Sold</th>
+                                    <th>Keywords</th>
+                                    <th>Date</th>
+                                    <th>Delete</th>
+                                    <th>Edit</th>
 
-<thead>
 
-<tr>
-<th>#</th>
-<th>Title</th>
-<th>Image</th>
-<th>Price</th>
-<th>Sold</th>
-<th>Keywords</th>
-<th>Date</th>
-<th>Delete</th>
-<th>Edit</th>
 
+                                </tr>
 
+                            </thead>
 
-</tr>
+                            <tbody>
 
-</thead>
+                                <?php
 
-<tbody>
+                                    $i = 0;
 
-<?php
+                                    $get_pro = "SELECT A.*, B.color_name, B.product_img1 AS img1,  B.product_img2 AS img2,  B.product_img3 AS img3, B.color_id  
+                                    FROM products AS A 
+                                    INNER JOIN product_colors AS B
+                                    ON A.product_id = B.product_id
+                                    WHERE A.status = 'product' 
+                                    ";
 
-$i = 0;
+                                    $run_pro = mysqli_query($con, $get_pro);
 
-$get_pro = "select * from products where status='product'";
+                                    while ($row_pro = mysqli_fetch_array($run_pro)) {
 
-$run_pro = mysqli_query($con,$get_pro);
+                                        $pro_id = $row_pro['product_id'];
 
-while($row_pro=mysqli_fetch_array($run_pro)){
+                                        $pro_title = $row_pro['product_title'];
 
-$pro_id = $row_pro['product_id'];
+                                        $pro_image = $row_pro['img1'];
 
-$pro_title = $row_pro['product_title'];
+                                        $pro_price = $row_pro['product_price'];
 
-$pro_image = $row_pro['product_img1'];
+                                        $pro_keywords = $row_pro['product_keywords'];
 
-$pro_price = $row_pro['product_price'];
+                                        $pro_date = $row_pro['date'];
 
-$pro_keywords = $row_pro['product_keywords'];
+                                        $pro_color_id = $row_pro['color_id'];
 
-$pro_date = $row_pro['date'];
+                                        $i++;
 
-$i++;
+                                        ?>
 
-?>
+                                    <tr>
 
-<tr>
+                                        <td><?php echo $i; ?></td>
 
-<td><?php echo $i; ?></td>
+                                        <td><?php echo $pro_title; ?></td>
 
-<td><?php echo $pro_title; ?></td>
+                                        <td><img src="product_images/<?php echo $pro_image; ?>" width="60" height="60"></td>
 
-<td><img src="product_images/<?php echo $pro_image; ?>" width="60" height="60"></td>
+                                        <td> <?php echo $pro_price; ?></td>
 
-<td>$ <?php echo $pro_price; ?></td>
+                                        <td>
+                                            <?php
 
-<td>
-<?php
+                                                    $get_sold = "select * from pending_orders where product_id='$pro_id'";
+                                                    $run_sold = mysqli_query($con, $get_sold);
+                                                    // $count = mysqli_num_rows($run_sold);
+                                                    // echo $count;
+                                                    ?>
+                                        </td>
 
-$get_sold = "select * from pending_orders where product_id='$pro_id'";
-$run_sold = mysqli_query($con,$get_sold);
-// $count = mysqli_num_rows($run_sold);
-// echo $count;
-?>
-</td>
+                                        <td> <?php echo $pro_keywords; ?> </td>
 
-<td> <?php echo $pro_keywords; ?> </td>
+                                        <td><?php echo $pro_date; ?></td>
 
-<td><?php echo $pro_date; ?></td>
+                                        <td>
 
-<td>
+                                            <a href="index.php?delete_product=<?= $pro_id; ?>">
 
-<a href="index.php?delete_product=<?php echo $pro_id; ?>">
+                                                <i class="fa fa-trash-o"> </i> Delete
 
-<i class="fa fa-trash-o"> </i> Delete
+                                            </a>
 
-</a>
+                                        </td>
 
-</td>
+                                        <td>
 
-<td>
+                                            <a href="index.php?edit_product=<?= $pro_id;?>&color=<?= $pro_color_id ?>">
 
-<a href="index.php?edit_product=<?php echo $pro_id; ?>">
+                                                <i class="fa fa-pencil"> </i> Edit
 
-<i class="fa fa-pencil"> </i> Edit
+                                            </a>
 
-</a>
+                                        </td>
 
-</td>
+                                    </tr>
 
-</tr>
+                                <?php } ?>
 
-<?php } ?>
 
+                            </tbody>
 
-</tbody>
 
+                        </table><!-- table table-bordered table-hover table-striped Ends -->
 
-</table><!-- table table-bordered table-hover table-striped Ends -->
+                    </div><!-- table-responsive Ends -->
 
-</div><!-- table-responsive Ends -->
+                </div><!-- panel-body Ends -->
 
-</div><!-- panel-body Ends -->
+            </div><!-- panel panel-default Ends -->
 
-</div><!-- panel panel-default Ends -->
+        </div><!-- col-lg-12 Ends -->
 
-</div><!-- col-lg-12 Ends -->
-
-</div><!-- 2 row Ends -->
+    </div><!-- 2 row Ends -->
 
 
 

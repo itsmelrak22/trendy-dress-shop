@@ -6,28 +6,32 @@ spl_autoload_register(function ($class) {
 
     if (isset($_POST['submit'])) {
       $grouped_files = array_chunk($_FILES, 3, true);
-
+      $explodedString = array();
       $colors = array();
+
       foreach ($_POST as $key => $value) {
           if (strpos($key, 'product_color') !== false) {
               $colors[$key] = $value;
           }
       }
 
-      $files = array();
+      foreach ($colors as $key => $color) {
+        $explodedString = explode('_', $key);
+        $index = $explodedString[2] - 1;
+        $grouped_files[ $index ]["number"] = $explodedString[2];
+        $grouped_files[ $index ]["color"] =  $color;
+      }
 
 
+      // echo "<pre>";
 
-      echo "<pre>";
+      //   print_r($_FILES);
 
-        print_r($colors);
-
-        print_r($grouped_files);
+      //   print_r($grouped_files);
         
-      echo "</pre>";
-      exit();
-   
-
+      // echo "</pre>";
+      // exit();
+      
       $target_dir = "../../product_images/";
 
       $product_title = $_POST['product_title'];
@@ -50,46 +54,63 @@ spl_autoload_register(function ($class) {
 
       $status = "product";
 
-      $paths = [ $_FILES['product_img1'], $_FILES['product_img2'], $_FILES['product_img3'] ];
-
+      // $paths = [ $_FILES['product_img1'], $_FILES['product_img2'], $_FILES['product_img3'] ];
 
       try {
-
-        $product_img1 =  $_FILES['product_img1']['name'];
-        $product_img2 =  $_FILES['product_img2']['name'];
-        $product_img3 =  $_FILES['product_img3']['name'];
-
+        // Begin transaction
+    
         $product = new Product();
+        $product->beginTransaction();
         $product->setQuery("INSERT INTO `products` 
-                            (`p_cat_id`,`cat_id`,`manufacturer_id`,`date`,`product_title`,`product_url`,`product_img1`,`product_img2`,`product_img3`,`product_price`,`product_psp_price`,`product_desc`,`product_features`,`product_video`,`product_keywords`,`product_label`,`status`) 
-                            VALUES ('$product_cat','$cat','$manufacturer_id',NOW(),'$product_title','$product_url','$product_img1','$product_img2','$product_img3','$product_price','$psp_price','$product_desc','$product_features','$product_video','$product_keywords','$product_label','$status')");
+                            (`p_cat_id`,`cat_id`,`manufacturer_id`,`date`,`product_title`,`product_url`,`product_price`,`product_psp_price`,`product_desc`,`product_features`,`product_video`,`product_keywords`,`product_label`,`status`) 
+                            VALUES ('$product_cat','$cat','$manufacturer_id',NOW(),'$product_title','$product_url','$product_price','$psp_price','$product_desc','$product_features','$product_video','$product_keywords','$product_label','$status')");
+        $last_id = $product->getLastInsertedId();
 
-        $isLoopOk = 1;
-        foreach ($paths as $key => $path) {
-          $isOk = checkUploadImage($path, $target_dir);
-          if( !$isOk ) return $isLoopOk = 0;
-        }
-  
-        if(!$isLoopOk){
-          echo "Error Uploading";
-          exit();
-        }
+        foreach ($grouped_files as $key => $value) {
+          $color = $value["color"];
+          $number = $value['number'];
+          $image1 = $value["product_img_".$number."_1"];
+          $image2 = $value["product_img_".$number."_2"];
+          $image3 = $value["product_img_".$number."_3"];
+          $image_array = array( $image1, $image2, $image3 );
 
+
+          foreach ($image_array as $key => $value) {
+            $isOk = checkUploadImage($value, $target_dir, $number, $key);
+            if(!$isOk){
+              echo "Error Uploading";
+              $product->rollback();
+              exit();
+
+            }
+          }
+          $url1 = basename($image1["name"]);
+          $url2 = basename($image2["name"]);
+          $url3 = basename($image3["name"]);
+
+          $product->setQuery("INSERT INTO `product_colors` (`product_id`, `color_name`, `product_img1`, `product_img2`, `product_img3`) VALUES ('$last_id','$color','$url1','$url2','$url3')");
+        }
+        
+        // Commit the transaction
+        $product->commit();
+    
         echo "<script>alert('Product has been inserted successfully')</script>";
-
         echo "<script>window.open('../../index.php?view_products','_self')</script>";
-      } catch (\PDOException $e) {
-        //throw $th;
+    } catch (\PDOException $e) {
+        // Rollback the transaction
+        $product->rollback();
         echo $e->getMessage();
-      }
+    }
+    
 
     }
 
 
 
 
-    function checkUploadImage($file, $target_dir) {
+    function checkUploadImage($file, $target_dir, $number, $key) {
       if(file_exists($file['tmp_name']) || is_uploaded_file($file['tmp_name'])) {
+          $fileKey = "product_img_$number"."_".$key;
           $target_file = $target_dir . basename($file["name"]);
           $uploadOk = 1;
           $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
@@ -115,12 +136,12 @@ spl_autoload_register(function ($class) {
           }
   
           if($uploadOk){
-            move_uploaded_file($file["tmp_name"], $target_file);
+            move_uploaded_file($_FILES[$fileKey]['tmp_name'], $target_file);
           }
 
           return $uploadOk;
       }
-  }
+    }
   
 
     ?>

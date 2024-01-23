@@ -37,6 +37,18 @@ if (isset($_GET['itemID'])) :
 
     $stmt->execute([$slug]);
     $product_data = $stmt->fetch();
+
+    $stmt = $conn->prepare("SELECT A.*
+    FROM product_colors AS A 
+    WHERE A.product_id =?");
+    
+    $stmt->execute([$slug]);
+    $product_colors = $stmt->fetchAll();
+    
+    // echo '<pre>';
+    //     print_r($product_colors);
+    // echo '</pre>';
+    
     if (!isset($product_data['product_id'])) :
         $slug = 'Product Not Found';
     endif;
@@ -93,13 +105,13 @@ endif;
                                 </ol>
                                 <div class="carousel-inner" role="listbox">
                                     <div class="carousel-item active">
-                                        <img src="admin_area/product_images/<?php echo $product_data['product_img1'] ?>" class="w-100 d-block" alt="First slide">
+                                        <img src="admin_area/product_images/<?php echo $product_colors[0]['product_img1'] ?>" class="w-100 d-block" alt="First slide">
                                     </div>
                                     <div class="carousel-item">
-                                        <img src="admin_area/product_images/<?php echo $product_data['product_img2'] ?>" class="w-100 d-block" alt="Second slide">
+                                        <img src="admin_area/product_images/<?php echo $product_colors[0]['product_img2'] ?>" class="w-100 d-block" alt="Second slide">
                                     </div>
                                     <div class="carousel-item">
-                                        <img src="admin_area/product_images/<?php echo $product_data['product_img3'] ?>" class="w-100 d-block" alt="Third slide">
+                                        <img src="admin_area/product_images/<?php echo $product_colors[0]['product_img3'] ?>" class="w-100 d-block" alt="Third slide">
                                     </div>
                                 </div>
                                 <button class="carousel-control-prev" type="button" data-bs-target="#carouselId" data-bs-slide="prev">
@@ -124,6 +136,24 @@ endif;
                                         <td>
                                             <p class="m-0"><?php echo $product_data['product_desc'] ?></p>
                                         </td>
+                                   
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            COLORS:
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="btn-group" role="group" aria-label="Basic checkbox toggle button group">
+                                                <?php foreach ($product_colors as $key => $value) {
+                                                    echo '
+                                                    <input type="radio" class="btn-check mx-2" name="btnradio" id="btnradio'.$key.'" autocomplete="off">
+                                                    <label class="btn btn-outline-primary" for="btnradio'.$key.'"> '.$value['color_name'].' </label>
+                                                    ';
+                                                } ?>
+                                            </div>
+                                        </td>
                                     </tr>
                                 </tbody>
 
@@ -133,7 +163,7 @@ endif;
                                     <tbody>
                                         <tr>
                                             <?php if($product_data['custom_status'] == 0) :?>
-                                            <td> <button data-bs-toggle="modal" data-bs-target="#modalId" style="background-color: black;" class="btn form-control text-white"><i class="fa fa-cart-plus" aria-hidden="true"></i> Customize</button></td>
+                                            <td> <button data-bs-toggle="modal" data-bs-target="#modalId" style="background-color: black;" class="btn form-control text-white" id="costumize_btn"><i class="fa fa-cart-plus" aria-hidden="true" ></i> Customize</button></td>
                                             <?php endif ?>
                                         </tr>
                                         <tr>
@@ -260,9 +290,16 @@ endif;
         $(document).ready(function() {
             fetchData(<?php echo $slug ?>)
 
-            imageView('admin_area/product_images/<?php echo $product_data['product_img1'] ?>', 'admin_area/product_images/<?php echo $product_data['product_img2'] ?>', <?php echo   $slug  ?>)
+            imageView('admin_area/product_images/<?php echo $product_colors[0]['product_img1'] ?>', 'admin_area/product_images/<?php echo $product_colors[0]['product_img2'] ?>', <?php echo   $slug  ?>)
+            
+            $("#costumize_btn").click(function(){
+                imageView(
+                    'admin_area/product_images/<?php echo $product_colors[0]['product_img1'] ?>', 
+                    'admin_area/product_images/<?php echo $product_colors[0]['product_img2'] ?>', 
+                    <?php echo   $slug  ?>
+                )
 
-
+            });
         });
 
         function fetchData(itemID) {
@@ -277,7 +314,7 @@ endif;
             );
         }
 
-        function imageView(image1, image2, id) {
+        function imageView(image1, image2, id, optionalObj = {}) {
             $.post("image_view_for.php", {
                     image1,
                     image2,
@@ -288,6 +325,10 @@ endif;
                 },
 
             );
+        }
+
+        function test(){
+            alert("hello")
         }
     </script>
 </body>

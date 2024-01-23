@@ -22,13 +22,14 @@ class Model
     protected $qry;
 
     public function __construct(){
-        $this->connect();
+        // $this->connect();
+        $this->connectActual();
     }
 
     public function connectActual(){
         
         try {
-            $this->pdo = new PDO("mysql:host=localhost;dbname=u286424252_serenidad_2023;charset=utf8","u286424252_root","SerenidadSuites2023");
+            $this->pdo = new PDO("mysql:host=localhost;dbname=u916113351_ecomm_store", "u916113351_root", "Trendydresshopsystem@2024");
             $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             $this->pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
             
@@ -93,6 +94,30 @@ class Model
     public function getLastInsertedId(){
         $data = $this->setQuery("SELECT LAST_INSERT_ID() as id")->getFirst();
         return (int) $data->id;
+    }
+
+    public function beginTransaction(){
+        try {
+            $this->pdo->beginTransaction();
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+        }
+    }
+
+    public function commit(){
+        try {
+            $this->pdo->commit();
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+        }
+    }
+
+    public function rollback(){
+        try {
+            $this->pdo->rollBack();
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+        }
     }
 
 

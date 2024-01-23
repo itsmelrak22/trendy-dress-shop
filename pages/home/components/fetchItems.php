@@ -12,12 +12,17 @@
     }
 
     // Calculate the total number of pages
-    $totalPages = ceil($conn->query("SELECT COUNT(*) FROM products")->fetchColumn() / $itemsPerPage);
+    $totalPages = ceil($conn->query("SELECT COUNT(*)
+    FROM products AS A 
+    INNER JOIN product_colors AS B
+    ON A.product_id = B.product_id")->fetchColumn() / $itemsPerPage);
 
     // echo json_decode($totalPages);
     // echo json_decode($currentPage);
 
-    $fetchItems = $conn->prepare("SELECT a.* FROM products a ORDER BY a.product_id DESC LIMIT ?, ?");
+    $fetchItems = $conn->prepare("SELECT A.*, B.product_img1 as img1 FROM products AS A 
+    INNER JOIN product_colors AS B
+    ON A.product_id = B.product_id ORDER BY A.product_id DESC LIMIT ?, ?");
     $fetchItems->bindValue(1, $offset, PDO::PARAM_INT);
     $fetchItems->bindValue(2, $itemsPerPage, PDO::PARAM_INT);
     $fetchItems->execute();
@@ -62,7 +67,7 @@
                 <div class="card shadow-sm">
                     <h6 class="card-title text-center mt-2"><?php echo $row['product_title'] ?></h6>
                     <div class="card-body d-flex justify-content-center">
-                        <img src="admin_area\product_images\<?php echo $row['product_img1'] ?>" class="card-image" />
+                        <img src="admin_area\product_images\<?php echo $row['img1'] ?>" class="card-image" />
                     </div>
                     <p class="mx-0 my-1 text-center px-2 custom-text"><?php echo $row['product_desc'] ?></p>
                     <span style="font-size:15px;" class="mx-0 my-1 text-center custom-text">&#8369; <?php echo $row['product_price'] ?></span>
