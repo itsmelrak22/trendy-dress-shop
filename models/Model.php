@@ -30,7 +30,7 @@ class Model
     public function connectActual(){
         
         try {
-            $this->pdo = new PDO("mysql:host='localhost';dbname=u916113351_ecomm_store", "u916113351_root", "Trendydresshopsystem@2024");
+            // $this->pdo = new PDO("mysql:host='localhost';dbname=u916113351_ecomm_store", "u916113351_root", "Trendydresshopsystem@2024");
             $this->pdo = new PDO("mysql:host=$this->servername;dbname=u916113351_ecomm_store", "u916113351_root", "Trendydresshopsystem@2024");
             
             $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
