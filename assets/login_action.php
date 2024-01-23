@@ -8,6 +8,8 @@ $checkUser = $conn->prepare('SELECT a.customer_id, COUNT(a.customer_id) as cnt F
 $checkUser->execute([$email, $password]);
 $checkUser_ = $checkUser->fetch();
 
+echo "<Script>alert($checkUser_)</script>";
+
 if ($checkUser_['cnt'] > 0) {
     session_start();
     $_SESSION['id_user'] = $checkUser_['customer_id'];
