@@ -273,11 +273,17 @@ if (!isset($_SESSION['admin_email'])) {
                 </div>
 
               </div><!-- form-group Ends -->
+
+              <div class="form-group">
+                <label class="col-md-3 control-label"> Product Color (required)</label>
+                <button type="button" class="btn btn-info" onclick="addInput()">Add</button>
+                <button type="button" class="btn btn-info" onclick="removeInput()">Remove</button>
+              </div>
+
               <div id="inputContainer">
 
               </div>
-              <button type="button" onclick="addInput()">Add</button>
-              <button type="button"  onclick="removeInput()">Remove</button>
+              
 
               <div class="form-group">
                 <!-- form-group Starts -->
@@ -308,11 +314,28 @@ if (!isset($_SESSION['admin_email'])) {
     </div><!-- 2 row Ends -->
 
     <script>
-        var counter = 0;
+        let counter = 0;
+
+        document.addEventListener('DOMContentLoaded', (event) => {
+            var btn = document.querySelector('input[name="submit"]');
+            btn.disabled = true;
+           
+        });
+
+        function checkCounter(){
+          var btn = document.querySelector('input[name="submit"]');
+
+          if(counter < 1){
+            btn.disabled = true;
+          }else{
+            btn.disabled = false;
+
+          }
+        }
 
         function addInput() {
             counter++;
-            var newDiv = document.createElement('div');
+            let newDiv = document.createElement('div');
             newDiv.innerHTML = `
                 <div class="form-group">
                     <label class="col-md-3 control-label"> Product Color </label>
@@ -348,6 +371,7 @@ if (!isset($_SESSION['admin_email'])) {
                   <hr>
             `;
             document.getElementById('inputContainer').appendChild(newDiv);
+            checkCounter()
         }
 
         function removeInput() {
@@ -356,6 +380,8 @@ if (!isset($_SESSION['admin_email'])) {
                 container.removeChild(container.lastChild);
                 counter--;
             }
+            checkCounter()
+
         }
     </script>
 

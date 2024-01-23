@@ -98,6 +98,14 @@ $fetchDetails_ = $fetchDetails->fetch();
 
         <div class="col-lg-12">
             <div class="m-2">
+                <label for="#textInput"><b>TEXT INPUT</b></label>
+                <button class="btn btn-primary btn-sm my-1" id="add-text-btn">Add Text</button>
+                <button class="btn btn-danger btn-sm my-1" id="remove-text-btn">Remove Text</button>
+                <textarea name="text_input" id="textInput" cols="30" rows="10"></textarea>
+                
+
+            </div>
+            <div class="m-2">
                 <label for="#imageInput"><b>FRONT LOGO</b></label>
                 <button id="remove_btn" class="btn btn-danger form-control">REMOVE</button>
                 <input accept=".png" class=" form-control" type="file" id="imageInput" />
@@ -175,6 +183,40 @@ $fetchDetails_ = $fetchDetails->fetch();
         var canvas2 = new fabric.Canvas('example2');
         setBackground(canvas2, bg_2)
 
+        $('#add-text-btn').on('click', function() {
+            let text = $('#textInput')[0].value
+            console.log(text)
+            if(Boolean(text)){
+                setText(canvas1, text)
+            }else{
+                alert("Insert Text")
+            }
+        });
+
+        function setText(canvas1, text) {
+            let canvasTemp = canvas1
+            var canvasText = new fabric.IText(text, {
+                left: 10,  // position of text
+                top: 10,
+                fontFamily: 'arial',
+                fill: 'white',
+                lineHeight: 1.1,
+            });
+            canvasText.bringToFront();
+            canvasTemp.isDrawingMode = false
+            canvasTemp.add(canvasText);
+            canvasTemp.setActiveObject(canvasText);
+            canvasTemp.renderAll();
+        }
+
+        $('#remove-text-btn').on('click', function() {
+            var activeObject = canvas1.getActiveObject();
+            if (activeObject && activeObject.type === 'i-text') {
+                canvas1.remove(activeObject);
+            }
+        });
+
+
 
         $('#imageInput').change(function(e) {
             var file = e.target.files[0];
@@ -224,7 +266,6 @@ $fetchDetails_ = $fetchDetails->fetch();
 
 
 
-
         $('#submit_images').on('click', function() {
             let tempBack = [];
             canvas2.getObjects().forEach((object) => {
@@ -236,38 +277,41 @@ $fetchDetails_ = $fetchDetails->fetch();
 
             let tempFront = [];
             canvas1.getObjects().forEach((object) => {
-                tempFront.push(object.getSrc())
+                if( object.type == "image" ){
+                    console.log(object.type)
+                    tempFront.push(object.getSrc())
+                }
             })
+
             //Get MainCanvas
             var dataURLtempFront = canvas1.toDataURL();
 
             $('#see_generated').attr("src", dataURLtempBack)
+            alert('test');
 
+            // $.post("action_customizeImage/GenerateImage.php", {
+            //         dataURLtempFront,
+            //         tempFront,
+            //         dataURLtempBack,
+            //         tempBack,
+            //         quantity: $('#qty').val(),
+            //         id: $('#div_set').attr('id_src'),
+            //         priceTotal: $('#price_tag').text(),
+            //         size: $('#size_sel').val()
+            //     },
+            //     function(data) {
+            //         if (data === 'No User') {
+            //             login_()
+            //             $('#modalId').modal('toggle')
+            //         } else {
+            //             alert(data)
+            //             // $('#modalId').modal('toggle')
+            //         }
 
+            //         //$('#modalId').modal('hide');
+            //     }
 
-            $.post("action_customizeImage/GenerateImage.php", {
-                    dataURLtempFront,
-                    tempFront,
-                    dataURLtempBack,
-                    tempBack,
-                    quantity: $('#qty').val(),
-                    id: $('#div_set').attr('id_src'),
-                    priceTotal: $('#price_tag').text(),
-                    size: $('#size_sel').val()
-                },
-                function(data) {
-                    if (data === 'No User') {
-                        login_()
-                        $('#modalId').modal('toggle')
-                    } else {
-                        alert(data)
-                        // $('#modalId').modal('toggle')
-                    }
-
-                    //$('#modalId').modal('hide');
-                }
-
-            );
+            // );
 
         });
 
