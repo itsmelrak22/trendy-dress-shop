@@ -129,10 +129,10 @@ if (!isset($_SESSION['admin_email'])) {
                                         <td>
                                             <?php
 
-                                                    $get_sold = "select * from pending_orders where product_id='$pro_id'";
-                                                    $run_sold = mysqli_query($con, $get_sold);
-                                                    // $count = mysqli_num_rows($run_sold);
-                                                    // echo $count;
+                                                    // $get_sold = "select * from pending_orders where product_id='$pro_id'";
+                                                    // $run_sold = mysqli_query($con, $get_sold);
+                                                    // // $count = mysqli_num_rows($run_sold);
+                                                    // // echo $count;
                                                     ?>
                                         </td>
 
