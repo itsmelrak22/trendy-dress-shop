@@ -264,9 +264,8 @@ $fetchDetails_ = $fetchDetails->fetch();
             setBackground(canvas2, bg_2)
         });
 
-
-
-        $('#submit_images').on('click', function() {
+        $('#submit_images').off('click').on('click', function(event) {
+            event.stopPropagation();
             let tempBack = [];
             canvas2.getObjects().forEach((object) => {
                 tempBack.push(object.getSrc())
@@ -287,31 +286,30 @@ $fetchDetails_ = $fetchDetails->fetch();
             var dataURLtempFront = canvas1.toDataURL();
 
             $('#see_generated').attr("src", dataURLtempBack)
-            alert('test');
 
-            // $.post("action_customizeImage/GenerateImage.php", {
-            //         dataURLtempFront,
-            //         tempFront,
-            //         dataURLtempBack,
-            //         tempBack,
-            //         quantity: $('#qty').val(),
-            //         id: $('#div_set').attr('id_src'),
-            //         priceTotal: $('#price_tag').text(),
-            //         size: $('#size_sel').val()
-            //     },
-            //     function(data) {
-            //         if (data === 'No User') {
-            //             login_()
-            //             $('#modalId').modal('toggle')
-            //         } else {
-            //             alert(data)
-            //             // $('#modalId').modal('toggle')
-            //         }
+            $.post("action_customizeImage/GenerateImage.php", {
+                    dataURLtempFront,
+                    tempFront,
+                    dataURLtempBack,
+                    tempBack,
+                    quantity: $('#qty').val(),
+                    id: $('#div_set').attr('id_src'),
+                    priceTotal: $('#price_tag').text(),
+                    size: $('#size_sel').val()
+                },
+                function(data) {
+                    if (data === 'No User') {
+                        login_()
+                        $('#modalId').modal('toggle')
+                    } else {
+                        alert(data)
+                        // $('#modalId').modal('toggle')
+                    }
 
-            //         //$('#modalId').modal('hide');
-            //     }
+                    //$('#modalId').modal('hide');
+                }
 
-            // );
+            );
 
         });
 

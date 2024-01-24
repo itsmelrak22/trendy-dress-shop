@@ -68,19 +68,6 @@ if (!isset($_SESSION['admin_email'])) {
 
               <div class="form-group">
                 <!-- form-group Starts -->
-                <label class="col-md-3 control-label"> Product Url </label>
-                <div class="col-md-6">
-                  <input type="text" name="product_url" class="form-control" required>
-                  <br>
-                  <p style="font-size:15px; font-weight:bold;">
-                    Product Url Example : navy-blue-t-shirt
-                  </p>
-                </div>
-              </div><!-- form-group Ends -->
-
-
-              <div class="form-group">
-                <!-- form-group Starts -->
                 <label class="col-md-3 control-label"> Select A Manufacturer </label>
                 <div class="col-md-6">
                   <select class="form-control" name="manufacturer">
@@ -159,6 +146,23 @@ if (!isset($_SESSION['admin_email'])) {
                 </div>
               </div><!-- form-group Ends -->
 
+              <div>
+              <hr>
+              </div>
+
+              
+              <div class="form-group">
+                <!-- form-group Starts -->
+                <label class="col-md-3 control-label"> Product Url </label>
+                <div class="col-md-6">
+                  <input type="text" name="product_url" class="form-control" required>
+                  <br>
+                  <p style="font-size:15px; font-weight:bold;">
+                    Product Url Example : navy-blue-t-shirt
+                  </p>
+                </div>
+              </div><!-- form-group Ends -->
+
               <div class="form-group">
                 <!-- form-group Starts -->
                 <label class="col-md-3 control-label"> Product Price </label>
@@ -218,26 +222,15 @@ if (!isset($_SESSION['admin_email'])) {
 
                     <div id="description" class="tab-pane fade in active">
                       <!-- description tab-pane fade in active Starts -->
-
                       <br>
-
-                      <textarea name="product_desc" class="form-control" rows="15" id="product_desc">
-
-
-</textarea>
-
+                      <textarea name="product_desc" class="form-control" rows="15" id="product_desc"></textarea>
                     </div><!-- description tab-pane fade in active Ends -->
-
 
                     <div id="features" class="tab-pane fade in">
                       <!-- features tab-pane fade in Starts -->
-
                       <br>
 
-                      <textarea name="product_features" class="form-control" rows="15" id="product_features">
-
-
-</textarea>
+                      <textarea name="product_features" class="form-control" rows="15" id="product_features"></textarea>
 
                     </div><!-- features tab-pane fade in Ends -->
 
@@ -247,10 +240,7 @@ if (!isset($_SESSION['admin_email'])) {
 
                       <br>
 
-                      <textarea name="product_video" class="form-control" rows="15">
-
-
-</textarea>
+                      <textarea name="product_video" class="form-control" rows="15"></textarea>
 
                     </div><!-- video tab-pane fade in Ends -->
 

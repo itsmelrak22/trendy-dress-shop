@@ -68,6 +68,11 @@ $paymentMethods = array(
         font-size: 20px;
     }
 </style> -->
+<style>
+    #paypalDiv {
+        display: none;
+    }
+</style> 
 
 <style>
     .cart-container {
@@ -255,14 +260,41 @@ $paymentMethods = array(
                 <label for="orderOption" class="form-label">Select Option:</label>
             </div>
             <div style="margin-right: 380px;"> <!-- Adjust the margin as needed -->
-                <select class="form-select" id="orderOption" name="orderOption">
+                <select class="form-select" id="orderOption" name="orderOption" onchange="checkOption()">
                     <?php foreach ($paymentMethods as $method) : ?>
                         <option value="<?php echo $method['id']; ?>"><?php echo $method['name']; ?></option>
                     <?php endforeach; ?>
                 </select>
             </div>
+
             <button onclick="placeOrder()" class="btn btn-primary">Confirm Order</button>
         </div>
+
+        <div class="row" id="paypalContainer" style="display: none;">
+                <div class="col-lg-12">
+                    <div class="p-5">
+                        <form class="user">
+                            <div class="form-group row">
+                                <div class="form-group col-12">
+                                    <label for="payment">Please input your Payment</label>
+                                    <input name="payment" id="payment" type="number" class="form-control form-control-user" placeholder="Payment" required value="1000" readonly>
+                                </div>
+                            </div>
+                        </form>
+                        <button type="button" id="paymentBtn" class="btn btn-info" onclick="togglePaypalDiv()" >
+                            Proceed to Payment <i class="fas fa-check"></i>
+                        </button>
+                        <hr>
+                    </div>
+                    <div class="card-body container-fluid" id="paypalDiv">
+                        <span>Available Payment Methods:</span>
+                        <hr>
+                        <div class="form-group col-12">
+                            <div class="paypal-button-container" id="paypal-button-container"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
     </div>
 
 
@@ -275,6 +307,113 @@ $paymentMethods = array(
         <p class="text-center text-vertical-center">No items in cart yet.</p>
     </div>
 <?php endif ?>
+<!-- <button type="button" id="paymentBtn" class="btn btn-info" onclick="togglePaypalDiv()"> Proceed to Payment <i class="fas fa-check"></i> </button>
+<div class="card-body container-fluid" id="paypalDiv">
+                                <span>Available Payment Methods:</span>
+                                <hr>
+                                <div class="form-group col-12">
+                                    <div class="paypal-button-container" id="paypal-button-container"></div>
+                                </div>
+                            </div>
+
+                            <div class="card-body p-0"> -->
+
+</div>
+<!-- <button class="btn btn-info btn-circle" data-toggle="modal" data-target="#paymentModal" > Online Payment</button> 
+
+<div class="modal fade" id="paymentModal" tabindex="-1" aria-labelledby="paymentModal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Trendy Dress Shop - Payment</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body card shadow py-2">
+                <div class="card-body p-0">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="p-5">
+                                <form class="user">
+                                    <div class="form-group row">
+                                        <div class="form-group col-12">
+                                            <label for="payment">Please input your Payment</label>
+                                            <input name="payment" id="payment" type="number" class="form-control form-control-user" placeholder="Payment" required oninput="checkPayment()">
+                                        </div>
+                                    </div>
+                                </form>
+                                <button type="button" id="paymentBtn" class="btn btn-info" onclick="togglePaypalDiv()" disabled>
+                                    Proceed to Payment <i class="fas fa-check"></i>
+                                </button>
+                                <hr>
+                            </div>
+                            <div class="card-body container-fluid" id="paypalDiv">
+                                <span>Available Payment Methods:</span>
+                                <hr>
+                                <div class="form-group col-12">
+                                    <div class="paypal-button-container" id="paypal-button-container"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> -->
+
+
+<script>
+    let transaction = {};
+
+    paypal.Buttons({
+        // style: {
+        //     layout: 'vertical',
+        //     color:  'blue',
+        //     shape:  'rect',
+        //     label:  'paypal'
+        // },
+        createOrder: function(data, actions) {
+            // Set up the transaction
+            let value = document.getElementById('payment').value
+            return actions.order.create({
+                purchase_units: [{
+                amount: {
+                    value: value
+                }
+                }]
+            });
+        },
+        onApprove: function(data, actions) {
+            // This function captures the funds from the transaction.
+            return actions.order.capture().then(function(details) {
+            // This function shows a transaction success message to your buyer.
+                handleReservation()
+                alert('Transaction completed by ' + details.payer.name.given_name);
+            });
+        }
+    }).render('#paypal-button-container');
+
+    function togglePaypalDiv() {
+        var x = document.getElementById("paypalDiv");
+
+        let computedStyle = window.getComputedStyle(x);
+        if (computedStyle.display === "none") {
+            x.style.display = "block";
+        }
+    }
+
+    function checkOption(){
+        let option = document.getElementById('orderOption');
+        let paypalContainer = document.getElementById('paypalContainer');
+        console.log(option.value);
+        if (option.value == 2){
+            paypalContainer.style.display = "block";
+        }else{
+            paypalContainer.style.display = "none";
+
+        }
+    }
+</script>
 
 <script>
     function deleteItem(cartID) {
@@ -446,7 +585,7 @@ $paymentMethods = array(
             orderSummaryContainer.appendChild(orderItem);
         }
     <?php endforeach ?>
-}
+    }
 
 
 
