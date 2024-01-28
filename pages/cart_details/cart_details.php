@@ -22,52 +22,6 @@ $paymentMethods = array(
     array('id' => 2, 'name' => 'Online Banking'),
 );
 ?>
-<!-- <style>
-    .cart-container {
-        display: flex;
-        flex-direction: column;
-    }
-
-    .cart-item {
-        display: flex;
-        border: 1px solid #ccc;
-        margin: 10px;
-        padding: 10px;
-        background-color: #fff;
-        box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
-    }
-
-    .cart-item-image {
-        width: 250px;
-        margin-right: 10px;
-    }
-
-    .cart-item-image img {
-        max-width: 100%;
-        height: auto;
-    }
-
-    .cart-item-details {
-        flex-grow: 1;
-        display: flex;
-        flex-direction: column;
-    }
-
-    .product-id,
-    .quantity,
-    .total-price,
-    .size {
-        margin-bottom: 5px;
-    }
-
-    .cart-item-remove {
-        display: flex;
-        align-items: center;
-        cursor: pointer;
-        color: red;
-        font-size: 20px;
-    }
-</style> -->
 <style>
     #paypalDiv {
         display: none;
@@ -223,28 +177,29 @@ $paymentMethods = array(
             <?php endif; ?>
         </div> -->
         <?php foreach ($fetchCart_ as $row) : ?>
-            <div class="cart-item">
+    <div class="cart-item">
+        <input type="checkbox" class="cart-item-checkbox" value="<?php echo $row['p_id']; ?>">
+        <div class="cart-item-image">
+            <?php $image = 'data:image/png;base64,' . $row['frontImage'] ?>
+            <img src="<?php echo $image ?>" alt="Product Image">
+        </div>
+        <div class="cart-item-image">
+            <?php $image1 = 'data:image/png;base64,' . $row['backImage'] ?>
+            <img src="<?php echo $image1 ?>" alt="Product Image">
+        </div>
+        <div class="cart-item-details">
+            <span class="product-id">Product ID: <?php echo $row['product_id'] ?></span>
+            <span class="product-id">Description: <?php echo $row['product_title'] ?></span>
+            <span class="quantity">Quantity: <?php echo $row['qty'] ?></span>
+            <span class="total-price">Total Price: &#8369; <?php echo $row['Total_p_price'] ?></span>
+            <span class="size">Size: <?php echo $row['size'] ?></span>
+        </div>
+        <div class="cart-item-remove">
+            <i onclick="deleteItem(<?php echo $row['p_id'] ?>)" class="fa fa-trash" aria-hidden="true"></i>
+        </div>
+    </div>
+<?php endforeach ?>
 
-                <div class="cart-item-image">
-                    <?php $image = 'data:image/png;base64,' . $row['frontImage'] ?>
-                    <img src="<?php echo $image ?>" alt="Product Image">
-                </div>
-                <div class="cart-item-image">
-                    <?php $image1 = 'data:image/png;base64,' . $row['backImage'] ?>
-                    <img src="<?php echo $image1 ?>" alt="Product Image">
-                </div>
-                <div class="cart-item-details">
-                    <span class="product-id">Product ID: <?php echo $row['product_id'] ?></span>
-                    <span class="product-id">Description: <?php echo $row['product_title'] ?></span>
-                    <span class="quantity">Quantity: <?php echo $row['qty'] ?></span>
-                    <span class="total-price">Total Price: &#8369; <?php echo $row['Total_p_price'] ?></span>
-                    <span class="size">Size: <?php echo $row['size'] ?></span>
-                </div>
-                <div class="cart-item-remove">
-                    <i onclick="deleteItem(<?php echo $row['p_id'] ?>)" class="fa fa-trash" aria-hidden="true"></i>
-                </div>
-            </div>
-        <?php endforeach ?>
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -307,59 +262,8 @@ $paymentMethods = array(
         <p class="text-center text-vertical-center">No items in cart yet.</p>
     </div>
 <?php endif ?>
-<!-- <button type="button" id="paymentBtn" class="btn btn-info" onclick="togglePaypalDiv()"> Proceed to Payment <i class="fas fa-check"></i> </button>
-<div class="card-body container-fluid" id="paypalDiv">
-                                <span>Available Payment Methods:</span>
-                                <hr>
-                                <div class="form-group col-12">
-                                    <div class="paypal-button-container" id="paypal-button-container"></div>
-                                </div>
-                            </div>
-
-                            <div class="card-body p-0"> -->
 
 </div>
-<!-- <button class="btn btn-info btn-circle" data-toggle="modal" data-target="#paymentModal" > Online Payment</button> 
-
-<div class="modal fade" id="paymentModal" tabindex="-1" aria-labelledby="paymentModal" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Trendy Dress Shop - Payment</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body card shadow py-2">
-                <div class="card-body p-0">
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <div class="p-5">
-                                <form class="user">
-                                    <div class="form-group row">
-                                        <div class="form-group col-12">
-                                            <label for="payment">Please input your Payment</label>
-                                            <input name="payment" id="payment" type="number" class="form-control form-control-user" placeholder="Payment" required oninput="checkPayment()">
-                                        </div>
-                                    </div>
-                                </form>
-                                <button type="button" id="paymentBtn" class="btn btn-info" onclick="togglePaypalDiv()" disabled>
-                                    Proceed to Payment <i class="fas fa-check"></i>
-                                </button>
-                                <hr>
-                            </div>
-                            <div class="card-body container-fluid" id="paypalDiv">
-                                <span>Available Payment Methods:</span>
-                                <hr>
-                                <div class="form-group col-12">
-                                    <div class="paypal-button-container" id="paypal-button-container"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div> -->
 
 
 <script>
@@ -431,20 +335,6 @@ $paymentMethods = array(
 
     }
 
-    // function toCheckOut() {
-    //     let answer = confirm("Are you sure to checkout now?");
-    //     if (answer) {
-    //         $.post("pages/cart_details/actions/check_out.php", {
-
-    //             },
-    //             function(data) {
-    //                 alert(data)
-    //                 fetchCartDetails_()
-    //             }
-    //         );
-    //     }
-    // }
-
 
     function toCheckOut() {
         document.querySelector('.cart-container').style.display = 'none';
@@ -458,134 +348,110 @@ $paymentMethods = array(
 
 
     function placeOrder() {
+    let selectedPaymentMethod = document.getElementById('orderOption').value;
+    let answer = confirm("Are you sure to checkout now?");
+    
+    if (answer) {
+        let selectedProductIds = []; // Get selected product IDs from populateOrderSummary function
+        let checkboxes = document.querySelectorAll('.cart-item-checkbox:checked');
+        checkboxes.forEach(function(checkbox) {
+            selectedProductIds.push(checkbox.value);
+        });
 
-        let selectedPaymentMethod = document.getElementById('orderOption').value;
-        let answer = confirm("Are you sure to checkout now?");
-            if (answer) {
-                $.post("pages/cart_details/actions/check_out.php", {
-                    paymentMethod: selectedPaymentMethod
-                },
-                    function(data) {
-                        alert(data);
-                        fetchCartDetails_();
-                    }
-                );
-            }
-
-        document.getElementById('checkoutConfirmation').style.display = 'none';
-
-        document.getElementById('confirmation').style.display = 'block';
+        $.post("pages/cart_details/actions/check_out.php", {
+            paymentMethod: selectedPaymentMethod,
+            selectedProducts: selectedProductIds
+        },
+        function(data) {
+            alert(data);
+            fetchCartDetails_();
+        });
     }
 
+    document.getElementById('checkoutConfirmation').style.display = 'none';
+    document.getElementById('confirmation').style.display = 'block';
+}
 
-    // function populateOrderSummary() {
-    //     let orderSummaryContainer = document.querySelector('.order-summary');
-
-    //     orderSummaryContainer.innerHTML = "";
-
-    //     let address = "<?php echo $row['complete_address'] ?? null; ?>";
-    //     let addressElement = document.createElement('div');
-    //     addressElement.className = 'user-address';
-
-    //     if (address.trim() !== "") {
-    //         addressElement.innerHTML = `
-    //             <h6>Shipping Address:</h6>
-    //             <p>${address}</p>
-    //         `;
-    //     } else {
-    //         addressElement.innerHTML = `
-    //             <h6>Shipping Address:</h6>
-    //             <form id="addressForm">
-    //                 <textarea name="newAddress" placeholder="Enter your address"></textarea>
-    //                 <button type="button" onclick="updateAddress()">Update Address</button>
-    //             </form>
-    //         `;
-    //     }
-
-    //     orderSummaryContainer.appendChild(addressElement);
-
-    //     let orderItem;
-
-    //     <?php foreach ($fetchCart_ as $row) : ?>
-    //         orderItem = document.createElement('div');
-    //         orderItem.className = 'order-item';
-
-    //         orderItem.innerHTML = `
-    //             <span class="product-id">Product ID: <?php echo $row['product_id'] ?></span>
-    //             <span class="product-id">Description: <?php echo $row['product_title'] ?></span>
-    //             <span class="quantity">Quantity: <?php echo $row['qty'] ?></span>
-    //             <span class="total-price">Total Price: &#8369; <?php echo $row['Total_p_price'] ?></span>
-    //             <span class="size">Size: <?php echo $row['size'] ?></span>
-    //         `;
-
-    //         orderSummaryContainer.appendChild(orderItem);
-    //     <?php endforeach ?>
-    // }
 
     function populateOrderSummary() {
     let orderSummaryContainer = document.querySelector('.order-summary');
-
     orderSummaryContainer.innerHTML = "";
 
-    let address = "<?php echo $row['complete_address'] ?? null; ?>";
+    let selectedProductIds = [];
+    let checkboxes = document.querySelectorAll('.cart-item-checkbox:checked');
+    checkboxes.forEach(function(checkbox) {
+        selectedProductIds.push(checkbox.value);
+    });
+
+    // Add address section
     let addressElement = document.createElement('div');
     addressElement.className = 'user-address';
 
-    if (address.trim() !== "") {
-        addressElement.innerHTML = `
-            <h6>Shipping Address:</h6>
-            <p>${address}</p>
-        `;
-    } else {
-        addressElement.innerHTML = `
-            <h6>Shipping Address:</h6>
-            <form id="addressForm">
-                <textarea name="newAddress" placeholder="Enter your address"></textarea>
-                <button type="button" onclick="updateAddress()">Update Address</button>
-            </form>
-        `;
-    }
+    // Check if address is available
+    <?php if (!empty($fetchCart_[0]['complete_address'])) : ?>
+        let addressParagraph = document.createElement('p');
+        addressParagraph.textContent = '<?php echo $fetchCart_[0]['complete_address']; ?>';
+        addressElement.appendChild(addressParagraph);
+    <?php else : ?>
+        let addressForm = document.createElement('form');
+        addressForm.id = 'addressForm';
+        
+        let addressTextarea = document.createElement('textarea');
+        addressTextarea.name = 'newAddress';
+        addressTextarea.placeholder = 'Enter your address';
+        addressForm.appendChild(addressTextarea);
 
+        let updateButton = document.createElement('button');
+        updateButton.type = 'button';
+        updateButton.textContent = 'Update Address';
+        updateButton.onclick = updateAddress;
+        addressForm.appendChild(updateButton);
+
+        addressElement.appendChild(addressForm);
+    <?php endif; ?>
+
+    // Append address section to order summary container
     orderSummaryContainer.appendChild(addressElement);
 
     <?php foreach ($fetchCart_ as $row) : ?>
-        {
+        // Check if the current item is selected
+        if (selectedProductIds.includes('<?php echo $row['p_id']; ?>')) {
+            // Create an order item element
             let orderItem = document.createElement('div');
             orderItem.className = 'order-item';
 
-            let productImageFrontSrc = 'data:image/png;base64,' + <?php echo json_encode($row['frontImage']); ?>;
-            // let productImageBackSrc = 'data:image/png;base64,' + <?php echo json_encode($row['backImage']); ?>;
-            
-            let productImageFrontElement = document.createElement('img');
-            productImageFrontElement.src = productImageFrontSrc;
-            productImageFrontElement.alt = 'Product Front Image';
-            productImageFrontElement.className = 'cart-item-image';
-            productImageFrontElement.style.width = '50px';
+            // Add image for the selected item
+            let productImageContainer = document.createElement('div');
+            productImageContainer.className = 'cart-item-image';
+            let productImageFront = document.createElement('img');
+            productImageFront.src = 'data:image/png;base64,' + '<?php echo $row['frontImage']; ?>';
+            productImageFront.alt = 'Product Image Front';
+            productImageContainer.appendChild(productImageFront);
+            orderItem.appendChild(productImageContainer);
 
-            // let productImageBackElement = document.createElement('img');
-            // productImageBackElement.src = productImageBackSrc;
-            // productImageBackElement.alt = 'Product Back Image';
-            // productImageBackElement.className = 'cart-item-image';
-
-            orderItem.appendChild(productImageFrontElement);
-            // orderItem.appendChild(productImageBackElement);
-
-            let orderItemDetails = document.createElement('div');
-            orderItemDetails.className = 'cart-item-details';
-            
-            orderItemDetails.innerHTML = `
+            // Add details of the selected item
+            let productDetailsContainer = document.createElement('div');
+            productDetailsContainer.className = 'cart-item-details';
+            productDetailsContainer.innerHTML = `
                 <span class="product-id">Product ID: <?php echo $row['product_id'] ?></span>
                 <span class="product-id">Description: <?php echo $row['product_title'] ?></span>
                 <span class="quantity">Quantity: <?php echo $row['qty'] ?></span>
                 <span class="total-price">Total Price: &#8369; <?php echo $row['Total_p_price'] ?></span>
                 <span class="size">Size: <?php echo $row['size'] ?></span>
             `;
+            orderItem.appendChild(productDetailsContainer);
 
-            orderItem.appendChild(orderItemDetails);
+            // Append the order item to the order summary container
             orderSummaryContainer.appendChild(orderItem);
         }
     <?php endforeach ?>
-    }
+}
+
+
+
+
+
+
 
 
 
@@ -626,15 +492,4 @@ $paymentMethods = array(
             updateButton.style.display = 'none';
         }
     }
-
-    // function updateAddress() {
-    //     let newAddress = document.querySelector('textarea[name="newAddress"]').value;
-        
-    //     $.post("pages/cart_details/actions/update_address.php", {
-    //         newAddress
-    //     }, function(data) {
-    //         alert(data);
-    //         fetchCartDetails_()
-    //     });
-    // }
 </script>

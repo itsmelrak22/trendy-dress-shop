@@ -45,6 +45,6 @@ function login_() {
   $.post("login.php", {}, function(data) {
     $("#contents").html(data); 
   });
-
-
 }
+
+
