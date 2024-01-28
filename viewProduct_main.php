@@ -67,6 +67,7 @@ endif;
     <link rel="stylesheet" href="assets/css/bootstrap.min.css">
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
     <!-- Paypal SDK -->
     <script src="https://www.paypal.com/sdk/js?client-id=Ad-DKICXtIrrhJRR4e7Bj1LMfHx1FKNPNf2rCWebJs3aX3Vv7HcNAwVHt8LMov7UJ2A7KRc3c_LrnM0z&currency=PHP&components=buttons,marks&debug=true&disable-funding=credit,card"></script>
 
@@ -166,7 +167,7 @@ endif;
                                     <tbody>
                                         <tr>
                                             <?php if($product_data['custom_status'] == 0) {?>
-                                            <td> <button data-bs-toggle="modal" data-bs-target="#modalId" style="background-color: black;" class="btn form-control text-white" id="costumize_btn"><i class="fa fa-cart-plus" aria-hidden="true" ></i> Customize</button></td>
+                                            <td> <button data-bs-toggle="modal" data-bs-target="#modalId" style="background-color: black;" class="btn form-control text-white" id="costumize_btn" onclick="initiateTab1()"><i class="fa fa-cart-plus" aria-hidden="true" ></i> Customize</button></td>
                                         </tr>
                                         <tr>
                                             <?php }else if($product_data['custom_status'] == 1) {?>

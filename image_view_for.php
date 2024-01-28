@@ -51,6 +51,33 @@ $fetchDetails_ = $fetchDetails->fetch();
         background-image: url("<?php echo $image2 ?>")
             /* Adjust the background size for zoom */
     }
+
+    @font-face {
+        font-family: 'Fonstars';
+        src: url('./assets/fonts/fonstars/fonstars.otf') format('truetype');
+    }
+
+    @font-face {
+        font-family: 'Operation Napalm';
+        src: url('./assets/fonts/operation-napalm/operation-napalm.ttf') format('truetype');
+    }
+
+    @font-face {
+        font-family: 'Unitblock';
+        src: url('./assets/fonts/unitblock/unitblock.ttf') format('truetype');
+    }
+
+    @font-face {
+        font-family: 'OSerif';
+        src: url('./assets/fonts/oserif/oserif.ttf') format('truetype');
+    }
+
+    @font-face {
+        font-family: 'Public Pixel';
+        src: url('./assets/fonts/public-pixel/public-pixel.ttf') format('truetype');
+    }
+
+
 </style>
 
 
@@ -97,28 +124,73 @@ $fetchDetails_ = $fetchDetails->fetch();
     <div class="m-4">
 
         <div class="col-lg-12">
-            <div class="m-2">
-                <label for="#textInput"><b>TEXT INPUT</b></label>
-                <button class="btn btn-primary btn-sm my-1" id="add-text-btn">Add Text</button>
-                <button class="btn btn-danger btn-sm my-1" id="remove-text-btn">Remove Text</button>
-                <textarea name="text_input" id="textInput" cols="30" rows="10"></textarea>
-                
 
-            </div>
-            <div class="m-2">
-                <label for="#imageInput"><b>FRONT LOGO</b></label>
-                <button id="remove_btn" class="btn btn-danger form-control">REMOVE</button>
-                <input accept=".png" class=" form-control" type="file" id="imageInput" />
-                <img class="m-1" id="previewImage" src="#" alt="Preview Image" style="display: none; width:200px">
 
+            <div class="tab">
+                <button class="tablinks" id="front" onclick="openTab(event, 'Front')">Front</button>
+                <button class="tablinks" id="back" onclick="openTab(event, 'Back')">Back</button>
             </div>
-            <div class="m-2">
-                <label for="#imageInput"> <b>BACK LOGO</b></label>
-                <button id="remove_btn1" class="btn btn-danger form-control">REMOVE</button>
-                <input accept=".png" class=" form-control" type="file" id="imageInput1" />
-                <img class="m-1" id="previewImage1" src="#" alt="Preview Image" style="display: none; width:200px">
 
+            <div id="Front" class="tabcontent" >
+                <div class="m-2">
+                    <div>
+                        <label for="#fronImageInput"><b>FRONT TEXT</b></label>
+                    </div>
+                    <div>
+                        <label for="frontColorPicker"><b>SELECT COLOR</b></label>
+                        <input type="color" id="frontColorPicker" name="frontColorPicker" value="#ffffff">
+                        <p id="frontColorDisplay">Selected Color: #ffffff</p>
+                    </div>
+                    <select id="frontFontFamily" onchange="updateDisplayFront(this.value)">
+                        <option value="">Select a font</option>
+                    </select>
+                    <h6>Font Display:  <p id="frontFontDisplay" style="font-size: 20px;">Select a font</p> </h6>
+                    <label for="#frontTextInput"><b>TEXT INPUT</b></label>
+                    <button class="btn btn-primary btn-sm my-1" id="frontAddTextBtn">Add Text</button>
+                    <button class="btn btn-danger btn-sm my-1" id="frontRemoveTextBtn">Remove Text</button>
+                    <textarea name="text_input" id="frontTextInput" cols="30" rows="10"></textarea>
+
+
+
+                    <div>
+                        <label for="#fronImageInput"><b>FRONT LOGO</b></label>
+                    </div>
+                    <input accept=".png" class=" form-control" type="file" id="fronImageInput" />
+                    <img class="m-1" id="previewImage" src="#" alt="Preview Image" style="display: none; width:200px">
+                    <button id="frontRemoveBtn" class="btn btn-danger form-control">REMOVE</button>
+                </div>
             </div>
+
+
+            <div id="Back" class="tabcontent"  >
+                <div class="m-2">
+                <div>
+                        <label for="#"><b>BACK TEXT</b></label>
+                    </div>
+                    <div>
+                        <label for="backColorPicker"><b>SELECT COLOR</b></label>
+                        <input type="color" id="backColorPicker" name="backColorPicker" value="#ffffff">
+                        <p id="backColorDisplay">Selected Color: #ffffff</p>
+                    </div>
+                    <select id="backFontFamily" onchange="updateDisplayBack(this.value)">
+                        <option value="">Select a font</option>
+                    </select>
+                    <h6>Font Display:  <p id="backFontDisplay" style="font-size: 20px;">Select a font</p> </h6>
+                    <label for="#backTextInput"><b>TEXT INPUT</b></label>
+                    <button class="btn btn-primary btn-sm my-1" id="backAddTextBtn">Add Text</button>
+                    <button class="btn btn-danger btn-sm my-1" id="backRemoveTextBtn">Remove Text</button>
+                    <textarea name="text_input" id="backTextInput" cols="30" rows="10"></textarea>
+
+                    <div>
+                        <label for="#backImageInput"><b>BACK LOGO</b></label>
+                    </div>
+                    <input accept=".png" class=" form-control" type="file" id="backImageInput" />
+                    <img class="m-1" id="previewImage1" src="#" alt="Preview Image" style="display: none; width:200px">
+                    <button id="backRemoveBtn" class="btn btn-danger form-control">REMOVE</button>
+
+                </div>
+            </div>
+
 
             <div class="p-1 border ">
                 <div style="background-color: black">
@@ -158,6 +230,84 @@ $fetchDetails_ = $fetchDetails->fetch();
     </div>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/fontfaceobserver@2.1.0/fontfaceobserver.standalone.js"></script>
+
+<script>
+    window.onload = function() {
+        // document.getElementById('front').click()
+    };
+
+    var canvas = new fabric.Canvas('c');
+
+    // Define an array with all fonts
+    var fonts = ['Fonstars', 'Operation Napalm', 'Unitblock', 'OSerif', 'Public Pixel'];
+
+
+    // Populate the fontFamily select
+    var frontSelect = document.getElementById("frontFontFamily");
+    var backSelect = document.getElementById("backFontFamily");
+    fonts.forEach(function(font) {
+        let option = document.createElement('option');
+        option.value = font;
+        option.text = font;
+        option.style.fontFamily = font;
+        frontSelect.add(option);
+    });
+
+    fonts.forEach(function(font) {
+        let option = document.createElement('option');
+        option.value = font;
+        option.text = font;
+        option.style.fontFamily = font;
+        backSelect.add(option);
+    });
+
+    function updateDisplayFront(font) {
+        var display = document.getElementById('frontFontDisplay');
+        display.textContent = font;
+        display.style.fontFamily = font;
+    }
+
+    function updateDisplayBack(font) {
+        var display = document.getElementById('backFontDisplay');
+        display.textContent = font;
+        display.style.fontFamily = font;
+    }
+
+    function openTab(evt, tabName) {
+        var i, tabcontent, tablinks;
+        tabcontent = document.getElementsByClassName("tabcontent");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";
+        }
+        tablinks = document.getElementsByClassName("tablinks");
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].className = tablinks[i].className.replace(" active", "");
+        }
+        document.getElementById(tabName).style.display = "block";
+        evt.currentTarget.className += " active";
+    }
+    function initiateTab1(){
+        setTimeout(() => {
+            document.getElementById('front').click()
+        }, 500)
+
+        document.getElementById('frontColorPicker').addEventListener('input', function() {
+            document.getElementById('frontColorDisplay').innerText = 'Selected Color: ' + this.value;
+        });
+
+        document.getElementById('backColorPicker').addEventListener('input', function() {
+            document.getElementById('colorDisplay2').innerText = 'Selected Color: ' + this.value;
+        });
+    }
+
+
+
+
+    
+
+</script>
+
 <script>
     $(document).ready(function() {
         $('#qty').on('change', function(e) {
@@ -172,8 +322,8 @@ $fetchDetails_ = $fetchDetails->fetch();
         })
         // Initialize Fabric.js canvas
 
-        $('#remove_btn').hide()
-        $('#remove_btn1').hide()
+        $('#frontRemoveBtn').hide()
+        $('#backRemoveBtn').hide()
         // Load and set a background image
         var bg_1 = $('#example1').attr('imgsrc')
         var bg_2 = $('#example2').attr('imgsrc')
@@ -183,11 +333,21 @@ $fetchDetails_ = $fetchDetails->fetch();
         var canvas2 = new fabric.Canvas('example2');
         setBackground(canvas2, bg_2)
 
-        $('#add-text-btn').on('click', function() {
-            let text = $('#textInput')[0].value
+        $('#frontAddTextBtn').on('click', function() {
+            let text = $('#frontTextInput')[0].value
             console.log(text)
             if(Boolean(text)){
                 setText(canvas1, text)
+            }else{
+                alert("Insert Text")
+            }
+        });
+        
+        $('#backAddTextBtn').on('click', function() {
+            let text = $('#backTextInput')[0].value
+            console.log(text)
+            if(Boolean(text)){
+                setText2(canvas2, text)
             }else{
                 alert("Insert Text")
             }
@@ -198,8 +358,8 @@ $fetchDetails_ = $fetchDetails->fetch();
             var canvasText = new fabric.IText(text, {
                 left: 10,  // position of text
                 top: 10,
-                fontFamily: 'arial',
-                fill: 'white',
+                fontFamily:  $('#frontFontFamily').val(),
+                fill: $('#frontColorPicker').val(),
                 lineHeight: 1.1,
             });
             canvasText.bringToFront();
@@ -209,8 +369,38 @@ $fetchDetails_ = $fetchDetails->fetch();
             canvasTemp.renderAll();
         }
 
-        $('#remove-text-btn').on('click', function() {
+        $('#frontRemoveTextBtn').on('click', function() {
             var activeObject = canvas1.getActiveObject();
+            if (activeObject && activeObject.type === 'i-text') {
+                canvas1.remove(activeObject);
+            }
+        });
+
+        function setText2(canvas2, text) {
+            let canvasTemp = canvas2
+            var canvasText = new fabric.IText(text, {
+                left: 10,  // position of text
+                top: 10,
+                fontFamily:  $('#backFontFamily').val(),
+                fill: $('#backColorPicker').val(),
+                lineHeight: 1.1,
+            });
+            canvasText.bringToFront();
+            canvasTemp.isDrawingMode = false
+            canvasTemp.add(canvasText);
+            canvasTemp.setActiveObject(canvasText);
+            canvasTemp.renderAll();
+        }
+
+        $('#frontRemoveTextBtn').on('click', function() {
+            var activeObject = canvas1.getActiveObject();
+            if (activeObject && activeObject.type === 'i-text') {
+                canvas1.remove(activeObject);
+            }
+        });
+
+        $('#backRemoveTextBtn').on('click', function() {
+            var activeObject = canvas2.getActiveObject();
             if (activeObject && activeObject.type === 'i-text') {
                 canvas1.remove(activeObject);
             }
@@ -218,7 +408,7 @@ $fetchDetails_ = $fetchDetails->fetch();
 
 
 
-        $('#imageInput').change(function(e) {
+        $('#fronImageInput').change(function(e) {
             var file = e.target.files[0];
             var imageType = /^image\//;
 
@@ -235,7 +425,7 @@ $fetchDetails_ = $fetchDetails->fetch();
                 reader.readAsDataURL(file);
             }
         });
-        $('#imageInput1').change(function(e) {
+        $('#backImageInput').change(function(e) {
             var file = e.target.files[0];
             var imageType = /^image\//;
 
@@ -253,12 +443,12 @@ $fetchDetails_ = $fetchDetails->fetch();
             }
         });
 
-        $('#remove_btn').on('click', function() {
+        $('#frontRemoveBtn').on('click', function() {
             removeSelected(canvas1)
             // Hide the button after generating the view
             setBackground(canvas1, bg_1)
         });
-        $('#remove_btn1').on('click', function() {
+        $('#backRemoveBtn').on('click', function() {
             removeSelected(canvas2)
             // Hide the button after generating the view
             setBackground(canvas2, bg_2)
@@ -313,6 +503,19 @@ $fetchDetails_ = $fetchDetails->fetch();
 
         });
 
+
+        function loadAndUse(font) {
+            var myfont = new FontFaceObserver(font)
+            myfont.load()
+                .then(function() {
+                    // when font is loaded, use it.
+                    canvas2.getActiveObject().set("fontFamily", font);
+                    canvas2.requestRenderAll();
+                }).catch(function(e) {
+                    console.log(e)
+                    alert('font loading failed ' + font);
+                });
+            }
     });
 
     function removeSelected(canvas) {
@@ -352,7 +555,7 @@ $fetchDetails_ = $fetchDetails->fetch();
                 height: img.height,
                 scaleX: canvas.width / img.width,
                 scaleY: canvas.height / img.height,
-                selectable: false, // Make it non-selectable
+                selectable: true, // Make it non-selectable
                 evented: false, // Make it non-evented
             });
 
@@ -363,20 +566,20 @@ $fetchDetails_ = $fetchDetails->fetch();
         });
     }
 
-    $('#imageInput').change(function() {
+    $('#fronImageInput').change(function() {
         if ($(this).val()) {
-            $('#remove_btn').show();
+            $('#frontRemoveBtn').show();
         } else {
-            $('#remove_btn').hide();
+            $('#frontRemoveBtn').hide();
         }
     });
 
 
-    $('#imageInput1').change(function() {
+    $('#backImageInput').change(function() {
         if ($(this).val()) {
-            $('#remove_btn1').show();
+            $('#backRemoveBtn').show();
         } else {
-            $('#remove_btn1').hide();
+            $('#backRemoveBtn').hide();
         }
     });
     $('#viewFrontView').on('change', function() {
@@ -392,6 +595,7 @@ $fetchDetails_ = $fetchDetails->fetch();
 
         } else if (!$(this).is(':checked') && !$('#viewBackView').is(':checked')) {
             $('#add_logo').hide();
+            $('#tab').hide();
         }
     });
     $('#viewBackView').on('change', function() {
