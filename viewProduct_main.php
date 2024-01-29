@@ -172,10 +172,10 @@ endif;
                                         <div class="btn-group" role="group" aria-label="Basic checkbox toggle button group">
                                             <?php foreach ($product_data["colors"] as $key => $value) {
                                                 $itemID =  $_GET['itemID']; // assuming 'itemID' is a key in $value
-                                                $slug = $value['product_url']; // assuming 'slug' is a key in $value
+                                                $slugData = $value['product_url']; // assuming 'slug' is a key in $value
                                                 $style = $slug_ == $value['product_url'] ? 'background-color: #0d6efd !important; color: white;' : '';
                                                 echo '
-                                                    <a href="viewProduct_main.php?itemID='.$itemID.'&slug='.$slug.'" >
+                                                    <a href="viewProduct_main.php?itemID='.$itemID.'&slug='.$slugData.'" >
                                                         <label style="'.$style.'" class="btn btn-outline-primary" for="btnradio'.$key.'"> '.$value['color_name'].' </label>
                                                     </a>
                                                 ';
@@ -191,11 +191,11 @@ endif;
                                 <table>
                                     <tbody>
                                         <tr>
-                                            <?php if($product_data['custom_status'] == 0) {?>
+                                            <?php if($product_data['custom_status'] == 1) {?>
                                             <td> <button data-bs-toggle="modal" data-bs-target="#modalId" style="background-color: black;" class="btn form-control text-white" id="costumize_btn" onclick="initiateTab1()"><i class="fa fa-cart-plus" aria-hidden="true" ></i> Customize</button></td>
                                         </tr>
                                         <tr>
-                                            <?php }else if($product_data['custom_status'] == 1) {?>
+                                            <?php }else if($product_data['custom_status'] == 0) {?>
                                             <button id="submit_images" type="button" style="background-color: black;" class="btn text-white" ><i class="fa fa-cart-plus" aria-hidden="true"></i>Add To Cart</button>
                                             <?php } ?>
                                         </tr>
@@ -318,12 +318,12 @@ endif;
         $(document).ready(function() {
             fetchData(<?= "'$slug'" ?>)
 
-            imageView('admin_area/product_images/<?php echo $img1 ?>', 'admin_area/product_images/<?php echo $img2 ?>',  <?= "'$slug'"  ?>)
+            imageView('<?= $img1 ?>', '<?= $img2 ?>',  <?= "'$slug'"  ?>)
             
             $("#costumize_btn").click(function(){
                 imageView(
-                    'admin_area/product_images/<?php echo $img1 ?>', 
-                    'admin_area/product_images/<?php echo $img2 ?>', 
+                    '<?= $img1 ?>', 
+                    '<?= $img2 ?>', 
                     <?= "'$slug'"  ?>
                 )
 

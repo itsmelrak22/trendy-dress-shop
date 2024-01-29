@@ -43,17 +43,17 @@ spl_autoload_register(function ($class) {
         $grouped_files[ $index ]["label"] =  $labels[ "product_label_$number" ];
       }
 
-      echo "<pre>";
+      // echo "<pre>";
 
-        print_r($_POST);
-        print_r($urls);
-        print_r($descs);
-        print_r($features);
-        print_r($labels);
+      //   print_r($_POST);
+      //   print_r($urls);
+      //   print_r($descs);
+      //   print_r($features);
+      //   print_r($labels);
 
-        print_r($grouped_files);
+      //   print_r($grouped_files);
         
-      echo "</pre>";
+      // echo "</pre>";
       // exit();
       
       $target_dir = "../../product_images";
