@@ -8,7 +8,7 @@ class Model
     protected $host = "localhost";
     protected $database = "ecomm_store";
     protected $username = "root";
-    protected $password = "";
+    protected $password = "admin";
     protected $servername = "localhost";
 
     // > Actual
@@ -23,8 +23,8 @@ class Model
     protected $qry;
 
     public function __construct(){
-        $this->connect();
-        // $this->connectActual();
+        // $this->connect();
+        $this->connectActual();
     }
 
     public function connectActual(){
