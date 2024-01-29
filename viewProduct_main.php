@@ -39,15 +39,35 @@ if (isset($_GET['itemID'])) :
     $product_data = $stmt->fetch();
 
     $stmt = $conn->prepare("SELECT A.*
-    FROM product_colors AS A 
-    WHERE A.product_id =?");
+        FROM product_colors AS A 
+        WHERE A.product_id =?");
     
     $stmt->execute([$slug]);
     $product_colors = $stmt->fetchAll();
+
+
+    $colors = $conn->prepare("SELECT * FROM `product_colors` WHERE `product_id` = ?");
+    $colors->bindValue(1, $product_data['product_id']);
+    $colors->execute();
+    $colors_ = $colors->fetchAll();
     
-    // echo '<pre>';
-    //     print_r($product_colors);
-    // echo '</pre>';
+    $product_data["colors"] = $colors_;
+
+    // echo "<pre>". print_r($product_data) ."</pre>";
+
+    $img1 = '';
+    $img2 = '';
+    $img3 = '';
+    $desc = '';
+
+    foreach ($product_data["colors"] as $key => $value) {
+        if($slug_ == $value['product_url']){
+            $img1 = "admin_area/product_images/product/" .$product_data["product_id"] ."/". $value["color_name"] ."/". $value['product_img1'];
+            $img2 = "admin_area/product_images/product/" .$product_data["product_id"] ."/". $value["color_name"] ."/". $value['product_img2'];
+            $img3 = "admin_area/product_images/product/" .$product_data["product_id"] ."/". $value["color_name"] ."/". $value['product_img3'];
+            $desc = $value["product_desc"];
+            }
+    }
     
     if (!isset($product_data['product_id'])) :
         $slug = 'Product Not Found';
@@ -105,13 +125,13 @@ endif;
                                 </ol>
                                 <div class="carousel-inner" role="listbox">
                                     <div class="carousel-item active">
-                                        <img src="admin_area/product_images/<?php echo $product_colors[0]['product_img1'] ?>" class="w-100 d-block" alt="First slide">
+                                        <img src="<?=$img1 ?>" class="w-100 d-block" alt="First slide">
                                     </div>
                                     <div class="carousel-item">
-                                        <img src="admin_area/product_images/<?php echo $product_colors[0]['product_img2'] ?>" class="w-100 d-block" alt="Second slide">
+                                        <img src="<?=$img2 ?>" class="w-100 d-block" alt="Second slide">
                                     </div>
                                     <div class="carousel-item">
-                                        <img src="admin_area/product_images/<?php echo $product_colors[0]['product_img3'] ?>" class="w-100 d-block" alt="Third slide">
+                                        <img src="<?=$img3 ?>" class="w-100 d-block" alt="Third slide">
                                     </div>
                                 </div>
                                 <button class="carousel-control-prev" type="button" data-bs-target="#carouselId" data-bs-slide="prev">
@@ -134,7 +154,7 @@ endif;
 
                                         <td colspan="10">Item Description: </td>
                                         <td>
-                                            <p class="m-0"><?php echo $product_data['product_desc'] ?></p>
+                                            <p class="m-0"><?php echo $desc ?></p>
                                         </td>
                                    
                                     </tr>
@@ -145,14 +165,19 @@ endif;
                                     </tr>
                                     <tr>
                                         <td>
-                                            <div class="btn-group" role="group" aria-label="Basic checkbox toggle button group">
-                                                <?php foreach ($product_colors as $key => $value) {
-                                                    echo '
-                                                    <input type="radio" class="btn-check mx-2" name="btnradio" id="btnradio'.$key.'" autocomplete="off">
-                                                    <label class="btn btn-outline-primary" for="btnradio'.$key.'"> '.$value['color_name'].' </label>
-                                                    ';
-                                                } ?>
-                                            </div>
+                                        <div class="btn-group" role="group" aria-label="Basic checkbox toggle button group">
+                                            <?php foreach ($product_data["colors"] as $key => $value) {
+                                                $itemID =  $_GET['itemID']; // assuming 'itemID' is a key in $value
+                                                $slug = $value['product_url']; // assuming 'slug' is a key in $value
+                                                $style = $slug_ == $value['product_url'] ? 'background-color: #0d6efd !important; color: white;' : '';
+                                                echo '
+                                                    <a href="viewProduct_main.php?itemID='.$itemID.'&slug='.$slug.'" >
+                                                        <label style="'.$style.'" class="btn btn-outline-primary" for="btnradio'.$key.'"> '.$value['color_name'].' </label>
+                                                    </a>
+                                                ';
+                                            } ?>
+                                        </div>
+
                                         </td>
                                     </tr>
                                 </tbody>
@@ -288,15 +313,15 @@ endif;
     <script src="assets/js/global_.js"></script>
     <script>
         $(document).ready(function() {
-            fetchData(<?php echo $slug ?>)
+            fetchData(<?= "'$slug'" ?>)
 
-            imageView('admin_area/product_images/<?php echo $product_colors[0]['product_img1'] ?>', 'admin_area/product_images/<?php echo $product_colors[0]['product_img2'] ?>', <?php echo   $slug  ?>)
+            imageView('admin_area/product_images/<?php echo $img1 ?>', 'admin_area/product_images/<?php echo $img2 ?>',  <?= "'$slug'"  ?>)
             
             $("#costumize_btn").click(function(){
                 imageView(
-                    'admin_area/product_images/<?php echo $product_colors[0]['product_img1'] ?>', 
-                    'admin_area/product_images/<?php echo $product_colors[0]['product_img2'] ?>', 
-                    <?php echo   $slug  ?>
+                    'admin_area/product_images/<?php echo $img1 ?>', 
+                    'admin_area/product_images/<?php echo $img2 ?>', 
+                    <?= "'$slug'"  ?>
                 )
 
             });

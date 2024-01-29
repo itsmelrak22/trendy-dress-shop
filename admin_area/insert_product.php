@@ -68,19 +68,6 @@ if (!isset($_SESSION['admin_email'])) {
 
               <div class="form-group">
                 <!-- form-group Starts -->
-                <label class="col-md-3 control-label"> Product Url </label>
-                <div class="col-md-6">
-                  <input type="text" name="product_url" class="form-control" required>
-                  <br>
-                  <p style="font-size:15px; font-weight:bold;">
-                    Product Url Example : navy-blue-t-shirt
-                  </p>
-                </div>
-              </div><!-- form-group Ends -->
-
-
-              <div class="form-group">
-                <!-- form-group Starts -->
                 <label class="col-md-3 control-label"> Select A Manufacturer </label>
                 <div class="col-md-6">
                   <select class="form-control" name="manufacturer">
@@ -182,97 +169,18 @@ if (!isset($_SESSION['admin_email'])) {
                   <input type="text" name="product_keywords" class="form-control" required>
                 </div>
               </div><!-- form-group Ends -->
-
               <div class="form-group">
                 <!-- form-group Starts -->
-
-                <label class="col-md-3 control-label"> Product Tabs </label>
-
+                <label class="col-md-3 control-label"> Product Customization </label>
                 <div class="col-md-6">
-
-                  <ul class="nav nav-tabs">
-                    <!-- nav nav-tabs Starts -->
-
-                    <li class="active">
-
-                      <a data-toggle="tab" href="#description"> Product Description </a>
-
-                    </li>
-
-                    <li>
-
-                      <a data-toggle="tab" href="#features"> Product Features </a>
-
-                    </li>
-
-                    <li>
-
-                      <a data-toggle="tab" href="#video"> Sounds And Videos </a>
-
-                    </li>
-
-                  </ul><!-- nav nav-tabs Ends -->
-
-                  <div class="tab-content">
-                    <!-- tab-content Starts -->
-
-                    <div id="description" class="tab-pane fade in active">
-                      <!-- description tab-pane fade in active Starts -->
-
-                      <br>
-
-                      <textarea name="product_desc" class="form-control" rows="15" id="product_desc">
-
-
-</textarea>
-
-                    </div><!-- description tab-pane fade in active Ends -->
-
-
-                    <div id="features" class="tab-pane fade in">
-                      <!-- features tab-pane fade in Starts -->
-
-                      <br>
-
-                      <textarea name="product_features" class="form-control" rows="15" id="product_features">
-
-
-</textarea>
-
-                    </div><!-- features tab-pane fade in Ends -->
-
-
-                    <div id="video" class="tab-pane fade in">
-                      <!-- video tab-pane fade in Starts -->
-
-                      <br>
-
-                      <textarea name="product_video" class="form-control" rows="15">
-
-
-</textarea>
-
-                    </div><!-- video tab-pane fade in Ends -->
-
-
-                  </div><!-- tab-content Ends -->
-
+                  <select name="product_custom_status" id="product_custom_status" class="form-control" required>
+                    <option disabled selected value="0"> Is your product can be customize? </option>
+                    <option value="1">YES</option>
+                    <option value="0">NO</option>
+                  </select>
                 </div>
-
               </div><!-- form-group Ends -->
 
-              <div class="form-group">
-                <!-- form-group Starts -->
-
-                <label class="col-md-3 control-label"> Product Label </label>
-
-                <div class="col-md-6">
-
-                  <input type="text" name="product_label" class="form-control" required>
-
-                </div>
-
-              </div><!-- form-group Ends -->
 
               <div class="form-group">
                 <label class="col-md-3 control-label"> Product Color (required)</label>
@@ -368,6 +276,69 @@ if (!isset($_SESSION['admin_email'])) {
                     </div>
 
                   </div><!-- form-group Ends -->
+
+                  <div class="form-group">
+                    <!-- form-group Starts -->
+                    <label class="col-md-3 control-label"> Product Url </label>
+                    <div class="col-md-6">
+                      <input type="text" name="product_url_${counter}" class="form-control" required>
+                      <br>
+                      <p style="font-size:15px; font-weight:bold;">
+                        Product Url Example : navy-blue-t-shirt
+                      </p>
+                    </div>
+                  </div><!-- form-group Ends -->
+                  
+
+                  <div class="form-group">
+                    <!-- form-group Starts -->
+                    <label class="col-md-3 control-label"> Product Tabs </label>
+
+                    <div class="col-md-6">
+                      <ul class="nav nav-tabs">
+                        <!-- nav nav-tabs Starts -->
+                        <li class="active">
+                          <a data-toggle="tab" href="#description"> Product Description </a>
+                        </li>
+
+                        <li>
+                          <a data-toggle="tab" href="#features"> Product Features </a>
+                        </li>
+
+                      </ul><!-- nav nav-tabs Ends -->
+
+                      <div class="tab-content">
+                        <!-- tab-content Starts -->
+                        <div id="description" class="tab-pane fade in active">
+                          <!-- description tab-pane fade in active Starts -->
+                          <br>
+                          <textarea name="product_desc_${counter}" class="form-control" rows="15" id="product_desc"></textarea>
+                        </div><!-- description tab-pane fade in active Ends -->
+
+                        <div id="features" class="tab-pane fade in">
+                          <!-- features tab-pane fade in Starts -->
+                          <br>
+                          <textarea name="product_features_${counter}" class="form-control" rows="15" id="product_features"> </textarea>
+                        </div><!-- features tab-pane fade in Ends -->
+
+                      </div><!-- tab-content Ends -->
+
+                    </div>
+
+                  </div><!-- form-group Ends -->
+
+                  <div class="form-group">
+                  <!-- form-group Starts -->
+
+                  <label class="col-md-3 control-label"> Product Label </label>
+
+                  <div class="col-md-6">
+
+                    <input type="text" name="product_label_${counter}" class="form-control" required>
+
+                  </div>
+
+                </div><!-- form-group Ends -->
                   <hr>
             `;
             document.getElementById('inputContainer').appendChild(newDiv);

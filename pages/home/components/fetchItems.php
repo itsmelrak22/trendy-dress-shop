@@ -62,16 +62,24 @@
         $flatItems = array_merge(...$repeatedItems);
 
         foreach ($fetchItems_ as $row) :
+            $colors = $conn->prepare("SELECT * FROM `product_colors` WHERE `product_id` = ?");
+            $colors->bindValue(1, $row['product_id']);
+            $colors->execute();
+            $colors_ = $colors->fetchAll();
+            
+            $display_img = "admin_area/product_images/product/" .  $row['product_id'] . "/" . $colors_[0]["color_name"] . "/" . $colors_[0]["product_img1"];
+            $display_desc = $colors_[0]["product_desc"];
+            $display_url = $colors_[0]["product_url"];
         ?>
             <div class="col">
                 <div class="card shadow-sm">
                     <h6 class="card-title text-center mt-2"><?php echo $row['product_title'] ?></h6>
                     <div class="card-body d-flex justify-content-center">
-                        <img src="admin_area\product_images\<?php echo $row['img1'] ?>" class="card-image" />
+                        <img src="<?= $display_img ?>" class="card-image" />
                     </div>
-                    <p class="mx-0 my-1 text-center px-2 custom-text"><?php echo $row['product_desc'] ?></p>
+                    <p class="mx-0 my-1 text-center px-2 custom-text"><?= $display_desc ?></p>
                     <span style="font-size:15px;" class="mx-0 my-1 text-center custom-text">&#8369; <?php echo $row['product_price'] ?></span>
-                    <a href="viewProduct_main.php?itemID=<?php echo $row['product_id'] ?>&slug=<?php echo $row['product_url'] ?>" style="background-color: black;" class="btn m-2 rounded-pill text-white product_link custom-text">View</a>
+                    <a href="viewProduct_main.php?itemID=<?php echo $row['product_id'] ?>&slug=<?= $display_url ?>" style="background-color: black;" class="btn m-2 rounded-pill text-white product_link custom-text">View</a>
                 </div>
             </div>
         <?php endforeach ?>
