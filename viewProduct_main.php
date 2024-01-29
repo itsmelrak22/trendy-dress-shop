@@ -88,6 +88,10 @@ endif;
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 
+    <!-- Paypal SDK -->
+    <script src="https://www.paypal.com/sdk/js?client-id=Ad-DKICXtIrrhJRR4e7Bj1LMfHx1FKNPNf2rCWebJs3aX3Vv7HcNAwVHt8LMov7UJ2A7KRc3c_LrnM0z&currency=PHP&components=buttons,marks&debug=true&disable-funding=credit,card"></script>
+
+
     <title><?php echo $slug_ ?></title>
 </head>
 
@@ -187,14 +191,13 @@ endif;
                                 <table>
                                     <tbody>
                                         <tr>
-                                            <?php if($product_data['custom_status'] == 0) :?>
-                                            <td> <button data-bs-toggle="modal" data-bs-target="#modalId" style="background-color: black;" class="btn form-control text-white" id="costumize_btn"><i class="fa fa-cart-plus" aria-hidden="true" ></i> Customize</button></td>
-                                            <?php endif ?>
+                                            <?php if($product_data['custom_status'] == 0) {?>
+                                            <td> <button data-bs-toggle="modal" data-bs-target="#modalId" style="background-color: black;" class="btn form-control text-white" id="costumize_btn" onclick="initiateTab1()"><i class="fa fa-cart-plus" aria-hidden="true" ></i> Customize</button></td>
                                         </tr>
                                         <tr>
-                                            <?php if($product_data['custom_status'] == 1) :?>
-                                            <button id="submit_images" type="button" style="background-color: black;" class="btn text-white"><i class="fa fa-cart-plus" aria-hidden="true"></i>Add To Cart</button>
-                                            <?php endif ?>
+                                            <?php }else if($product_data['custom_status'] == 1) {?>
+                                            <button id="submit_images" type="button" style="background-color: black;" class="btn text-white" ><i class="fa fa-cart-plus" aria-hidden="true"></i>Add To Cart</button>
+                                            <?php } ?>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -243,7 +246,7 @@ endif;
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                    <button id="submit_images" type="button" style="background-color: black;" class="btn text-white"><i class="fa fa-cart-plus" aria-hidden="true"></i>Add To Cart</button>
+                                    <button id="submit_images" type="button" style="background-color: black;" class="btn text-white" ><i class="fa fa-cart-plus" aria-hidden="true"></i>Add To Cart</button>
                                 </div>
                             </div>
                         </div>

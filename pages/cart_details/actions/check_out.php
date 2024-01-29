@@ -4,25 +4,27 @@ session_start();
 
 $userID = $_SESSION['id_user'];
 
-$fetch = $conn->prepare('SELECT GROUP_CONCAT(a.p_id) as list_ from cart a where a.user_id=? and a.status=0');
-$fetch->execute([$userID]);
-$listOfItems = $fetch->fetch();
-
-$fetch_ = $conn->prepare('SELECT count(a.order_id) as countedInvoice from pending_orders a');
-$fetch_->execute();
-$count_ = $fetch_->fetch();
-
 $selectedPaymentMethod = $_POST['paymentMethod'] ?? '';
-$temp = $listOfItems['list_'];
+$selectedProductIds = $_POST['selectedProducts'] ?? array();
+
+// print_r($selectedProductId);
+
 try {
     $conn->beginTransaction();
 
+    // Insert pending order
+    $fetch = $conn->prepare('SELECT count(a.order_id) as countedInvoice from pending_orders a');
+    $fetch->execute();
+    $count_ = $fetch->fetch();
 
-    $insert = $conn->prepare("INSERT INTO pending_orders(customer_id,invoice_no, cartItems,order_status, mop) VALUES (?,?,?,?,?)");
-    $insert->execute([$userID, (intval($count_['countedInvoice']) + 1), $temp, 'pending', $selectedPaymentMethod]);
+    $insert = $conn->prepare("INSERT INTO pending_orders(customer_id, invoice_no, cartItems, order_status, mop) VALUES (?, ?, ?, ?, ?)");
+    $insert->execute([$userID, (intval($count_['countedInvoice']) + 1), implode(',', $selectedProductIds), 'pending', $selectedPaymentMethod]);
 
-    $update = $conn->prepare("UPDATE  cart  SET  status=1, mop=?  where user_id=? and status=0");
-    $update->execute([$selectedPaymentMethod,$userID]);
+    // Update cart status for selected items
+    foreach ($selectedProductIds as $selectedProductId) {
+        $update = $conn->prepare("UPDATE cart SET status = 1, mop = ? WHERE user_id = ? AND status = 0 AND p_id = ?");
+        $update->execute([$selectedPaymentMethod, $userID, $selectedProductId]);
+    }
 
     echo "Successfully Checked out!";
     $conn->commit();
@@ -30,3 +32,4 @@ try {
     $conn->rollBack();
     echo $err;
 }
+?>

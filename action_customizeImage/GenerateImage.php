@@ -15,7 +15,7 @@ if (isset($_SESSION['id_user'])) {
     // echo '</pre>';
     // exit();
 
-    if (isset($_POST['tempBack'])) {
+    if (isset($_POST['tempFront'])) {
         $tempFront = $_POST['tempFront'];
     }
 
@@ -46,7 +46,7 @@ if (isset($_SESSION['id_user'])) {
          }
 
 
-        if (isset($_POST['tempBack'])) {
+        if (isset($_POST['tempFront'])) {
             foreach ($tempFront as $row) {
                 $insertLogo = $conn->prepare('INSERT into tbl_logo_list(cartID,logoType,imageBase64) values(?,?,?)');
                 $insertLogo->execute([$lastKey, 0, explode(',', $row)[1]]);
