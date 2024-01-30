@@ -21,7 +21,7 @@ if (isset($_SESSION['id_user'])) {
 </style> -->
 <nav class="navbar navbar-expand-lg navbar-light " style="background-color:black">
         <div class="container-fluid">
-            <a onclick="window.location.href=''" class="navbar-brand" href="./"><img class="rounded-pill" src="assets/images/Logo_mini.jpeg" style="width: 120px;" /></a>
+            <a class="navbar-brand" href="#"><img class="rounded-pill" src="assets/images/Logo_mini.jpeg" style="width: 120px;" /></a>
             <button class="navbar-toggler" style="background-color:white" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -29,7 +29,7 @@ if (isset($_SESSION['id_user'])) {
 
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a onclick="window.location.href=''" href="./" style="cursor: pointer;" class="nav-link active text-white " aria-current="page">Products</a>
+                        <a onclick="window.location.href=''" style="cursor: pointer;" class="nav-link active text-white " aria-current="page">Products</a>
 
                     </li>
 

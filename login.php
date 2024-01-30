@@ -64,6 +64,8 @@ if (isset($_SESSION['id_user'])) {
                 <button type="button" class="btn-close text-white bg-white" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
+                <!-- <label for="customer_image">Profile Picture</label>
+                <input id="customer_image" class="form-control" type="file" accept="image/*" /> -->
                 <label for="name_text">NAME</label>
                 <input id="name_text" class="form-control" type="text" placeholder="Enter your name here" />
                 <label for="username1_text">Email</label>
@@ -71,7 +73,7 @@ if (isset($_SESSION['id_user'])) {
                 <label for="pass1_text">Password</label>
                 <input id="pass1_text" class="form-control" type="password" placeholder="Enter your password here" />
                 <label for="complete_add">Complete Address</label>
-                <input id="complete_add" class="form-control" type="text" placeholder="Enter your password here" />
+                <input id="complete_add" class="form-control" type="text" placeholder="Enter your complete address here" />
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -88,6 +90,7 @@ if (isset($_SESSION['id_user'])) {
         formData.append('customer_email', $("#username1_text").val());
         formData.append('customer_password', $("#pass1_text").val());
         formData.append('complete_address', $("#complete_add").val());
+        // formData.append('customer_image', $("#customer_image")[0].files[0]);
 
         $.ajax({
             type: 'POST',
@@ -101,6 +104,7 @@ if (isset($_SESSION['id_user'])) {
                 if (data == 'success') {
                     alert('Account is not created');
                 } else {
+                    
                     alert('Account Created Successfully');
                     $("#modalId4").modal('hide');
                 }

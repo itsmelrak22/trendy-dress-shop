@@ -9,9 +9,6 @@ $fetchDetails = $conn->prepare('SELECT a.* from products a where a.product_id=?'
 $fetchDetails->execute([$id]);
 
 $fetchDetails_ = $fetchDetails->fetch();
-
-    // echo "<pre>". print_r($_POST) ."</pre>";
-
 // admin_area/product_images/<?php echo $product_data['product_img1'] 
 ?>
 <style>
@@ -85,7 +82,25 @@ $fetchDetails_ = $fetchDetails->fetch();
 
 
 <div id="div_set" id_src="<?php echo $id ?>" style="margin-top:30px" class="d-flex">
-    <div class="row">
+    <div class="d-flex m-2">
+
+        <div class="image-container m-4" id="frontView">
+            <label for=""><b>FRONT VIEW</b></label>
+            <canvas imgsrc="<?php echo $image1 ?>" class="custom-input" width="400" height="450" id="example1"></canvas>
+            <div class="magnifier1"></div>
+        </div>
+
+
+
+        <div class="image-container m-4" id="backView">
+            <label for=""><b>BACK VIEW</b></label>
+            <canvas imgsrc="<?php echo $image2 ?>" class="custom-input" width="400" height="450" id="example2"></canvas>
+            <div class="magnifier2"></div>
+        </div>
+
+
+    </div>
+    <div class="col">
         <div class="p-1">
             <div class="m-1">
                 <h4 id="price_id" price='<?php echo $fetchDetails_['product_price'] ?>' class="mb-0">&#8369; <span id="price_tag"> <?php echo $fetchDetails_['product_price'] ?></span></h4>
@@ -102,7 +117,10 @@ $fetchDetails_ = $fetchDetails->fetch();
                 <option value="xl">Extra Large (XL)</option>
             </select>
         </div>
+
     </div>
+
+
     <div class="m-4">
 
         <div class="col-lg-12">
@@ -114,13 +132,6 @@ $fetchDetails_ = $fetchDetails->fetch();
             </div>
 
             <div id="Front" class="tabcontent" >
-                <div class="d-flex m-2">
-                    <div class="image-container m-4" id="frontView">
-                        <label for=""><b>FRONT VIEW</b></label>
-                        <canvas imgsrc="<?php echo $image1 ?>" class="custom-input" width="400" height="450" id="example1"></canvas>
-                        <div class="magnifier1"></div>
-                    </div>
-                </div>
                 <div class="m-2">
                     <div>
                         <label for="#fronImageInput"><b>FRONT TEXT</b></label>
@@ -152,15 +163,8 @@ $fetchDetails_ = $fetchDetails->fetch();
 
 
             <div id="Back" class="tabcontent"  >
-                <div class="d-flex m-2">
-                    <div class="image-container m-4" id="backView">
-                        <label for=""><b>BACK VIEW</b></label>
-                        <canvas imgsrc="<?php echo $image2 ?>" class="custom-input" width="400" height="450" id="example2"></canvas>
-                        <div class="magnifier2"></div>
-                    </div>
-                </div>
                 <div class="m-2">
-                    <div>
+                <div>
                         <label for="#"><b>BACK TEXT</b></label>
                     </div>
                     <div>

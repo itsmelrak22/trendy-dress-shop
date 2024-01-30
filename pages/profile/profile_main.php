@@ -74,13 +74,18 @@ $user_order_ = $user_order->fetchall();
     <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-md" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="modalTitleId">EDIT PROFILE</h5>
+                <h5 class="modal-title" id="modalTitleId">UPDATE PROFILE</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form id="editProfileForm" method="post">
+            <form id="editProfileForm" method="post" enctype="multipart/form-data">
                 <div class="modal-body">
-                    <label for="profilePicture">PROFILE PICTURE</label>
-                    <input id="profilePicture" type="file" class="form-control" />
+                    <div class="text-center mb-2">
+                        <?php if(!empty($userDetails_['customer_image'])): ?>
+                            <img src="updateUploads/<?php echo $userDetails_['customer_image']; ?>" alt="Profile Picture" class="img-fluid" style="max-width: 100px;">
+                        <?php endif; ?>
+                    </div>
+                    <label for="customer_image">PROFILE PICTURE</label>
+                    <input id="customer_image" name="customer_image" type="file" class="form-control" />
                     <label for="name">NAME</label>
                     <input id="name" name="name" class="form-control" type="text" placeholder="Enter your name here" value="<?php echo $userDetails_['customer_name']; ?>" />
                     <label for="email">Email</label>
@@ -90,7 +95,7 @@ $user_order_ = $user_order->fetchall();
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button style="background-color: black;" type="submit" class="btn text-white">Save</button>
+                    <button style="background-color: black;" name="submit" type="submit" class="btn text-white">Save</button>
                 </div>
             </form>
         </div>

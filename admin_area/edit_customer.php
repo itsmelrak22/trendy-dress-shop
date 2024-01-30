@@ -22,6 +22,12 @@ if(isset($_GET['customer_id'])){
 <html>
 <head>
     <title>Edit Customer</title>
+    <script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
+    <script>
+      tinymce.init({
+        selector: '#product_desc,#product_features'
+      });
+    </script>
 </head>
 <body>
     <form action="" method="post" enctype="multipart/form-data">
@@ -39,7 +45,9 @@ if(isset($_GET['customer_id'])){
             </tr>
             <tr>
                 <td align="right">Customer Image:</td>
-                <td><input type="file" name="c_image" /><img src="../customer/customer_images/<?php echo $c_image; ?>" width="60" height="60"></td>
+                    <td><input  type="file" name="c_image" onchange="previewImage(event);" />
+                    <img id="imagePreview" src="../updateUploads/<?php echo $c_image; ?>" width="60" height="60">
+                </td>
             </tr>
             <tr>
                 <td align="right">Customer Country:</td>
@@ -58,6 +66,11 @@ if(isset($_GET['customer_id'])){
             </tr>
         </table>
     </form>
+    <script>
+        function previewImage(event) {
+            imagePreview.src=URL.createObjectURL(event.target.files[0]);
+        }
+    </script>
 </body>
 </html>
 
@@ -70,8 +83,18 @@ if(isset($_POST['update_customer'])){
     $c_country = $_POST['c_country'];
     $c_city = $_POST['c_city'];
     $c_contact = $_POST['c_contact'];
+    $old_image = $_POST['old_image'];
 
-    $update_customer = "UPDATE customers SET customer_name='$c_name', customer_email='$c_email', customer_country='$c_country', customer_city='$c_city', customer_contact='$c_contact' WHERE customer_id='$customer_id'";
+    // Handle file upload
+    if($_FILES['c_image']['name'] != "") {
+        $c_image = $_FILES['c_image']['name'];
+        $c_image_tmp = $_FILES['c_image']['tmp_name'];
+        move_uploaded_file($c_image_tmp,"../updateUploads/$c_image");
+    } else {
+        $c_image = $old_image; // Retain existing image path if no new image is uploaded
+    }
+
+    $update_customer = "UPDATE customers SET customer_name='$c_name', customer_email='$c_email', customer_country='$c_country', customer_city='$c_city', customer_contact='$c_contact', customer_image='$c_image' WHERE customer_id='$customer_id'";
     $run_update = mysqli_query($con, $update_customer);
 
 

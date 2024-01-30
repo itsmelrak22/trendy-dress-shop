@@ -58,10 +58,10 @@ if (!isset($_SESSION['admin_email'])) {
                                                     cart.Total_p_price,
                                                     p.product_id AS p_1,
                                                     p.product_title
-                                                FROM pending_orders po
-                                                JOIN customers c ON po.customer_id = c.customer_id
+                                                FROM pending_orders AS po
+                                                JOIN customers AS c ON po.customer_id = c.customer_id
                                                 JOIN cart ON po.cartItems = cart.p_id
-                                                JOIN products p ON cart.product_id = p.product_id";
+                                                JOIN products AS p ON cart.product_id = p.product_id";
                                 
                                     $run_orders = mysqli_query($con, $get_orders);
                                     while ($row_orders = mysqli_fetch_array($run_orders)) {
