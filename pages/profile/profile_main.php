@@ -90,8 +90,8 @@ $user_order_ = $user_order->fetchall();
                     <input id="name" name="name" class="form-control" type="text" placeholder="Enter your name here" value="<?php echo $userDetails_['customer_name']; ?>" />
                     <label for="email">Email</label>
                     <input id="email" name="email" class="form-control" type="email" placeholder="Enter your email here" value="<?php echo $userDetails_['customer_email']; ?>" />
-                    <label for="country">Country</label>
-                    <input id="country" name="country" class="form-control" type="text" placeholder="Enter your country here" value="<?php echo $userDetails_['customer_country']; ?>" />
+                    <label for="complete_address">Complete Address</label>
+                    <textarea id="complete_address" name="complete_address" class="form-control" placeholder="Enter your complete address here"><?php echo $userDetails_['complete_address']; ?></textarea>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -107,7 +107,7 @@ $user_order_ = $user_order->fetchall();
     event.preventDefault();
     var name = document.getElementById('name').value;
     var email = document.getElementById('email').value;
-    var country = document.getElementById('country').value;
+    var complete_address = document.getElementById('complete_address').value;
 
     var formData = new FormData(this);
 

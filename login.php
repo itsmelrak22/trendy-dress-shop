@@ -11,28 +11,14 @@ if (isset($_SESSION['id_user'])) {
 
 ?>
 
-<div class="container ">
-
-
-    <div class="row login_style ">
-        <!-- <div class="col-sm-12 col-md-6 col-lg-6  ">
-                <div class="design-inside ">
-                    <div class="logo">
-                        <img src="exampleImage.jpg" class="card-image">
-                    </div>
-
-
+<div class="container">
+    <div class="row justify-content-center align-items-center" style="height:70vh;">
+        <div class="col-sm-12 col-md-6 col-lg-4">
+            <div class="border design-inside bg-white rounded-3">
+                <div class="logo text-center">
+                    <img src="assets/images/Logo_mini.jpeg" alt="Logo">
                 </div>
-
-            </div> -->
-        <div class="col-sm-12 col-md-6 col-lg-4 mb-3">
-            <div class="border design-inside bg-white  rounded-3">
-                <div class="logo">
-                    <img src="assets/images//Logo_mini.jpeg" alt="Logo">
-                </div>
-                <div class="justify-conten-center bg-success" id="alert-container"></div>
-
-
+                <div class="justify-content-center bg-success" id="alert-container"></div>
                 <div class="mb-3">
                     <label for="username" class="form-label">Email</label>
                     <input placeholder="Enter Email" id="username_text" type="text" name="username" class="form-control" required>
@@ -42,18 +28,15 @@ if (isset($_SESSION['id_user'])) {
                     <input id="pass_text" placeholder="Enter Password" type="password" name="password" class="form-control" required>
                 </div>
                 <div class="mb-3">
-                    <button onclick="loginAction()" id="loginbtnID" type="submit" style="background-color: black;" class="btn  text-white form-control"> LOGIN</button>
+                    <button onclick="loginAction()" id="loginbtnID" type="submit" style="background-color: black;" class="btn text-white form-control"> LOGIN</button>
                 </div>
-                <!-- MODAL FOR REGISTRATION  CONTROLLER-->
-                <p for="password" class="form-label">Not registered yet? <a data-bs-toggle="modal" data-bs-target="#modalId4" class="text-primary cursor-pointer">Register Here!</a></p>
-                <div id="error-message" class="text-danger">
-                </div>
-
+                <p for="password" class="form-label text-center">Not registered yet? <a data-bs-toggle="modal" data-bs-target="#modalId4" class="text-primary cursor-pointer">Register Here!</a></p>
+                <div id="error-message" class="text-danger"></div>
             </div>
-
         </div>
     </div>
 </div>
+
 
 <!-- MODAL FOR REGISTRATION -->
 <div class="modal fade" id="modalId4" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" role="dialog" aria-labelledby="modalTitleId" aria-hidden="true">
@@ -73,7 +56,7 @@ if (isset($_SESSION['id_user'])) {
                 <label for="pass1_text">Password</label>
                 <input id="pass1_text" class="form-control" type="password" placeholder="Enter your password here" />
                 <label for="complete_add">Complete Address</label>
-                <input id="complete_add" class="form-control" type="text" placeholder="Enter your complete address here" />
+                <textarea id="complete_add" class="form-control" placeholder="Enter your complete address here"></textarea>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

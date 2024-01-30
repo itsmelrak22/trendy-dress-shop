@@ -7,7 +7,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $name = $_POST['name'] ?? '';
     $email = $_POST['email'] ?? '';
-    $country = $_POST['country'] ?? '';
+    $completeAddress = $_POST['complete_address'] ?? '';
 
 
     $uploadsDirectory = "../../updateUploads/";
@@ -27,8 +27,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
 
-    $updateQuery = $conn->prepare("UPDATE customers SET customer_name = ?, customer_email = ?, customer_country = ?, customer_image = ? WHERE customer_id = ?");
-    $updateResult = $updateQuery->execute([$name, $email, $country, $fileName, $userID]);
+    $updateQuery = $conn->prepare("UPDATE customers SET customer_name = ?, customer_email = ?, complete_address = ?, customer_image = ? WHERE customer_id = ?");
+    $updateResult = $updateQuery->execute([$name, $email, $completeAddress, $fileName, $userID]);
 
     if ($updateResult) {
 

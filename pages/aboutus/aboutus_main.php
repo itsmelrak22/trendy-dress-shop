@@ -1,110 +1,41 @@
-<div class="container">
-    <div class="row my-2">
-        <div class="col-sm-12 col-md-12 col-lg-12">
-            <h3 class="text-center"><span class="title_item">AUCTION<span class="primary_text">HOUSE</span> </span> TEAM</h3>
-        </div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us</title>
+    <!-- Include necessary CSS files -->
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Font Awesome CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- Your custom CSS -->
+    <!-- <link rel="stylesheet" href="path/to/your/custom.css"> -->
+</head>
+<body>
 
+<nav class="navbar navbar-expand-lg navbar-light " style="background-color:black">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#"><img class="rounded-pill" src="assets/images/Logo_mini.jpeg" style="width: 120px;" /></a>
+        <!-- Other navigation items... -->
     </div>
-    <div class="row bg-light p-4 my-3">
-        <div class="col-sm-12 col-md-12 col-lg-6 rounded">
-            <!-- //IMAGE  -->
-            <div class="row">
-                <div class="col-sm-12 col-md-6 col-lg-6">
-                    <div class="rounded-circle primary_bg round_design d-flex justify-content-center">
-                        <div class=" card-imageborder rounded-circle primary_bg">
-                            <img src=" exampleImage.jpg" class="card-image2 rounded-circle">
-                        </div>
+</nav>
 
-
-
-                    </div>
-
-                </div>
-                <div class="col-sm-12 col-md-6 col-lg-6">
-
-                    <p style="margin-top:120px;" class="text-center"><b>EXAMPLE TEAM MEMBER 1</b></p>
-
-                </div>
-
-
-
-
-
-            </div>
-
-
-        </div>
-        <div class="col-sm-12 col-md-12 col-lg-6">
-            <p class="express_style">"This is an example comment given by the developer and expresses the use of auction team that provides the experience of the said system developement."</p>
-        </div>
+<div class="main-content">
+    <!-- About Us content goes here -->
+    <div class="container">
+        <h2>About Us</h2>
+        <p>Welcome to our company! We are dedicated to providing high-quality products and excellent customer service.</p>
+        <p>Our team consists of passionate individuals who strive to innovate and create value for our customers.</p>
+        <p>Contact us at: info@example.com</p>
     </div>
-    <div class="row bg-light p-4 my-3">
-        <div class="col-sm-12 col-md-12 col-lg-6 rounded">
-            <!-- //IMAGE  -->
-            <div class="row">
-                <div class="col-sm-12 col-md-6 col-lg-6">
-                    <div class="rounded-circle primary_bg round_design d-flex justify-content-center">
-                        <div class=" card-imageborder rounded-circle primary_bg">
-                            <img src=" exampleImage.jpg" class="card-image2 rounded-circle">
-                        </div>
-
-
-
-                    </div>
-
-                </div>
-                <div class="col-sm-12 col-md-6 col-lg-6">
-
-                    <p style="margin-top:120px;" class="text-center"><b>EXAMPLE TEAM MEMBER 1</b></p>
-
-                </div>
-
-
-
-
-
-            </div>
-
-
-        </div>
-        <div class="col-sm-12 col-md-12 col-lg-6">
-            <p class="express_style">"This is an example comment given by the developer and expresses the use of auction team that provides the experience of the said system developement."</p>
-        </div>
-    </div>
-    <!-- <div class="row bg-light p-4 my-3">
-        <div class="col-sm-12 col-md-12 col-lg-6">
-            <p class="express_style">"This is an example comment given by the developer and expresses the use of auction team that provides the experience of the said system developement."</p>
-        </div>
-        <div class="col-sm-12 col-md-12 col-lg-6 rounded">
-
-        
-            <div class="row">
-                <div class="col-sm-12 col-md-6 col-lg-6">
-
-                    <p style="margin-bottom:80px;margin-top:120px;" class="text-center"><b>EXAMPLE TEAM MEMBER 1</b></p>
-
-                </div>
-
-                <div class="col-sm-12 col-md-6 col-lg-6">
-                    <div class="rounded-circle primary_bg round_design d-flex justify-content-center">
-                        <div class=" card-imageborder1 rounded-circle primary_bg">
-                            <img src=" exampleImage.jpg" class="card-image2 rounded-circle">
-                        </div>
-
-
-
-                    </div>
-
-                </div>
-
-
-
-
-
-            </div>
-
-        </div>
-
-    </div> -->
-
 </div>
+
+<!-- Include necessary JavaScript files -->
+<!-- jQuery -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<!-- Bootstrap JS -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</body>
+</html>
