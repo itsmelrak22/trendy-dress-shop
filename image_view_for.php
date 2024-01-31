@@ -9,9 +9,6 @@ $fetchDetails = $conn->prepare('SELECT a.* from products a where a.product_id=?'
 $fetchDetails->execute([$id]);
 
 $fetchDetails_ = $fetchDetails->fetch();
-
-    // echo "<pre>". print_r($_POST) ."</pre>";
-
 // admin_area/product_images/<?php echo $product_data['product_img1'] 
 ?>
 <style>
@@ -117,20 +114,44 @@ $fetchDetails_ = $fetchDetails->fetch();
 
 </style>
 
- <div id="customized_container">
-    <section class="jumbotron text-center">
-        <div class="container">
-        <h2>CUSTOMIZE YOUR ITEM</h2>
-        </div>
-    </section>
 
-    <div id="div_set" id_src="<?php echo $id ?>" style="margin-top:30px" class="container">
-        <div class="row">
-            <div class="col-md-6">
-            <div class="card mb-6 shadow-sm">
-                <div class="card-body">
-                <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                <div class="d-flex justify-content-between align-items-center">
+<div id="div_set" id_src="<?php echo $id ?>" style="margin-top:30px" class="d-flex">
+    <div class="row">
+        <div class="p-1">
+            <div class="m-1">
+                <h4 id="price_id" price='<?php echo $fetchDetails_['product_price'] ?>' class="mb-0">&#8369; <span id="price_tag"> <?php echo $fetchDetails_['product_price'] ?></span></h4>
+            </div>
+            <label for="">Quantity</label>
+            <input value="1" type="number" placeholder="Enter quantity" id="qty" class="form-control" type="text" />
+        </div>
+        <div class="p-1">
+            <label for="">Size</label>
+            <select class="form-control" name="" id="size_sel">
+                <option value="sm" selected>Small (SM)</option>
+                <option value="md">Medium (MD)</option>
+                <option value="lg">Large (LG)</option>
+                <option value="xl">Extra Large (XL)</option>
+            </select>
+        </div>
+    </div>
+    <div class="m-4">
+
+        <div class="col-lg-12">
+
+
+            <div class="tab">
+                <button class="tablinks" id="front" onclick="openTab(event, 'Front')">Front</button>
+                <button class="tablinks" id="back" onclick="openTab(event, 'Back')">Back</button>
+            </div>
+
+            <div id="Front" class="tabcontent" >
+                <div class="d-flex m-2">
+                    <div class="image-container m-4" id="frontView">
+                        <label for=""><b>FRONT VIEW</b></label>
+                        <canvas imgsrc="<?php echo $image1 ?>" class="custom-input" width="400" height="450" id="example1"></canvas>
+                        <div class="magnifier1"></div>
+                    </div>
+                </div>
                 <div class="m-2">
                         <div>
                             <label for="#fronImageInput"><b>FRONT TEXT</b></label>
@@ -200,55 +221,31 @@ $fetchDetails_ = $fetchDetails->fetch();
     </div>
 
 
-    <div id="div_set" id_src="<?php echo $id ?>" style="margin-top:30px" class="d-flex">
-        <div class="row">
-            <div class="p-1">
-                <div class="m-1">
-                    <h4 id="price_id" price='<?php echo $fetchDetails_['product_price'] ?>' class="mb-0">&#8369; <span id="price_tag"> <?php echo $fetchDetails_['product_price'] ?></span></h4>
-                </div>
-                <label for="">Quantity</label>
-                <input value="1" type="number" placeholder="Enter quantity" id="qty" class="form-control" type="text" />
-            </div>
-            <div class="p-1">
-                <label for="">Size</label>
-                <select class="form-control" name="" id="size_sel">
-                    <option value="sm" selected>Small (SM)</option>
-                    <option value="md">Medium (MD)</option>
-                    <option value="lg">Large (LG)</option>
-                    <option value="xl">Extra Large (XL)</option>
-                </select>
-            </div>
-        </div>
-        <div class="container row">
-
-        </div>
-        <div class="m-4 row" >
-            <div class="col-lg-6">
-                <div id="Back" class="tabcontent"  >
-                    <div class="d-flex m-2">
-                        <div class="image-container m-4" id="backView">
-                            <label for=""><b>BACK VIEW</b></label>
-                            <canvas imgsrc="<?php echo $image2 ?>" class="custom-input" width="400" height="450" id="example2"></canvas>
-                            <div class="magnifier2"></div>
-                        </div>
+            <div id="Back" class="tabcontent"  >
+                <div class="d-flex m-2">
+                    <div class="image-container m-4" id="backView">
+                        <label for=""><b>BACK VIEW</b></label>
+                        <canvas imgsrc="<?php echo $image2 ?>" class="custom-input" width="400" height="450" id="example2"></canvas>
+                        <div class="magnifier2"></div>
                     </div>
-                    <div class="m-2">
-                        <div>
-                            <label for="#"><b>BACK TEXT</b></label>
-                        </div>
-                        <div>
-                            <label for="backColorPicker"><b>SELECT COLOR</b></label>
-                            <input type="color" id="backColorPicker" name="backColorPicker" value="#ffffff">
-                            <p id="backColorDisplay">Selected Color: #ffffff</p>
-                        </div>
-                        <select id="backFontFamily" onchange="updateDisplayBack(this.value)">
-                            <option value="">Select a font</option>
-                        </select>
-                        <h6>Font Display:  <p id="backFontDisplay" style="font-size: 20px;">Select a font</p> </h6>
-                        <label for="#backTextInput"><b>TEXT INPUT</b></label>
-                        <button class="btn btn-primary btn-sm my-1" id="backAddTextBtn">Add Text</button>
-                        <button class="btn btn-danger btn-sm my-1" id="backRemoveTextBtn">Remove Text</button>
-                        <textarea name="text_input" id="backTextInput" cols="30" rows="10"></textarea>
+                </div>
+                <div class="m-2">
+                    <div>
+                        <label for="#"><b>BACK TEXT</b></label>
+                    </div>
+                    <div>
+                        <label for="backColorPicker"><b>SELECT COLOR</b></label>
+                        <input type="color" id="backColorPicker" name="backColorPicker" value="#ffffff">
+                        <p id="backColorDisplay">Selected Color: #ffffff</p>
+                    </div>
+                    <select id="backFontFamily" onchange="updateDisplayBack(this.value)">
+                        <option value="">Select a font</option>
+                    </select>
+                    <h6>Font Display:  <p id="backFontDisplay" style="font-size: 20px;">Select a font</p> </h6>
+                    <label for="#backTextInput"><b>TEXT INPUT</b></label>
+                    <button class="btn btn-primary btn-sm my-1" id="backAddTextBtn">Add Text</button>
+                    <button class="btn btn-danger btn-sm my-1" id="backRemoveTextBtn">Remove Text</button>
+                    <textarea name="text_input" id="backTextInput" cols="30" rows="10"></textarea>
 
                         <div>
                             <label for="#backImageInput"><b>BACK LOGO</b></label>

@@ -7,11 +7,28 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $name = $_POST['name'] ?? '';
     $email = $_POST['email'] ?? '';
-    $country = $_POST['country'] ?? '';
+    $completeAddress = $_POST['complete_address'] ?? '';
 
 
-    $updateQuery = $conn->prepare("UPDATE customers SET customer_name = ?, customer_email = ?, customer_country = ? WHERE customer_id = ?");
-    $updateResult = $updateQuery->execute([$name, $email, $country, $userID]);
+    $uploadsDirectory = "../../updateUploads/";
+    if (!is_dir($uploadsDirectory)) {
+        mkdir($uploadsDirectory, 0777, true); // Creates the directory recursively
+    }
+
+    // Check if file is uploaded successfully
+    if(isset($_FILES['customer_image']) && $_FILES['customer_image']['error'] === UPLOAD_ERR_OK) {
+        $fileTmpPath = $_FILES['customer_image']['tmp_name'];
+        $fileName = $_FILES['customer_image']['name'];
+        // Move the uploaded file to the desired location
+        $targetPath = $uploadsDirectory . $fileName; // Adjust the target directory as per your requirement
+        move_uploaded_file($fileTmpPath, $targetPath);
+    } else {
+        // Handle if no file is uploaded or if there's an error
+    }
+
+
+    $updateQuery = $conn->prepare("UPDATE customers SET customer_name = ?, customer_email = ?, complete_address = ?, customer_image = ? WHERE customer_id = ?");
+    $updateResult = $updateQuery->execute([$name, $email, $completeAddress, $fileName, $userID]);
 
     if ($updateResult) {
 

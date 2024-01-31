@@ -142,11 +142,6 @@ if(isset($_GET['edit_product'])){
 include("edit_product.php");
 
 }
-if(isset($_GET['edit_product_colors'])){
-
-include("edit_product_colors.php");
-
-}
 
 if(isset($_GET['insert_p_cat'])){
 
@@ -546,11 +541,6 @@ include("edit_store.php");
 <script src="js/bootstrap.min.js"></script>
 
 
-<script>
-    $(document).ready(function(){
-        $('[data-toggle="tooltip"]').tooltip();   
-    });
-</script>
 </body>
 
 

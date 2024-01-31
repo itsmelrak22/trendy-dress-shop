@@ -58,7 +58,11 @@
                                     <td><?php echo $i; ?></td>
                                     <td><?php echo $c_name; ?></td>
                                     <td><?php echo $c_email; ?></td>
-                                    <td><img src="../customer/customer_images/<?php echo $c_image; ?>" width="60" height="60" ></td>
+                                    <td>
+                                        <?php if(!empty($c_image)): ?>
+                                            <img src="../updateUploads/<?php echo $c_image; ?>" width="60" height="60" >
+                                        <?php endif; ?>
+                                    </td>
                                     <td><?php echo $c_country; ?></td>
                                     <td><?php echo $c_city; ?></td>
                                     <td><?php echo $c_contact; ?></td>

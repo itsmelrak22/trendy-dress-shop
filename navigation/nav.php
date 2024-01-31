@@ -21,7 +21,7 @@ if (isset($_SESSION['id_user'])) {
 </style> -->
 <nav class="navbar navbar-expand-lg navbar-light " style="background-color:black">
         <div class="container-fluid">
-            <a onclick="window.location.href=''" class="navbar-brand" href="./"><img class="rounded-pill" src="assets/images/Logo_mini.jpeg" style="width: 120px;" /></a>
+            <a class="navbar-brand" href="#"><img class="rounded-pill" src="assets/images/Logo_mini.jpeg" style="width: 120px;" /></a>
             <button class="navbar-toggler" style="background-color:white" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -29,10 +29,16 @@ if (isset($_SESSION['id_user'])) {
 
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a onclick="window.location.href=''" href="./" style="cursor: pointer;" class="nav-link active text-white " aria-current="page">Products</a>
+                        <a onclick="window.location.href=''" style="cursor: pointer;" class="nav-link active text-white " aria-current="page">Products</a>
 
                     </li>
+                    <li class="nav-item">
+                        <a href="./pages/aboutus/aboutus_main.php" class="nav-link active text-white" aria-current="page">About Us</a>
+                    </li>
 
+                    <!-- <li class="nav-item">
+                        <a id="aboutUsLink" style="cursor: pointer;" class="nav-link active text-white" aria-current="page">About Us</a>
+                    </li> -->
                     <!-- <li class="nav-item">
                             <a onclick="to_myauction()" style="cursor: pointer;" class="nav-link active " aria-current="page">My Auction</a>
                         </li>
@@ -120,7 +126,9 @@ if (isset($_SESSION['id_user'])) {
         </div>
 </nav>
 
-
+<!-- <div class="main-content">
+    <div id="aboutUsContainer"></div>
+</div> -->
 
 
 <div class="div_insert">
@@ -180,4 +188,28 @@ if (isset($_SESSION['id_user'])) {
             }
         );
     }
+
+    // $(document).ready(function() {
+    //     // JavaScript function to fetch and load About Us content
+    //     function loadAboutUsContent() {
+    //         $.ajax({
+    //             url: './pages/aboutus/aboutus_main.php',
+    //             method: 'GET',
+    //             success: function(response) {
+    //                 // Load About Us content into the main content area
+    //                 $('.main-content').html(response);
+    //             },
+    //             error: function(xhr, status, error) {
+    //                 console.error('Error fetching About Us content:', error);
+    //             }
+    //         });
+    //     }
+
+    //     // Event listener to trigger loading of About Us content when the "About Us" link is clicked
+    //     $('#aboutUsLink').click(function(e) {
+    //         e.preventDefault();
+    //         loadAboutUsContent();
+    //     });
+    // });
+
 </script>
