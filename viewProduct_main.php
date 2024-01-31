@@ -192,7 +192,8 @@ endif;
                                     <tbody>
                                         <tr>
                                             <?php if($product_data['custom_status'] == 1) {?>
-                                            <td> <button data-bs-toggle="modal" data-bs-target="#modalId" style="background-color: black;" class="btn form-control text-white" id="costumize_btn" onclick="initiateTab1()"><i class="fa fa-cart-plus" aria-hidden="true" ></i> Customize</button></td>
+                                            <td> <button data-bs-toggle="modal" data-bs-target="#modalId" style="background-color: black;" class="btn form-control text-white" id="costumize_btn" ><i class="fa fa-cart-plus" aria-hidden="true" ></i> Customize</button></td>
+                                            <td><button id="submit_images" type="button" style="background-color: black;" class="btn text-white" ><i class="fa fa-cart-plus" aria-hidden="true"></i>Add To Cart</button></td>
                                         </tr>
                                         <tr>
                                             <?php }else if($product_data['custom_status'] == 0) {?>

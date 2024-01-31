@@ -16,7 +16,6 @@ $fetchDetails_ = $fetchDetails->fetch();
 ?>
 <style>
     .custom-input {
-
         width: 350px;
     }
 
@@ -80,151 +79,263 @@ $fetchDetails_ = $fetchDetails->fetch();
         src: url('./assets/fonts/public-pixel/public-pixel.ttf') format('truetype');
     }
 
+    #customized_container .jumbotron {
+        /* padding-top: 3rem; */
+        /* padding-bottom: 3rem; */
+        margin-bottom: 0;
+        background-color: #fff;
+    }
+    @media (min-width: 768px) {
+        #customized_container .jumbotron {
+            padding-top: 6rem;
+            padding-bottom: 6rem;
+        }
+    }
+
+    #customized_container .jumbotron p:last-child {
+        margin-bottom: 0;
+    }
+
+    #customized_container .jumbotron h1 {
+        font-weight: 300;
+    }
+
+    #customized_container .jumbotron .container {
+        max-width: 40rem;
+    }
+
+    #customized_container footer {
+        padding-top: 3rem;
+        padding-bottom: 3rem;
+    }
+
+    #customized_container footer p {
+        margin-bottom: .25rem;
+    }
+
+
 
 </style>
 
-
-<div id="div_set" id_src="<?php echo $id ?>" style="margin-top:30px" class="d-flex">
-    <div class="row">
-        <div class="p-1">
-            <div class="m-1">
-                <h4 id="price_id" price='<?php echo $fetchDetails_['product_price'] ?>' class="mb-0">&#8369; <span id="price_tag"> <?php echo $fetchDetails_['product_price'] ?></span></h4>
-            </div>
-            <label for="">Quantity</label>
-            <input value="1" type="number" placeholder="Enter quantity" id="qty" class="form-control" type="text" />
+ <div id="customized_container">
+    <section class="jumbotron text-center">
+        <div class="container">
+        <h2>CUSTOMIZE YOUR ITEM</h2>
         </div>
-        <div class="p-1">
-            <label for="">Size</label>
-            <select class="form-control" name="" id="size_sel">
-                <option value="sm" selected>Small (SM)</option>
-                <option value="md">Medium (MD)</option>
-                <option value="lg">Large (LG)</option>
-                <option value="xl">Extra Large (XL)</option>
-            </select>
+    </section>
+
+    <div id="div_set" id_src="<?php echo $id ?>" style="margin-top:30px" class="container">
+        <div class="row">
+            <div class="col-md-6">
+            <div class="card mb-6 shadow-sm">
+                <div class="card-body">
+                <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                <div class="d-flex justify-content-between align-items-center">
+                <div class="m-2">
+                        <div>
+                            <label for="#fronImageInput"><b>FRONT TEXT</b></label>
+                        </div>
+                        <div>
+                            <label for="frontColorPicker"><b>SELECT COLOR</b></label>
+                            <input type="color" id="frontColorPicker" name="frontColorPicker" value="#ffffff">
+                            <p id="frontColorDisplay">Selected Color: #ffffff</p>
+                        </div>
+                        <select id="frontFontFamily" onchange="updateDisplayFront(this.value)">
+                            <option value="">Select a font</option>
+                        </select>
+                        <h6>Font Display:  <p id="frontFontDisplay" style="font-size: 20px;">Select a font</p> </h6>
+                        <label for="#frontTextInput"><b>TEXT INPUT</b></label>
+                        <button class="btn btn-primary btn-sm my-1" id="frontAddTextBtn">Add Text</button>
+                        <button class="btn btn-danger btn-sm my-1" id="frontRemoveTextBtn">Remove Text</button>
+                        <textarea name="text_input" id="frontTextInput" cols="30" rows="10"></textarea>
+
+
+
+                        <div>
+                            <label for="#fronImageInput"><b>FRONT LOGO</b></label>
+                        </div>
+                        <input accept=".png" class=" form-control" type="file" id="fronImageInput" />
+                        <img class="m-1" id="previewImage" src="#" alt="Preview Image" style="display: none; width:200px">
+                        <button id="frontRemoveBtn" class="btn btn-danger form-control">REMOVE</button>
+                    </div>
+                </div>
+                </div>
+            </div>
+            </div>
+            <div class="col-md-6">
+            <div class="card mb-6 shadow-sm">
+                <div class="card-body">
+                <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class="m-2">
+                        <div>
+                            <label for="#"><b>BACK TEXT</b></label>
+                        </div>
+                        <div>
+                            <label for="backColorPicker"><b>SELECT COLOR</b></label>
+                            <input type="color" id="backColorPicker" name="backColorPicker" value="#ffffff">
+                            <p id="backColorDisplay">Selected Color: #ffffff</p>
+                        </div>
+                        <select id="backFontFamily" onchange="updateDisplayBack(this.value)">
+                            <option value="">Select a font</option>
+                        </select>
+                        <h6>Font Display:  <p id="backFontDisplay" style="font-size: 20px;">Select a font</p> </h6>
+                        <label for="#backTextInput"><b>TEXT INPUT</b></label>
+                        <button class="btn btn-primary btn-sm my-1" id="backAddTextBtn">Add Text</button>
+                        <button class="btn btn-danger btn-sm my-1" id="backRemoveTextBtn">Remove Text</button>
+                        <textarea name="text_input" id="backTextInput" cols="30" rows="10"></textarea>
+
+                        <div>
+                            <label for="#backImageInput"><b>BACK LOGO</b></label>
+                        </div>
+                        <input accept=".png" class=" form-control" type="file" id="backImageInput" />
+                        <img class="m-1" id="previewImage1" src="#" alt="Preview Image" style="display: none; width:200px">
+                        <button id="backRemoveBtn" class="btn btn-danger form-control">REMOVE</button>
+                    </div>
+                </div>
+                </div>
+            </div>
+            </div>
         </div>
     </div>
-    <div class="m-4">
-
-        <div class="col-lg-12">
 
 
-            <div class="tab">
-                <button class="tablinks" id="front" onclick="openTab(event, 'Front')">Front</button>
-                <button class="tablinks" id="back" onclick="openTab(event, 'Back')">Back</button>
+    <div id="div_set" id_src="<?php echo $id ?>" style="margin-top:30px" class="d-flex">
+        <div class="row">
+            <div class="p-1">
+                <div class="m-1">
+                    <h4 id="price_id" price='<?php echo $fetchDetails_['product_price'] ?>' class="mb-0">&#8369; <span id="price_tag"> <?php echo $fetchDetails_['product_price'] ?></span></h4>
+                </div>
+                <label for="">Quantity</label>
+                <input value="1" type="number" placeholder="Enter quantity" id="qty" class="form-control" type="text" />
             </div>
-
-            <div id="Front" class="tabcontent" >
-                <div class="d-flex m-2">
-                    <div class="image-container m-4" id="frontView">
-                        <label for=""><b>FRONT VIEW</b></label>
-                        <canvas imgsrc="<?php echo $image1 ?>" class="custom-input" width="400" height="450" id="example1"></canvas>
-                        <div class="magnifier1"></div>
-                    </div>
-                </div>
-                <div class="m-2">
-                    <div>
-                        <label for="#fronImageInput"><b>FRONT TEXT</b></label>
-                    </div>
-                    <div>
-                        <label for="frontColorPicker"><b>SELECT COLOR</b></label>
-                        <input type="color" id="frontColorPicker" name="frontColorPicker" value="#ffffff">
-                        <p id="frontColorDisplay">Selected Color: #ffffff</p>
-                    </div>
-                    <select id="frontFontFamily" onchange="updateDisplayFront(this.value)">
-                        <option value="">Select a font</option>
-                    </select>
-                    <h6>Font Display:  <p id="frontFontDisplay" style="font-size: 20px;">Select a font</p> </h6>
-                    <label for="#frontTextInput"><b>TEXT INPUT</b></label>
-                    <button class="btn btn-primary btn-sm my-1" id="frontAddTextBtn">Add Text</button>
-                    <button class="btn btn-danger btn-sm my-1" id="frontRemoveTextBtn">Remove Text</button>
-                    <textarea name="text_input" id="frontTextInput" cols="30" rows="10"></textarea>
-
-
-
-                    <div>
-                        <label for="#fronImageInput"><b>FRONT LOGO</b></label>
-                    </div>
-                    <input accept=".png" class=" form-control" type="file" id="fronImageInput" />
-                    <img class="m-1" id="previewImage" src="#" alt="Preview Image" style="display: none; width:200px">
-                    <button id="frontRemoveBtn" class="btn btn-danger form-control">REMOVE</button>
-                </div>
+            <div class="p-1">
+                <label for="">Size</label>
+                <select class="form-control" name="" id="size_sel">
+                    <option value="sm" selected>Small (SM)</option>
+                    <option value="md">Medium (MD)</option>
+                    <option value="lg">Large (LG)</option>
+                    <option value="xl">Extra Large (XL)</option>
+                </select>
             </div>
-
-
-            <div id="Back" class="tabcontent"  >
-                <div class="d-flex m-2">
-                    <div class="image-container m-4" id="backView">
-                        <label for=""><b>BACK VIEW</b></label>
-                        <canvas imgsrc="<?php echo $image2 ?>" class="custom-input" width="400" height="450" id="example2"></canvas>
-                        <div class="magnifier2"></div>
-                    </div>
-                </div>
-                <div class="m-2">
-                    <div>
-                        <label for="#"><b>BACK TEXT</b></label>
-                    </div>
-                    <div>
-                        <label for="backColorPicker"><b>SELECT COLOR</b></label>
-                        <input type="color" id="backColorPicker" name="backColorPicker" value="#ffffff">
-                        <p id="backColorDisplay">Selected Color: #ffffff</p>
-                    </div>
-                    <select id="backFontFamily" onchange="updateDisplayBack(this.value)">
-                        <option value="">Select a font</option>
-                    </select>
-                    <h6>Font Display:  <p id="backFontDisplay" style="font-size: 20px;">Select a font</p> </h6>
-                    <label for="#backTextInput"><b>TEXT INPUT</b></label>
-                    <button class="btn btn-primary btn-sm my-1" id="backAddTextBtn">Add Text</button>
-                    <button class="btn btn-danger btn-sm my-1" id="backRemoveTextBtn">Remove Text</button>
-                    <textarea name="text_input" id="backTextInput" cols="30" rows="10"></textarea>
-
-                    <div>
-                        <label for="#backImageInput"><b>BACK LOGO</b></label>
-                    </div>
-                    <input accept=".png" class=" form-control" type="file" id="backImageInput" />
-                    <img class="m-1" id="previewImage1" src="#" alt="Preview Image" style="display: none; width:200px">
-                    <button id="backRemoveBtn" class="btn btn-danger form-control">REMOVE</button>
-
-                </div>
-            </div>
-
-
-            <div class="p-1 border ">
-                <div style="background-color: black">
-                    <p style="text-align: center;" class="text-white ">CUSTOMIZATION LIST</p>
-                </div>
-
-                <table>
-                    <thead></thead>
-
-                    <tbody>
-                        <tr>
-                            <td> <label for="#viewFrontView">FRONT VIEW</label></td>
-
-                            <td> <input type="checkbox" name="" id="viewFrontView" checked /></td>
-
-                        </tr>
-                        <tr>
-                            <td> <label for="#viewBackView">BACK VIEW</label></td>
-                            <td> <input type="checkbox" name="" id="viewBackView" checked /></td>
-
-                        </tr>
-                        <!-- <tr>
-                                                                    <td><label for="">NO LOGO</label></td>
-                                                                    <td> <input type="checkbox" name="" id="" checked /></td>
-
-                                                                </tr> -->
-                    </tbody>
-                </table>
-            </div>
-            <!-- // <img id="see_generated" alt="" /> -->
-
-
-
+        </div>
+        <div class="container row">
 
         </div>
+        <div class="m-4 row" >
+            <div class="col-lg-6">
+                <div id="Back" class="tabcontent"  >
+                    <div class="d-flex m-2">
+                        <div class="image-container m-4" id="backView">
+                            <label for=""><b>BACK VIEW</b></label>
+                            <canvas imgsrc="<?php echo $image2 ?>" class="custom-input" width="400" height="450" id="example2"></canvas>
+                            <div class="magnifier2"></div>
+                        </div>
+                    </div>
+                    <div class="m-2">
+                        <div>
+                            <label for="#"><b>BACK TEXT</b></label>
+                        </div>
+                        <div>
+                            <label for="backColorPicker"><b>SELECT COLOR</b></label>
+                            <input type="color" id="backColorPicker" name="backColorPicker" value="#ffffff">
+                            <p id="backColorDisplay">Selected Color: #ffffff</p>
+                        </div>
+                        <select id="backFontFamily" onchange="updateDisplayBack(this.value)">
+                            <option value="">Select a font</option>
+                        </select>
+                        <h6>Font Display:  <p id="backFontDisplay" style="font-size: 20px;">Select a font</p> </h6>
+                        <label for="#backTextInput"><b>TEXT INPUT</b></label>
+                        <button class="btn btn-primary btn-sm my-1" id="backAddTextBtn">Add Text</button>
+                        <button class="btn btn-danger btn-sm my-1" id="backRemoveTextBtn">Remove Text</button>
+                        <textarea name="text_input" id="backTextInput" cols="30" rows="10"></textarea>
 
+                        <div>
+                            <label for="#backImageInput"><b>BACK LOGO</b></label>
+                        </div>
+                        <input accept=".png" class=" form-control" type="file" id="backImageInput" />
+                        <img class="m-1" id="previewImage1" src="#" alt="Preview Image" style="display: none; width:200px">
+                        <button id="backRemoveBtn" class="btn btn-danger form-control">REMOVE</button>
+
+                    </div>
+                </div>
+
+
+                <div class="p-1 border ">
+                    <div style="background-color: black">
+                        <p style="text-align: center;" class="text-white ">CUSTOMIZATION LIST</p>
+                    </div>
+
+                    <table>
+                        <thead></thead>
+
+                        <tbody>
+                            <tr>
+                                <td> <label for="#viewFrontView">FRONT VIEW</label></td>
+
+                                <td> <input type="checkbox" name="" id="viewFrontView" checked /></td>
+
+                            </tr>
+                            <tr>
+                                <td> <label for="#viewBackView">BACK VIEW</label></td>
+                                <td> <input type="checkbox" name="" id="viewBackView" checked /></td>
+
+                            </tr>
+                            <!-- <tr>
+                                                                        <td><label for="">NO LOGO</label></td>
+                                                                        <td> <input type="checkbox" name="" id="" checked /></td>
+
+                                                                    </tr> -->
+                        </tbody>
+                    </table>
+                </div>
+                <!-- // <img id="see_generated" alt="" /> -->
+
+
+
+
+            </div>
+            <div class="col-lg-6">
+                <div id="Front" class="tabcontent" >
+                    <div class="d-flex m-2">
+                        <div class="image-container m-4" id="frontView">
+                            <label for=""><b>FRONT VIEW</b></label>
+                            <canvas imgsrc="<?php echo $image1 ?>" class="custom-input" width="400" height="450" id="example1"></canvas>
+                            <div class="magnifier1"></div>
+                        </div>
+                    </div>
+                    <div class="m-2">
+                        <div>
+                            <label for="#fronImageInput"><b>FRONT TEXT</b></label>
+                        </div>
+                        <div>
+                            <label for="frontColorPicker"><b>SELECT COLOR</b></label>
+                            <input type="color" id="frontColorPicker" name="frontColorPicker" value="#ffffff">
+                            <p id="frontColorDisplay">Selected Color: #ffffff</p>
+                        </div>
+                        <select id="frontFontFamily" onchange="updateDisplayFront(this.value)">
+                            <option value="">Select a font</option>
+                        </select>
+                        <h6>Font Display:  <p id="frontFontDisplay" style="font-size: 20px;">Select a font</p> </h6>
+                        <label for="#frontTextInput"><b>TEXT INPUT</b></label>
+                        <button class="btn btn-primary btn-sm my-1" id="frontAddTextBtn">Add Text</button>
+                        <button class="btn btn-danger btn-sm my-1" id="frontRemoveTextBtn">Remove Text</button>
+                        <textarea name="text_input" id="frontTextInput" cols="30" rows="10"></textarea>
+
+
+
+                        <div>
+                            <label for="#fronImageInput"><b>FRONT LOGO</b></label>
+                        </div>
+                        <input accept=".png" class=" form-control" type="file" id="fronImageInput" />
+                        <img class="m-1" id="previewImage" src="#" alt="Preview Image" style="display: none; width:200px">
+                        <button id="frontRemoveBtn" class="btn btn-danger form-control">REMOVE</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-</div>
+ </div>
 
 <script src="https://cdn.jsdelivr.net/npm/fontfaceobserver@2.1.0/fontfaceobserver.standalone.js"></script>
 
