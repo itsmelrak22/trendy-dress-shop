@@ -137,7 +137,7 @@ $fetchDetails_ = $fetchDetails->fetch();
     <div class="d-flex m-2">
         <div class="image-container m-4" id="frontView">
             <label for=""><b>FRONT VIEW</b></label>
-            <canvas imgsrc="<?php echo $image1 ?>" class="custom-input" width="400" height="450" id="example1"></canvas>
+            <canvas imgsrc="<?php echo $image1 ?>" class="custom-input" width="600" height="600" id="example1"></canvas>
             <div class="magnifier1"></div>
         </div>
         <div class="image-container m-4" id="backView">
@@ -151,53 +151,52 @@ $fetchDetails_ = $fetchDetails->fetch();
             <div id="Front" class="tabcontent" >
                 <div class="m-2">
                     <div>
+                        <label for="#fronImageInput"><b>FRONT TEXT</b></label>
+                    </div>
+                    <div>
                         <div class="mb-3">
                         <!-- <label for="qty">Quantity</label> -->
                             <div class="input-group">
-                                <div class="input-group-prepend">
-                                <span class="input-group-text">SELECT COLOR</span>
+                                <div class="input-group-prepend" style=" width: 200px; ">
+                                <span class="input-group-text">SELECT COLOR: </span>
                                 </div>
-                                <input type="color" id="frontColorPicker" name="frontColorPicker" value="#ffffff" class="form-control">
+                                <input style="height: 36px;" type="color" id="frontColorPicker" name="frontColorPicker" value="#ffffff" class="form-control" onchange="updateDisplayColorFront(this.value)">
                             </div>
                         </div>
                         <div class="mb-3">
                             <div class="input-group">
-                                <div class="input-group-prepend">
-                                <span class="input-group-text">SELECTED COLOR</span>
+                                <div class="input-group-prepend" style=" width: 200px; ">
+                                <span class="input-group-text">SELECTED COLOR:</span>
                                 </div>
-                                    <input type="test" class="form-control" readonly/>
+                                    <input type="text" class="form-control" readonly id="selectedColor"/>
                             </div>
                         </div>
                         <div class="mb-3">
                             <div class="input-group">
-                                <div class="input-group-prepend">
-                                <span class="input-group-text">SELECT FONT</span>
+                                <div class="input-group-prepend" style=" width: 200px; ">
+                                <span class="input-group-text">SELECT FONT: </span>
                                 </div>
                                 <select id="frontFontFamily" onchange="updateDisplayFront(this.value)" class="form-control">
                                     <option value="">Select a font</option>
                                 </select>
                             </div>
                         </div>
-                    </div>
-                    <div>
-                        <label for="#fronImageInput"><b>FRONT TEXT</b></label>
-                    </div>
-                    <div>
-                        <label for="frontColorPicker"><b>SELECT COLOR</b></label>
-                        <input type="color" id="frontColorPicker" name="frontColorPicker" value="#ffffff">
-                        <div>
-                            <p id="frontColorDisplay">Selected Color: #ffffff</p>
-                        </div>
+                        <div class="mb-3">
+                            <div class="input-group">
+                                <div class="input-group-prepend" style=" width: 200px; ">
+                                <span class="input-group-text">FONT DISPLAY: </span>
+                                </div>
+                                <!-- <p id="frontFontDisplay" style="font-size: 20px;"> &nbsp ...</p> -->
+                                <input type="text" class="form-control" readonly id="frontFontDisplay"/>
 
+                            </div>
+                        </div>
                     </div>
-                    <select id="frontFontFamily" onchange="updateDisplayFront(this.value)">
-                        <option value="">Select a font</option>
-                    </select>
-                    <h6>Font Display:  <p id="frontFontDisplay" style="font-size: 20px;">Select a font</p> </h6>
+                   
                     <label for="#frontTextInput"><b>TEXT INPUT</b></label>
                     <button class="btn btn-primary btn-sm my-1" id="frontAddTextBtn">Add Text</button>
                     <button class="btn btn-danger btn-sm my-1" id="frontRemoveTextBtn">Remove Text</button>
-                    <textarea name="text_input" id="frontTextInput" cols="30" rows="10"></textarea>
+                    <textarea name="text_input" id="frontTextInput" cols="35" rows="4"></textarea>
 
 
 
@@ -216,7 +215,7 @@ $fetchDetails_ = $fetchDetails->fetch();
                         <label for="#"><b>BACK TEXT</b></label>
                     </div>
                     <div>
-                        <label for="backColorPicker"><b>SELECT COLOR</b></label>
+                        <label for="backColorPicker"><b>SELECT COLOR (HEX) </b></label>
                         <input type="color" id="backColorPicker" name="backColorPicker" value="#ffffff">
                         <p id="backColorDisplay">Selected Color: #ffffff</p>
                     </div>
@@ -307,13 +306,19 @@ $fetchDetails_ = $fetchDetails->fetch();
 
     function updateDisplayFront(font) {
         var display = document.getElementById('frontFontDisplay');
-        display.textContent = font;
+        display.value = `  ${font}`;
         display.style.fontFamily = font;
+    }
+
+    function updateDisplayColorFront(color) {
+        var display = document.getElementById('selectedColor');
+        display.value = `  ${color}`;
+        // display.style.fontFamily = color;
     }
 
     function updateDisplayBack(font) {
         var display = document.getElementById('backFontDisplay');
-        display.textContent = font;
+        display.value = font;
         display.style.fontFamily = font;
     }
 
