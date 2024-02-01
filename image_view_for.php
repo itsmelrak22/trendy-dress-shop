@@ -358,7 +358,7 @@ $fetchDetails_ = $fetchDetails->fetch();
     function initiateTab1(){
         setTimeout(() => {
             document.getElementById('front').click()
-        }, 500)
+        }, 100)
 
         document.getElementById('frontColorPicker').addEventListener('input', function() {
             document.getElementById('frontColorDisplay').innerText = 'Selected Color: ' + this.value;
