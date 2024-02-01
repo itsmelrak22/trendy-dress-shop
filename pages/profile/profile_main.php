@@ -81,7 +81,7 @@ $user_order_ = $user_order->fetchall();
                 <div class="modal-body">
                     <div class="text-center mb-2">
                         <?php if(!empty($userDetails_['customer_image'])): ?>
-                            <img src="updateUploads/<?php echo $userDetails_['customer_image']; ?>" alt="Profile Picture" class="img-fluid" style="max-width: 100px;">
+                            <img loading="lazy" src="updateUploads/<?php echo $userDetails_['customer_image']; ?>" alt="Profile Picture" class="img-fluid" style="max-width: 100px;">
                         <?php endif; ?>
                     </div>
                     <label for="customer_image">PROFILE PICTURE</label>

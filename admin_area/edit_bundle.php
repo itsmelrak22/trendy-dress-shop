@@ -300,7 +300,7 @@ echo "<option value='$cat_id'>$cat_title</option>";
 <div class="col-md-6" >
 
 <input type="file" name="product_img1" class="form-control" >
-<br><img src="product_images/<?php echo $p_image1; ?>" width="70" height="70" >
+<br><img loading="lazy" src="product_images/<?php echo $p_image1; ?>" width="70" height="70" >
 
 </div>
 
@@ -313,7 +313,7 @@ echo "<option value='$cat_id'>$cat_title</option>";
 <div class="col-md-6" >
 
 <input type="file" name="product_img2" class="form-control" >
-<br><img src="product_images/<?php echo $p_image2; ?>" width="70" height="70" >
+<br><img loading="lazy" src="product_images/<?php echo $p_image2; ?>" width="70" height="70" >
 
 </div>
 
@@ -326,7 +326,7 @@ echo "<option value='$cat_id'>$cat_title</option>";
 <div class="col-md-6" >
 
 <input type="file" name="product_img3" class="form-control" >
-<br><img src="product_images/<?php echo $p_image3; ?>" width="70" height="70" >
+<br><img loading="lazy" src="product_images/<?php echo $p_image3; ?>" width="70" height="70" >
 
 </div>
 

@@ -121,7 +121,7 @@ $new_m_image = $row_manufacturer['manufacturer_image'];
 
 <br>
 
-<img src="other_images/<?php echo $m_image; ?>" width="70" height="70">
+<img loading="lazy" src="other_images/<?php echo $m_image; ?>" width="70" height="70">
 
 </div>
 

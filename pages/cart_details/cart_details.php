@@ -181,11 +181,11 @@ $paymentMethods = array(
         <input type="checkbox" class="cart-item-checkbox" value="<?php echo $row['p_id']; ?>">
         <div class="cart-item-image">
             <?php $image = 'data:image/png;base64,' . $row['frontImage'] ?>
-            <img src="<?php echo $image ?>" alt="Product Image">
+            <img loading="lazy" src="<?php echo $image ?>" alt="Product Image">
         </div>
         <div class="cart-item-image">
             <?php $image1 = 'data:image/png;base64,' . $row['backImage'] ?>
-            <img src="<?php echo $image1 ?>" alt="Product Image">
+            <img loading="lazy" src="<?php echo $image1 ?>" alt="Product Image">
         </div>
         <div class="cart-item-details">
             <span class="product-id">Product ID: <?php echo $row['product_id'] ?></span>

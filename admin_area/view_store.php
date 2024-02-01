@@ -90,7 +90,7 @@ $store_url = $row_store['store_url'];
 
 <div class="panel-body"><!-- panel-body Starts -->
 
-<img src="store_images/<?php echo $store_image; ?>" class="img-responsive">
+<img loading="lazy" src="store_images/<?php echo $store_image; ?>" class="img-responsive">
 
 <br>
 

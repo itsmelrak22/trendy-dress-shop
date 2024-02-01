@@ -133,13 +133,13 @@ endif;
                                 </ol>
                                 <div class="carousel-inner" role="listbox">
                                     <div class="carousel-item active">
-                                        <img src="<?=$img1 ?>" class="w-100 d-block" alt="First slide">
+                                        <img loading="lazy" src="<?=$img1 ?>" class="w-100 d-block" alt="First slide">
                                     </div>
                                     <div class="carousel-item">
-                                        <img src="<?=$img2 ?>" class="w-100 d-block" alt="Second slide">
+                                        <img loading="lazy" src="<?=$img2 ?>" class="w-100 d-block" alt="Second slide">
                                     </div>
                                     <div class="carousel-item">
-                                        <img src="<?=$img3 ?>" class="w-100 d-block" alt="Third slide">
+                                        <img loading="lazy" src="<?=$img3 ?>" class="w-100 d-block" alt="Third slide">
                                     </div>
                                 </div>
                                 <button class="carousel-control-prev" type="button" data-bs-target="#carouselId" data-bs-slide="prev">
@@ -220,7 +220,7 @@ endif;
 
 
                     <div class="card shadow col-sm-12 col-md-4 col-lg-4 ">
-                        <!-- <img style="align-self: center;" src="exampleImage.jpg" class="card-img-top card-image-viewing" alt="Card image"> -->
+                        <!-- <img loading="lazy" style="align-self: center;" src="exampleImage.jpg" class="card-img-top card-image-viewing" alt="Card image"> -->
                         <div class="card-body">
                             <h5 class="card-title ">OTHER ITEMS</h5>
                             <hr>

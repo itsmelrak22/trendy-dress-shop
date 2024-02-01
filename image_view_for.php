@@ -209,7 +209,7 @@ $fetchDetails_ = $fetchDetails->fetch();
                         <label for="#fronImageInput"><b>FRONT LOGO</b></label>
                     </div>
                     <input accept=".png" class=" form-control" type="file" id="fronImageInput" />
-                    <img class="m-1" id="previewImage" src="#" alt="Preview Image" style="display: none; width:200px">
+                    <img loading="lazy" class="m-1" id="previewImage" src="#" alt="Preview Image" style="display: none; width:200px">
                     <button id="frontRemoveBtn" class="btn btn-danger form-control">REMOVE</button>
                 </div>
             </div>
@@ -237,7 +237,7 @@ $fetchDetails_ = $fetchDetails->fetch();
                         <label for="#backImageInput"><b>BACK LOGO</b></label>
                     </div>
                     <input accept=".png" class=" form-control" type="file" id="backImageInput" />
-                    <img class="m-1" id="previewImage1" src="#" alt="Preview Image" style="display: none; width:200px">
+                    <img loading="lazy" class="m-1" id="previewImage1" src="#" alt="Preview Image" style="display: none; width:200px">
                     <button id="backRemoveBtn" class="btn btn-danger form-control">REMOVE</button>
 
                 </div>
@@ -272,7 +272,7 @@ $fetchDetails_ = $fetchDetails->fetch();
                     </tbody>
                 </table>
             </div>
-            <!-- // <img id="see_generated" alt="" /> -->
+            <!-- // <img loading="lazy" id="see_generated" alt="" /> -->
         </div>
     </div>
 </div>

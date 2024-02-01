@@ -60,7 +60,7 @@
                                     <td><?php echo $c_email; ?></td>
                                     <td>
                                         <?php if(!empty($c_image)): ?>
-                                            <img src="../updateUploads/<?php echo $c_image; ?>" width="60" height="60" >
+                                            <img loading="lazy" src="../updateUploads/<?php echo $c_image; ?>" width="60" height="60" >
                                         <?php endif; ?>
                                     </td>
                                     <td><?php echo $c_country; ?></td>

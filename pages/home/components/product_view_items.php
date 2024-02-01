@@ -50,7 +50,7 @@
     <?php if ($row['product_id'] !== $itemID) : ?>
         <div class=" bg-light row  m-1">
             <div class="col-lg-12 col-md-2 col-sm-12 d-flex justify-content-center">
-                <img class="m-1" src="<?= $img1 ?>" style="width:150px" />
+                <img loading="lazy" class="m-1" src="<?= $img1 ?>" style="width:150px" />
             </div>
             <div class="col-lg-10 col-md-10 col-sm-12 mx-2">
                 <p class="mb-0"><?php echo $row['product_title'] ?></p>

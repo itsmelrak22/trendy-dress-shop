@@ -31,7 +31,7 @@ if (isset($_SESSION['id_user'])) {
         <div class="col-sm-12 col-md-6 col-lg-4">
             <div class="border design-inside bg-white rounded-3">
                 <div class="logo text-center">
-                    <img src="assets/images/Logo_mini.jpeg" alt="Logo">
+                    <img loading="lazy" src="assets/images/Logo_mini.jpeg" alt="Logo">
                 </div>
                 <div class="justify-content-center bg-success" id="alert-container"></div>
                 <div class="mb-3">

@@ -110,7 +110,7 @@ try {
                         
                             <h6 class="card-title text-center mt-2"><?php echo $row['product_title'] ?></h6>
                             <div class="card-body d-flex justify-content-center">
-                                <img src="<?= $display_img ?>" class="card-image" loding="lazy" />
+                                <img loading="lazy" src="<?= $display_img ?>" class="card-image" loding="lazy" />
                             </div>
                             <p class="mx-0 my-1 text-center px-2 custom-text"><?= $display_desc ?></p>
                             <span style="font-size:15px;" class="mx-0 my-1 text-center custom-text">&#8369; <?php echo $row['product_price'] ?></span>

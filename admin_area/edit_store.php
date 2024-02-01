@@ -107,7 +107,7 @@ $new_s_image = $row_store['store_image'];
 
 <br>
 
-<img src="store_images/<?php echo $store_image; ?>" width="70" height="70" >
+<img loading="lazy" src="store_images/<?php echo $store_image; ?>" width="70" height="70" >
 
 </div>
 

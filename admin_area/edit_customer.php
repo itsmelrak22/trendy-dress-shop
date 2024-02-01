@@ -46,7 +46,7 @@ if(isset($_GET['customer_id'])){
             <tr>
                 <td align="right">Customer Image:</td>
                     <td><input  type="file" name="c_image" onchange="previewImage(event);" />
-                    <img id="imagePreview" src="../updateUploads/<?php echo $c_image; ?>" width="60" height="60">
+                    <img loading="lazy" id="imagePreview" src="../updateUploads/<?php echo $c_image; ?>" width="60" height="60">
                 </td>
             </tr>
             <tr>

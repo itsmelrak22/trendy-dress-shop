@@ -120,7 +120,7 @@ $new_p_cat_image = $row_edit['p_cat_image'];
 
 <br>
 
-<img src="other_images/<?php echo $p_cat_image; ?>" width="70" height="70" >
+<img loading="lazy" src="other_images/<?php echo $p_cat_image; ?>" width="70" height="70" >
 
 </div>
 

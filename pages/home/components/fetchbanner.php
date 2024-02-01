@@ -51,13 +51,13 @@
     </ol>
     <div class="carousel-inner" role="listbox" style="max-height: 730px !important;">
         <div class="carousel-item active">
-            <img src="assets/images/1.png" class="d-block mx-auto img-fluid" alt="First slide">
+            <img loading="lazy" src="assets/images/1.png" class="d-block mx-auto img-fluid" alt="First slide">
         </div>
         <div class="carousel-item">
-            <img src="assets/images/2.jpg" class="w-100 d-block mx-auto img-fluid" alt="Second slide">
+            <img loading="lazy" src="assets/images/2.jpg" class="w-100 d-block mx-auto img-fluid" alt="Second slide">
         </div>
         <div class="carousel-item">
-            <img src="assets/images/3.jpg" class="w-100 d-block mx-auto img-fluid" alt="Third slide">
+            <img loading="lazy" src="assets/images/3.jpg" class="w-100 d-block mx-auto img-fluid" alt="Third slide">
         </div>
     </div>
     <button class="carousel-control-prev" type="button" data-bs-target="#carouselId" data-bs-slide="prev">

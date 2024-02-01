@@ -192,7 +192,7 @@ $admin_about = $row_admin['admin_about'];
 
 <input type="file" name="admin_image" class="form-control" >
 <br>
-<img src="admin_images/<?Php echo $admin_image; ?>" width="70" height="70" >
+<img loading="lazy" src="admin_images/<?Php echo $admin_image; ?>" width="70" height="70" >
 
 </div><!-- col-md-6 Ends -->
 

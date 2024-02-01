@@ -119,7 +119,7 @@ if (!isset($_SESSION['admin_email'])) {
 
                                         <td><?= $pro_title; ?></td>
 
-                                        <td><img src="product_images/product/<?=$pro_id?>/<?=$pro_color_name?>/<?=$pro_image?>" width="60" height="60"></td>
+                                        <td><img loading="lazy" src="product_images/product/<?=$pro_id?>/<?=$pro_color_name?>/<?=$pro_image?>" width="60" height="60"></td>
 
                                         <td> <?= $pro_price; ?></td>
 

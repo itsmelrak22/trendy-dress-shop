@@ -118,7 +118,7 @@ $new_c_image = $row_edit['cat_image'];
 
 <br>
 
-<img src="other_images/<?php echo $c_image; ?>" width="70" height="70" >
+<img loading="lazy" src="other_images/<?php echo $c_image; ?>" width="70" height="70" >
 
 </div>
 
