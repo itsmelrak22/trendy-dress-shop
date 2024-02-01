@@ -1,6 +1,8 @@
 <?php
-
-
+spl_autoload_register(function ($class) {
+    include '../models/' . $class . '.php';
+  });
+  
 
 if (!isset($_SESSION['admin_email'])) {
 
@@ -71,6 +73,8 @@ if (!isset($_SESSION['admin_email'])) {
                                     <th>Price</th>
                                     <th>Sold</th>
                                     <th>Keywords</th>
+                                    <th>Colors (clickable)</th>
+                                    <th>Customizable</th>
                                     <th>Date</th>
                                     <th>Delete</th>
                                     <th>Edit</th>
@@ -87,79 +91,75 @@ if (!isset($_SESSION['admin_email'])) {
 
                                     $i = 0;
 
-                                    $get_pro = "SELECT A.*, B.color_name, B.product_img1 AS img1,  B.product_img2 AS img2,  B.product_img3 AS img3, B.color_id  
-                                    FROM products AS A 
-                                    INNER JOIN product_colors AS B
-                                    ON A.product_id = B.product_id
-                                    WHERE A.status = 'product' 
-                                    ";
+                                    $instance = new Product;
+                                    $row_pro = $instance::getProductsWithColors();
 
-                                    $run_pro = mysqli_query($con, $get_pro);
+                                  foreach ($row_pro as $key => $value) {
 
-                                    while ($row_pro = mysqli_fetch_array($run_pro)) {
+                                    $pro_id = $value['product_id'];
 
-                                        $pro_id = $row_pro['product_id'];
+                                    $pro_image = $value['colors'][0]['product_img1'];
 
-                                        $pro_title = $row_pro['product_title'];
+                                    $pro_title = $value['product_title'];
 
-                                        $pro_image = $row_pro['img1'];
+                                    $pro_color_name = $value['colors'][0]['color_name'];
 
-                                        $pro_price = $row_pro['product_price'];
+                                    $pro_price = $value['product_price'];
 
-                                        $pro_keywords = $row_pro['product_keywords'];
+                                    $pro_keywords = $value['product_keywords'];
 
-                                        $pro_date = $row_pro['date'];
+                                    $pro_custom_status = $value['custom_status'];
 
-                                        $pro_color_id = $row_pro['color_id'];
+                                    $pro_date = $value['date'];
 
-                                        $i++;
-
-                                        ?>
-
+                                   ?>
                                     <tr>
 
-                                        <td><?php echo $i; ?></td>
+                                        <td><?= $key + 1; ?></td>
 
-                                        <td><?php echo $pro_title; ?></td>
+                                        <td><?= $pro_title; ?></td>
 
-                                        <td><img src="product_images/<?php echo $pro_image; ?>" width="60" height="60"></td>
+                                        <td><img src="product_images/product/<?=$pro_id?>/<?=$pro_color_name?>/<?=$pro_image?>" width="60" height="60"></td>
 
-                                        <td> <?php echo $pro_price; ?></td>
+                                        <td> <?= $pro_price; ?></td>
 
                                         <td>
                                             <?php
-
-                                                    // $get_sold = "select * from pending_orders where product_id='$pro_id'";
-                                                    // $run_sold = mysqli_query($con, $get_sold);
-                                                    // // $count = mysqli_num_rows($run_sold);
-                                                    // // echo $count;
-                                                    ?>
+                                                // $get_sold = "select * from pending_orders where product_id='$pro_id'";
+                                                // $run_sold = mysqli_query($con, $get_sold);
+                                                // // $count = mysqli_num_rows($run_sold);
+                                                // // echo $count;
+                                            ?>
                                         </td>
 
-                                        <td> <?php echo $pro_keywords; ?> </td>
+                                        <td> <?= $pro_keywords; ?> </td>
 
-                                        <td><?php echo $pro_date; ?></td>
+                                        <td>
+                                            <?php foreach ($value["colors"] as $key => $color) { ?> 
+                                                <a data-toggle="tooltip" title="Click to edit product color info" href="index.php?edit_product_colors=<?= $pro_id;?>&color=<?= $color["color_id"] ?>">
+                                                    <span class="badge "><?= $color["color_name"] ?></span>
+                                                </a>
+                                            <?php } ?> 
+                                            
+                                        </td>
+
+                                        <td> <?= $pro_custom_status == 1 ? "YES" : "NO"; ?> </td>
+
+                                        <td><?= $pro_date; ?></td>
 
                                         <td>
 
                                             <a href="index.php?delete_product=<?= $pro_id; ?>">
-
                                                 <i class="fa fa-trash-o"> </i> Delete
-
                                             </a>
 
                                         </td>
 
                                         <td>
-
-                                            <a href="index.php?edit_product=<?= $pro_id;?>&color=<?= $pro_color_id ?>">
-
+                                            <a href="index.php?edit_product=<?= $pro_id;?>">
                                                 <i class="fa fa-pencil"> </i> Edit
-
                                             </a>
-
                                         </td>
-
                                     </tr>
 
                                 <?php } ?>
@@ -179,8 +179,5 @@ if (!isset($_SESSION['admin_email'])) {
         </div><!-- col-lg-12 Ends -->
 
     </div><!-- 2 row Ends -->
-
-
-
 
 <?php } ?>

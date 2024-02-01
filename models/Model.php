@@ -23,8 +23,8 @@ class Model
     protected $qry;
 
     public function __construct(){
-        $this->connect();
-        // $this->connectActual();
+        // $this->connect();
+        $this->connectActual();
     }
 
     public function connectActual(){

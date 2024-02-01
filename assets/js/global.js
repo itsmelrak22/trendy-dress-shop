@@ -41,6 +41,11 @@ function to_portfolio() {
     $("#contents").html(data);
   });
 }
+function to_about_us() {
+  $.post("pages/aboutus/aboutus_main.php", {}, function (data) {
+    $("#contents").html(data);
+  });
+}
 function login_() {
   $.post("login.php", {}, function(data) {
     $("#contents").html(data); 

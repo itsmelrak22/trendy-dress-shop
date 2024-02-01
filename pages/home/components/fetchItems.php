@@ -20,13 +20,37 @@
     // echo json_decode($totalPages);
     // echo json_decode($currentPage);
 
-    $fetchItems = $conn->prepare("SELECT A.*, B.product_img1 as img1 FROM products AS A 
-    INNER JOIN product_colors AS B
+    $fetchItems = $conn->prepare(
+        "SELECT A.*, 
+        B.product_img1 as img1, 
+        B.product_desc as description,
+        B.product_url as p_url
+        FROM products AS A INNER JOIN product_colors AS B
     ON A.product_id = B.product_id ORDER BY A.product_id DESC LIMIT ?, ?");
     $fetchItems->bindValue(1, $offset, PDO::PARAM_INT);
     $fetchItems->bindValue(2, $itemsPerPage, PDO::PARAM_INT);
     $fetchItems->execute();
     $fetchItems_ = $fetchItems->fetchAll();
+
+    $query = "
+    SELECT DISTINCT C.p_cat_id, C.p_cat_title 
+    FROM product_categories AS C 
+    LEFT JOIN products AS A ON C.p_cat_id = A.p_cat_id
+    LEFT JOIN product_colors AS B ON A.product_id = B.product_id";
+
+try {
+    // Prepare and execute the query
+    $stmt = $conn->prepare($query);
+    $stmt->execute();
+
+    // Fetch all rows as associative array
+    $categories = $stmt->fetchAll(PDO::FETCH_ASSOC);
+} catch (PDOException $e) {
+    // Handle database errors
+    echo "Error fetching categories: " . $e->getMessage();
+}
+
+
 ?>
 <style>
     .fixed-height-card {
@@ -52,6 +76,18 @@
     
 </style>
 <div class="album py-5 bg-light">
+    <div class="container mb-3">
+        <label for="filterSelect" class="form-label">Filter by categories:</label>
+        <select class="form-select" id="filterSelect" onchange="applyFilter(this.value)">
+            <option value="all" selected>All</option>
+            <?php foreach ($categories as $category) : ?>
+                <div class="col" data-category-id="<?php echo $category['p_cat_id']; ?>">
+                    <option value="<?php echo $category['p_cat_id']; ?>"><?php echo $category['p_cat_title']; ?></option>
+                </div>
+                
+            <?php endforeach; ?>
+        </select>
+    </div>
     <div class="row row-cols-1 row-cols-md-4 g-3">
         <?php
         // Repeat the items in $fetchItems_ to create a set of 100 items
@@ -62,16 +98,26 @@
         $flatItems = array_merge(...$repeatedItems);
 
         foreach ($fetchItems_ as $row) :
+            $colors = $conn->prepare("SELECT * FROM `product_colors` WHERE `product_id` = ?");
+            $colors->bindValue(1, $row['product_id']);
+            $colors->execute();
+            $colors_ = $colors->fetchAll();
+            
+            $display_img = "admin_area/product_images/product/" .  $row['product_id'] . "/" . $colors_[0]["color_name"] . "/" . $colors_[0]["product_img1"];
+            $display_desc = $colors_[0]["product_desc"];
+            $display_url = $colors_[0]["product_url"];
         ?>
-            <div class="col">
-                <div class="card shadow-sm">
+
+            <div class="tCol" cat-id="<?php echo  ($row['p_cat_id']);?>">
+                
+            <div class="card shadow-sm">
                     <h6 class="card-title text-center mt-2"><?php echo $row['product_title'] ?></h6>
                     <div class="card-body d-flex justify-content-center">
-                        <img src="admin_area\product_images\<?php echo $row['img1'] ?>" class="card-image" />
+                        <img src="<?= $display_img ?>" class="card-image" />
                     </div>
-                    <p class="mx-0 my-1 text-center px-2 custom-text"><?php echo $row['product_desc'] ?></p>
+                    <p class="mx-0 my-1 text-center px-2 custom-text"><?= $display_desc ?></p>
                     <span style="font-size:15px;" class="mx-0 my-1 text-center custom-text">&#8369; <?php echo $row['product_price'] ?></span>
-                    <a href="viewProduct_main.php?itemID=<?php echo $row['product_id'] ?>&slug=<?php echo $row['product_url'] ?>" style="background-color: black;" class="btn m-2 rounded-pill text-white product_link custom-text">View</a>
+                    <a href="viewProduct_main.php?itemID=<?php echo $row['product_id'] ?>&slug=<?= $display_url ?>" style="background-color: black;" class="btn m-2 rounded-pill text-white product_link custom-text">View</a>
                 </div>
             </div>
         <?php endforeach ?>
@@ -106,3 +152,30 @@
 
     <button id="nextPage" <?php echo ($currentPage == $totalPages) ? 'disabled' : ''; ?> onclick="changePage(1)">Next</button>
 </div> -->
+
+<script>
+    function applyFilter(selectedCategory) {
+    // Get all product items
+    var items = document.querySelectorAll('.tCol');
+
+    // If 'All' is selected, show all items
+    if (selectedCategory === 'all') {
+        items.forEach(function(item) {
+            item.style.display = 'block';
+        });
+        return; // Exit the function
+    }
+
+    // Otherwise, filter and display items belonging to the selected category
+    items.forEach(function(item) {
+        var category = item.getAttribute('cat-id'); // Get the category ID from data-category-id attribute
+        if (category !== selectedCategory) {
+            item.style.display = 'none';
+        } else {
+            item.style.display = 'block';
+        }
+    });
+}
+
+
+</script>
