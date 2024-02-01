@@ -38,7 +38,7 @@ session_start();
     <title>Home</title>
     
     <!-- Paypal SDK -->
-    <!-- <script src="https://www.paypal.com/sdk/js?client-id=Ad-DKICXtIrrhJRR4e7Bj1LMfHx1FKNPNf2rCWebJs3aX3Vv7HcNAwVHt8LMov7UJ2A7KRc3c_LrnM0z&currency=PHP&components=buttons,marks&debug=true&disable-funding=credit,card"></script> -->
+    <script src="https://www.paypal.com/sdk/js?client-id=Ad-DKICXtIrrhJRR4e7Bj1LMfHx1FKNPNf2rCWebJs3aX3Vv7HcNAwVHt8LMov7UJ2A7KRc3c_LrnM0z&currency=PHP&components=buttons,marks&debug=true&disable-funding=credit,card"></script>
 
 </head>
 
@@ -54,7 +54,8 @@ session_start();
 
     <!-- ------SCRIPTS---------- -->
 
-    <script src="assets/js/jquery-3.6.3.js"></script>
+    <!-- <script src="assets/js/jquery-3.6.3.js"></script> -->
+    <script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
     <script src="assets/js/bootstrap.bundle.min.js"></script>
 
     <script src="assets/js/global.js"></script>
