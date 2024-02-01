@@ -16,16 +16,10 @@
     FROM products AS A 
     INNER JOIN product_colors AS B
     ON A.product_id = B.product_id")->fetchColumn() / $itemsPerPage);
-
     // echo json_decode($totalPages);
     // echo json_decode($currentPage);
-
-    $fetchItems = $conn->prepare(
-        "SELECT A.*, 
-        B.product_img1 as img1, 
-        B.product_desc as description,
-        B.product_url as p_url
-        FROM products AS A INNER JOIN product_colors AS B
+    $fetchItems = $conn->prepare("SELECT A.*, B.product_img1 as img1 FROM products AS A 
+    INNER JOIN product_colors AS B
     ON A.product_id = B.product_id ORDER BY A.product_id DESC LIMIT ?, ?");
     $fetchItems->bindValue(1, $offset, PDO::PARAM_INT);
     $fetchItems->bindValue(2, $itemsPerPage, PDO::PARAM_INT);
@@ -55,40 +49,43 @@ try {
 <style>
     .fixed-height-card {
         height: 450px;
-        /* You can add other styles as needed */
+        / You can add other styles as needed /
     }
     
     .card {
-        max-height: 350px; /* Set a maximum height for the card */
+        max-height: 350px; / Set a maximum height for the card /
     }
 
     .card-body {
-        max-height: 300px; /* Set a maximum height for the card body */
-        overflow: hidden; /* Hide the overflow content */
+        max-height: 300px; / Set a maximum height for the card body /
+        overflow: hidden; / Hide the overflow content /
     }
 
     .custom-text {
-        font-size: 14px; /* Adjust the font size as needed */
-        overflow: hidden; /* Hide the overflow content */
-        white-space: nowrap; /* Prevent text from wrapping */
-        text-overflow: ellipsis; /* Show an ellipsis (...) when text overflows */
+        font-size: 14px; / Adjust the font size as needed /
+        overflow: hidden; / Hide the overflow content /
+        white-space: nowrap; / Prevent text from wrapping /
+        text-overflow: ellipsis; / Show an ellipsis (...) when text overflows /
     }
     
+    
 </style>
+
 <div class="album py-5 bg-light">
-    <div class="container mb-3">
-        <label for="filterSelect" class="form-label">Filter by categories:</label>
-        <select class="form-select" id="filterSelect" onchange="applyFilter(this.value)">
-            <option value="all" selected>All</option>
-            <?php foreach ($categories as $category) : ?>
-                <div class="col" data-category-id="<?php echo $category['p_cat_id']; ?>">
-                    <option value="<?php echo $category['p_cat_id']; ?>"><?php echo $category['p_cat_title']; ?></option>
-                </div>
-                
-            <?php endforeach; ?>
-        </select>
-    </div>
+<div class="row">
+        <!-- Categories Section -->
+        <div class="col-md-3">
+        <div class="list-group">
+                <h3 class="my-4">Categories</h3>
+                <span class="list-group-item list-group-item-action active" onclick="applyFilter('all')">All</span>
+                <?php foreach ($categories as $category) : ?>
+                    <span class="list-group-item list-group-item-action" onclick="applyFilter('<?php echo $category['p_cat_id']; ?>')"><?php echo $category['p_cat_title']; ?></span>
+                <?php endforeach; ?>
+            </div>
+        </div>
+    <div class="col-md-9">
     <div class="row row-cols-1 row-cols-md-4 g-3">
+        
         <?php
         // Repeat the items in $fetchItems_ to create a set of 100 items
         $repeatTimes = 100;
@@ -102,7 +99,7 @@ try {
             $colors->bindValue(1, $row['product_id']);
             $colors->execute();
             $colors_ = $colors->fetchAll();
-            
+
             $display_img = "admin_area/product_images/product/" .  $row['product_id'] . "/" . $colors_[0]["color_name"] . "/" . $colors_[0]["product_img1"];
             $display_desc = $colors_[0]["product_desc"];
             $display_url = $colors_[0]["product_url"];
@@ -110,7 +107,8 @@ try {
 
             <div class="tCol" cat-id="<?php echo  ($row['p_cat_id']);?>">
                 
-            <div class="card shadow-sm">
+                <div class="card shadow-sm">
+                
                     <h6 class="card-title text-center mt-2"><?php echo $row['product_title'] ?></h6>
                     <div class="card-body d-flex justify-content-center">
                         <img src="<?= $display_img ?>" class="card-image" />
@@ -121,6 +119,7 @@ try {
                 </div>
             </div>
         <?php endforeach ?>
+    </div>
     </div>
     <div id="paginationData" data-total-pages="<?php echo $totalPages; ?>"></div>
     <nav class="mx-auto mt-3" aria-label="...">
@@ -140,6 +139,7 @@ try {
             </li>
         </ul>
     </nav>
+</div>
 </div>
 <!-- <div class="pagination mb-5">
     <button id="prevPage" <?php echo ($currentPage == 1) ? 'disabled' : ''; ?> onclick="changePage(-1)">Previous</button>
