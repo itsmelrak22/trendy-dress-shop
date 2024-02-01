@@ -140,7 +140,7 @@ $fetchDetails_ = $fetchDetails->fetch();
             <canvas imgsrc="<?php echo $image1 ?>" class="custom-input" width="600" height="600" id="example1"></canvas>
             <div class="magnifier1"></div>
         </div>
-        <div class="image-container m-4" id="backView">
+        <div class="image-container m-4" id="backView" style="display: none;">
             <label for=""><b>BACK VIEW</b></label>
             <canvas imgsrc="<?php echo $image2 ?>" class="custom-input" width="400" height="450" id="example2"></canvas>
             <div class="magnifier2"></div>
