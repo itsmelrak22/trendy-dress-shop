@@ -191,15 +191,20 @@ $fetchDetails_ = $fetchDetails->fetch();
 
                             </div>
                         </div>
+                        <div class="mb-3">
+                            <div class="input-group">
+                                <div class="input-group-prepend" style=" width: 200px; ">
+                                    <span class="input-group-text">TEXT INPUT: </span>
+                                </div>
+                                <!-- <p id="frontFontDisplay" style="font-size: 20px;"> &nbsp ...</p> -->
+                                <textarea name="text_input" id="frontTextInput" cols="35" rows="4"></textarea>
+
+                            </div>
+                            <button class="btn btn-primary btn-sm my-1" id="frontAddTextBtn">Add Text</button>
+                            <button class="btn btn-danger btn-sm my-1" id="frontRemoveTextBtn">Remove Text</button>
+                        </div>
                     </div>
                    
-                    <label for="#frontTextInput"><b>TEXT INPUT</b></label>
-                    <button class="btn btn-primary btn-sm my-1" id="frontAddTextBtn">Add Text</button>
-                    <button class="btn btn-danger btn-sm my-1" id="frontRemoveTextBtn">Remove Text</button>
-                    <textarea name="text_input" id="frontTextInput" cols="35" rows="4"></textarea>
-
-
-
                     <div>
                         <label for="#fronImageInput"><b>FRONT LOGO</b></label>
                     </div>

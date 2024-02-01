@@ -1,63 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsive Carousel</title>
+    <link href="styles.css" rel="stylesheet">
+</head>
 <style>
-    /* Custom CSS for the carousel */
+    / Custom CSS for the carousel /
+#carouselId .carousel-item img {
+    max-width: 100%; / Ensure image doesn't exceed its container's width /
+    height: auto; / Allow height to adjust proportionally /
+    margin: 0 auto; / Center the image horizontally /
+}
+
+/ Media queries for responsive design /
+@media (max-width: 576px) {
     #carouselId .carousel-item img {
-        object-fit: contain;
-        max-height: 400px;
-        width: 100%;
-        margin: 0 auto; /* Center the image horizontally */
+        max-height: 50vh; / Adjust max height for smaller screens /
     }
+}
 
-    /* Style for the quote and assurance message */
-    .quote-wrapper {
-        position: absolute;
-        bottom: 20px; /* Adjust as needed */
-        left: 50%;
-        transform: translateX(-50%);
-        /* background-color: rgba(0, 0, 0, 0.7); */
-        padding: 10px 20px;
-        border-radius: 10px;
-        color: #ffffff;
-        text-align: center;
-        max-width: 80%;
+@media (min-width: 577px) and (max-width: 768px) {
+    #carouselId .carousel-item img {
+        max-height: 60vh; / Adjust max height for medium screens /
     }
+}
 
-    .quote-wrapper h3 {
-        font-size: 24px;
-        margin-bottom: 5px;
+@media (min-width: 769px) and (max-width: 992px) {
+    #carouselId .carousel-item img {
+        max-height: 70vh; / Adjust max height for large screens /
     }
+}
 
-    .quote-wrapper p {
-        font-size: 16px;
-        margin: 0;
+/ Additional media queries for even larger screens if needed /
+@media (min-width: 993px) {
+    #carouselId .carousel-item img {
+        max-height: 80vh; / Adjust max height for extra-large screens /
     }
+}
+
 </style>
-<div id="carouselId" class="carousel slide" data-bs-ride="carousel" style="max-height: 400px; overflow: hidden; position: relative;">
+<body>
+
+<div id="carouselId" class="carousel slide" data-bs-ride="carousel" style="max-height: 730px !important;">
     <ol class="carousel-indicators">
         <li data-bs-target="#carouselId" data-bs-slide-to="0" class="active" aria-current="true" aria-label="First slide"></li>
         <li data-bs-target="#carouselId" data-bs-slide-to="1" aria-label="Second slide"></li>
         <li data-bs-target="#carouselId" data-bs-slide-to="2" aria-label="Third slide"></li>
     </ol>
-    <div class="carousel-inner" role="listbox">
+    <div class="carousel-inner" role="listbox" style="max-height: 730px !important;">
         <div class="carousel-item active">
-            <img src="assets/images/Logo.jpeg" class="d-block mx-auto" alt="First slide" style="width: 100%;">
-            <div class="carousel-caption d-none d-md-block quote-wrapper">
-                <h3>IT'S NOT ABOUT BRAND, IT'S ABOUT STYLE</h3>
-                <p>We can assure you of a guaranteed high quality but affordable item.</p>
-            </div>
+            <img src="assets/images/1.png" class="d-block mx-auto img-fluid" alt="First slide">
         </div>
         <div class="carousel-item">
-            <img src="assets/images/11.jpg" class="w-100 d-block mx-auto" alt="Second slide" style="width: 100%; ">
-            <div class="carousel-caption d-none d-md-block">
-                <!-- <h3>Image Title 2</h3>
-                <p>Description</p> -->
-            </div>
+            <img src="assets/images/2.jpg" class="w-100 d-block mx-auto img-fluid" alt="Second slide">
         </div>
         <div class="carousel-item">
-            <img src="assets/images/22.jpg" class="w-100 d-block mx-auto" alt="Third slide" style="width: 100%;">
-            <div class="carousel-caption d-none d-md-block">
-                <!-- <h3>Image Title 3</h3>
-                <p>Description</p> -->
-            </div>
+            <img src="assets/images/3.jpg" class="w-100 d-block mx-auto img-fluid" alt="Third slide">
         </div>
     </div>
     <button class="carousel-control-prev" type="button" data-bs-target="#carouselId" data-bs-slide="prev">
@@ -69,3 +69,6 @@
         <span class="visually-hidden">Next</span>
     </button>
 </div>
+
+</body>
+</html>
