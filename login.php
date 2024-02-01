@@ -11,6 +11,21 @@ if (isset($_SESSION['id_user'])) {
 
 ?>
 
+<style>
+    .row {
+    height: 80vh; /* Adjust the height as needed */
+}
+
+.col-md-6 {
+    width: 40%; /* Adjust the width as needed */
+}
+
+.form-control {
+    width: 100%; /* Adjust the width of form controls */
+}
+
+</style>
+
 <div class="container">
     <div class="row justify-content-center align-items-center" style="height:70vh;">
         <div class="col-sm-12 col-md-6 col-lg-4">

@@ -49,97 +49,96 @@ try {
 <style>
     .fixed-height-card {
         height: 450px;
-        / You can add other styles as needed /
     }
     
     .card {
-        max-height: 350px; / Set a maximum height for the card /
+        max-height: 350px; 
     }
 
     .card-body {
-        max-height: 300px; / Set a maximum height for the card body /
-        overflow: hidden; / Hide the overflow content /
+        max-height: 300px; 
+        overflow: hidden; 
     }
 
     .custom-text {
-        font-size: 14px; / Adjust the font size as needed /
-        overflow: hidden; / Hide the overflow content /
-        white-space: nowrap; / Prevent text from wrapping /
-        text-overflow: ellipsis; / Show an ellipsis (...) when text overflows /
+        font-size: 14px; 
+        overflow: hidden; 
+        white-space: nowrap; 
+        text-overflow: ellipsis;
     }
     
     
 </style>
 
 <div class="album py-5 bg-light">
-<div class="row">
+    <div class="row">
         <!-- Categories Section -->
-        <div class="col-md-3">
-        <div class="list-group">
+        <div class="col-md-2">
+            <div class="list-group" style="padding-left: 10px;">
                 <h3 class="my-4">Categories</h3>
-                <span class="list-group-item list-group-item-action active" onclick="applyFilter('all')">All</span>
+                <span style="cursor: pointer;" class="list-group-item list-group-item-action active" onclick="applyFilter('all')">All</span>
                 <?php foreach ($categories as $category) : ?>
-                    <span class="list-group-item list-group-item-action" onclick="applyFilter('<?php echo $category['p_cat_id']; ?>')"><?php echo $category['p_cat_title']; ?></span>
+                    <span style="cursor: pointer;"  class="list-group-item list-group-item-action" onclick="applyFilter('<?php echo $category['p_cat_id']; ?>')"><?php echo $category['p_cat_title']; ?></span>
                 <?php endforeach; ?>
             </div>
         </div>
-    <div class="col-md-9">
-    <div class="row row-cols-1 row-cols-md-4 g-3">
-        
-        <?php
-        // Repeat the items in $fetchItems_ to create a set of 100 items
-        $repeatTimes = 100;
-        $repeatedItems = array_fill(0, $repeatTimes, $fetchItems_);
-
-        // Flatten the array to get a single-dimensional array
-        $flatItems = array_merge(...$repeatedItems);
-
-        foreach ($fetchItems_ as $row) :
-            $colors = $conn->prepare("SELECT * FROM `product_colors` WHERE `product_id` = ?");
-            $colors->bindValue(1, $row['product_id']);
-            $colors->execute();
-            $colors_ = $colors->fetchAll();
-
-            $display_img = "admin_area/product_images/product/" .  $row['product_id'] . "/" . $colors_[0]["color_name"] . "/" . $colors_[0]["product_img1"];
-            $display_desc = $colors_[0]["product_desc"];
-            $display_url = $colors_[0]["product_url"];
-        ?>
-
-            <div class="tCol" cat-id="<?php echo  ($row['p_cat_id']);?>">
+        <div class="col-md-10">
+            <div class="row row-cols-1 row-cols-md-4 g-3" style="padding: 10px;">
                 
-                <div class="card shadow-sm">
-                
-                    <h6 class="card-title text-center mt-2"><?php echo $row['product_title'] ?></h6>
-                    <div class="card-body d-flex justify-content-center">
-                        <img src="<?= $display_img ?>" class="card-image" />
+                <?php
+                // Repeat the items in $fetchItems_ to create a set of 100 items
+                $repeatTimes = 100;
+                $repeatedItems = array_fill(0, $repeatTimes, $fetchItems_);
+
+                // Flatten the array to get a single-dimensional array
+                $flatItems = array_merge(...$repeatedItems);
+
+                foreach ($fetchItems_ as $row) :
+                    $colors = $conn->prepare("SELECT * FROM `product_colors` WHERE `product_id` = ?");
+                    $colors->bindValue(1, $row['product_id']);
+                    $colors->execute();
+                    $colors_ = $colors->fetchAll();
+
+                    $display_img = "admin_area/product_images/product/" .  $row['product_id'] . "/" . $colors_[0]["color_name"] . "/" . $colors_[0]["product_img1"];
+                    $display_desc = $colors_[0]["product_desc"];
+                    $display_url = $colors_[0]["product_url"];
+                ?>
+
+                    <div class="tCol" cat-id="<?php echo  ($row['p_cat_id']);?>">
+                        
+                        <div class="card shadow-sm">
+                        
+                            <h6 class="card-title text-center mt-2"><?php echo $row['product_title'] ?></h6>
+                            <div class="card-body d-flex justify-content-center">
+                                <img src="<?= $display_img ?>" class="card-image" />
+                            </div>
+                            <p class="mx-0 my-1 text-center px-2 custom-text"><?= $display_desc ?></p>
+                            <span style="font-size:15px;" class="mx-0 my-1 text-center custom-text">&#8369; <?php echo $row['product_price'] ?></span>
+                            <a href="viewProduct_main.php?itemID=<?php echo $row['product_id'] ?>&slug=<?= $display_url ?>" style="background-color: black;" class="btn m-2 rounded-pill text-white product_link custom-text">View</a>
+                        </div>
                     </div>
-                    <p class="mx-0 my-1 text-center px-2 custom-text"><?= $display_desc ?></p>
-                    <span style="font-size:15px;" class="mx-0 my-1 text-center custom-text">&#8369; <?php echo $row['product_price'] ?></span>
-                    <a href="viewProduct_main.php?itemID=<?php echo $row['product_id'] ?>&slug=<?= $display_url ?>" style="background-color: black;" class="btn m-2 rounded-pill text-white product_link custom-text">View</a>
-                </div>
+                <?php endforeach ?>
             </div>
-        <?php endforeach ?>
-    </div>
-    </div>
-    <div id="paginationData" data-total-pages="<?php echo $totalPages; ?>"></div>
-    <nav class="mx-auto mt-3" aria-label="...">
-        <ul class="pagination justify-content-center">
-            <li class="page-item <?php echo ($currentPage == 1) ? 'disabled' : ''; ?>">
-                <button id="prevPage" class="page-link" onclick="changePage(-1)" tabindex="-1" aria-disabled="true">Previous</button>
-            </li>
+        </div>
+        <div id="paginationData" data-total-pages="<?php echo $totalPages; ?>"></div>
+        <nav class="mx-auto mt-3" aria-label="...">
+            <ul class="pagination justify-content-center">
+                <li class="page-item <?php echo ($currentPage == 1) ? 'disabled' : ''; ?>">
+                    <button id="prevPage" class="page-link" onclick="changePage(-1)" tabindex="-1" aria-disabled="true">Previous</button>
+                </li>
 
-            <?php
-            for ($i = 1; $i <= $totalPages; $i++) {
-                echo '<li class="page-item ' . (($i == $currentPage) ? 'active' : '') . '"><button class="page-link" onclick="fetchData(' . $i . ')">' . $i . '</button></li>';
-            }
-            ?>
+                <?php
+                for ($i = 1; $i <= $totalPages; $i++) {
+                    echo '<li class="page-item ' . (($i == $currentPage) ? 'active' : '') . '"><button class="page-link" onclick="fetchData(' . $i . ')">' . $i . '</button></li>';
+                }
+                ?>
 
-            <li class="page-item <?php echo ($currentPage == $totalPages) ? 'disabled' : ''; ?>">
-                <button id="nextPage" class="page-link" onclick="changePage(1)">Next</button>
-            </li>
-        </ul>
-    </nav>
-</div>
+                <li class="page-item <?php echo ($currentPage == $totalPages) ? 'disabled' : ''; ?>">
+                    <button id="nextPage" class="page-link" onclick="changePage(1)">Next</button>
+                </li>
+            </ul>
+        </nav>
+    </div>
 </div>
 <!-- <div class="pagination mb-5">
     <button id="prevPage" <?php echo ($currentPage == 1) ? 'disabled' : ''; ?> onclick="changePage(-1)">Previous</button>
