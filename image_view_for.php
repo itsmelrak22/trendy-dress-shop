@@ -225,7 +225,7 @@ $fetchDetails_ = $fetchDetails->fetch();
                 </div>
             </div>
 
-            <div id="Back" class="tabcontent"  >
+            <div id="Back" class="tabcontent"  style="display: none;">
                 <div class="m-2">
                     <div>
                         <label for="#"><b>BACK TEXT</b></label>
@@ -282,7 +282,8 @@ $fetchDetails_ = $fetchDetails->fetch();
 
 <script>
     window.onload = function() {
-        document.getElementById('front').click()
+        // document.getElementById('front').click()
+        initiateTab1()
     };
 
     var canvas = new fabric.Canvas('c');
