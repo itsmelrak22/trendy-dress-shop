@@ -177,18 +177,8 @@ $fetchDetails_ = $fetchDetails->fetch();
                                 <span class="input-group-text">SELECT FONT: </span>
                                 </div>
                                 <select id="frontFontFamily" onchange="updateDisplayFront(this.value)" class="form-control">
-                                    <option value="">Select a font</option>
+                                    <option selected disabled readonly> Select a font </option>option>
                                 </select>
-                            </div>
-                        </div>
-                        <div class="mb-3">
-                            <div class="input-group">
-                                <div class="input-group-prepend" style=" width: 200px; ">
-                                <span class="input-group-text">FONT DISPLAY: </span>
-                                </div>
-                                <!-- <p id="frontFontDisplay" style="font-size: 20px;"> &nbsp ...</p> -->
-                                <input type="text" class="form-control" readonly id="frontFontDisplay"/>
-
                             </div>
                         </div>
                         <div class="mb-3">
@@ -202,6 +192,27 @@ $fetchDetails_ = $fetchDetails->fetch();
                             </div>
                             <button class="btn btn-primary btn-sm my-1" id="frontAddTextBtn">Add Text</button>
                             <button class="btn btn-danger btn-sm my-1" id="frontRemoveTextBtn">Remove Text</button>
+                        </div>
+                        <div class="mb-3">
+                            <div class="input-group">
+                                <div class="input-group-prepend" style=" width: 200px; ">
+                                    <span class="input-group-text">TEXT SIZE (MAX 4X4): </span>
+                                </div>
+                                <input style="height: 36px;" type="number" id="textLength" name="frontColorPicker" class="form-control" min="1" max="4" placeholder="Length">
+                                <input style="height: 36px;" type="number" id="textWidth" name="frontColorPicker" class="form-control" min="1" max="4" placeholder="Width">
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <div class="input-group">
+                                <div class="input-group-prepend" style=" width: 200px; ">
+                                <span class="input-group-text">CUSTOMIZE BY:  </span>
+                                </div>
+                                <select class="form-control">
+                                    <option selected disabled readonly>...</option>
+                                    <option value="print">PRINT</option>
+                                    <option value="embroide">EMBROIDE</option>
+                                </select>
+                            </div>
                         </div>
                     </div>
                    
@@ -248,27 +259,17 @@ $fetchDetails_ = $fetchDetails->fetch();
                 <div style="background-color: black">
                     <p style="text-align: center;" class="text-white ">CUSTOMIZATION LIST</p>
                 </div>
-
                 <table>
                     <thead></thead>
-
                     <tbody>
                         <tr>
                             <td> <label for="#viewFrontView">FRONT VIEW</label></td>
-
                             <td> <input type="checkbox" name="" id="viewFrontView" checked /></td>
-
                         </tr>
                         <tr>
                             <td> <label for="#viewBackView">BACK VIEW</label></td>
                             <td> <input type="checkbox" name="" id="viewBackView" checked /></td>
-
                         </tr>
-                        <!-- <tr>
-                                                                    <td><label for="">NO LOGO</label></td>
-                                                                    <td> <input type="checkbox" name="" id="" checked /></td>
-
-                                                                </tr> -->
                     </tbody>
                 </table>
             </div>
@@ -281,7 +282,7 @@ $fetchDetails_ = $fetchDetails->fetch();
 
 <script>
     window.onload = function() {
-        // document.getElementById('front').click()
+        document.getElementById('front').click()
     };
 
     var canvas = new fabric.Canvas('c');
@@ -310,8 +311,8 @@ $fetchDetails_ = $fetchDetails->fetch();
     });
 
     function updateDisplayFront(font) {
-        var display = document.getElementById('frontFontDisplay');
-        display.value = `  ${font}`;
+        var display = document.getElementById('frontFontFamily');
+        // display.value = `  ${font}`;
         display.style.fontFamily = font;
     }
 
