@@ -4,7 +4,7 @@
         <div class="row">
             <div class="col-md-6 offset-md-3">
                 <div class="mb-4">
-                    <i class="fas fa-map-marker-alt text-primary"></i> Biwas Brg, 4108 Tanza, Philippines, Tanza, Philippines
+                    <i class="fas fa-map-marker-alt text-primary"></i> 9026 DR. SOLIS STREET JULUGAN 8, TANZA, CAVITE
                 </div>
                 <div class="mb-4">
                     <i class="fas fa-phone text-success"></i> 0963 609 9067
