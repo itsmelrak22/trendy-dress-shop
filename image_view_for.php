@@ -140,7 +140,7 @@ $fetchDetails_ = $fetchDetails->fetch();
             <canvas imgsrc="<?php echo $image1 ?>" class="custom-input" width="600" height="600" id="example1"></canvas>
             <div class="magnifier1"></div>
         </div>
-        <div class="image-container m-4" id="backView" style="display: none;">
+        <div class="image-container m-4" id="backView" >
             <label for=""><b>BACK VIEW</b></label>
             <canvas imgsrc="<?php echo $image2 ?>" class="custom-input" width="400" height="450" id="example2"></canvas>
             <div class="magnifier2"></div>
@@ -198,8 +198,8 @@ $fetchDetails_ = $fetchDetails->fetch();
                                 <div class="input-group-prepend" style=" width: 200px; ">
                                     <span class="input-group-text">TEXT SIZE (MAX 4X4): </span>
                                 </div>
-                                <input style="height: 36px;" type="number" id="textLength" name="frontColorPicker" class="form-control" min="1" max="4" placeholder="Length">
-                                <input style="height: 36px;" type="number" id="textWidth" name="frontColorPicker" class="form-control" min="1" max="4" placeholder="Width">
+                                <input style="height: 36px;" type="number" id="textLength" name="frontColorPicker" class="form-control" min="1" max="4" oninput="validateInput(this)" placeholder="Length">
+                                <input style="height: 36px;" type="number" id="textWidth" name="frontColorPicker" class="form-control" min="1" max="4" oninput="validateInput(this)" placeholder="Width">
                             </div>
                         </div>
                         <div class="mb-3">
@@ -281,6 +281,15 @@ $fetchDetails_ = $fetchDetails->fetch();
 <script src="https://cdn.jsdelivr.net/npm/fontfaceobserver@2.1.0/fontfaceobserver.standalone.js"></script>
 
 <script>
+    function validateInput(input) {
+        if(input){
+            var value = input.value;
+            if (value < 1 || value > 4) {
+                alert("Please enter a value between 1 and 4.");
+                input.value = "";
+            }
+        }
+    }
     window.onload = function() {
         // document.getElementById('front').click()
         initiateTab1()
@@ -380,8 +389,8 @@ $fetchDetails_ = $fetchDetails->fetch();
     $(document).ready(function() {
         $('#qty').on('change', function(e) {
             if (Number.parseInt($(this).val()) >= 1) {
-                let num = Number.parseFloat($('#price_id').attr('value')) * Number.parseInt($(this).val())
-                $('#price_id').value
+                let num = Number.parseFloat($('#product_price').textContent) * Number.parseInt($(this).val())
+                $('#product_price').value
                 console.log(num)
             } else {
                 Number.parseInt($(this).val(1))
@@ -552,7 +561,7 @@ $fetchDetails_ = $fetchDetails->fetch();
                     tempBack,
                     quantity: $('#qty').val(),
                     id: $('#div_set').attr('id_src'),
-                    priceTotal: $('#price_id').value(),
+                    priceTotal: $('#product_price').textContent,
                     size: $('#size_sel').val()
                 },
                 function(data) {
