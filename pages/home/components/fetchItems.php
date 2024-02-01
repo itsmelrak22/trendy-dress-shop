@@ -78,7 +78,7 @@ try {
                 <h3 class="my-4">Categories</h3>
                 <span style="cursor: pointer;" class="list-group-item list-group-item-action active" onclick="applyFilter('all')">All</span>
                 <?php foreach ($categories as $category) : ?>
-                    <span style="cursor: pointer;"  class="list-group-item list-group-item-action" onclick="applyFilter('<?php echo $category['p_cat_id']; ?>')"><?php echo $category['p_cat_title']; ?></span>
+                    <span style="cursor: pointer;"  class="list-group-item list-group-item-action " onclick="applyFilter('<?php echo $category['p_cat_id']; ?>')"><?php echo $category['p_cat_title']; ?></span>
                 <?php endforeach; ?>
             </div>
         </div>
@@ -154,27 +154,44 @@ try {
 
 <script>
     function applyFilter(selectedCategory) {
-    // Get all product items
-    var items = document.querySelectorAll('.tCol');
+        var categories = document.querySelectorAll('.list-group-item');
 
-    // If 'All' is selected, show all items
-    if (selectedCategory === 'all') {
-        items.forEach(function(item) {
-            item.style.display = 'block';
+        categories.forEach(function(category) {
+            category.classList.remove('active');
         });
-        return; // Exit the function
-    }
 
-    // Otherwise, filter and display items belonging to the selected category
-    items.forEach(function(item) {
-        var category = item.getAttribute('cat-id'); // Get the category ID from data-category-id attribute
-        if (category !== selectedCategory) {
-            item.style.display = 'none';
-        } else {
-            item.style.display = 'block';
+        if (selectedCategory === 'all') {
+            categories.forEach(function(category) {
+                if (category.textContent.trim() === 'All') {
+                    category.classList.add('active');
+                }
+            });
+
+            var items = document.querySelectorAll('.tCol');
+            items.forEach(function(item) {
+                item.style.display = 'block';
+            });
+
+            return;
         }
-    });
-}
 
+        categories.forEach(function(category) {
+            if (category.getAttribute('onclick').includes(selectedCategory)) {
+                category.classList.add('active');
+            }
+        });
+
+        var items = document.querySelectorAll('.tCol');
+
+        items.forEach(function(item) {
+            var category = item.getAttribute('cat-id');
+
+            if (selectedCategory === category) {
+                item.style.display = 'block';
+            } else {
+                item.style.display = 'none';
+            }
+        });
+    }
 
 </script>
