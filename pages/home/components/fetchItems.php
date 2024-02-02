@@ -44,6 +44,31 @@ try {
     echo "Error fetching categories: " . $e->getMessage();
 }
 
+$topSalesQuery = "
+SELECT B.product_id, B.product_title, C.product_desc, B.product_price, C.product_img1 as img1, 
+COUNT(A.product_id) as total_sales
+FROM cart AS A 
+INNER JOIN products AS B ON A.product_id = B.product_id 
+LEFT JOIN product_colors AS C ON B.product_id = A.product_id AND A.status = 1
+GROUP BY B.product_id, B.product_title, C.product_desc, B.product_price, C.product_img1
+ORDER BY total_sales DESC
+LIMIT 4
+";
+
+try {
+    // Prepare and execute the query
+    $topSalesStmt = $conn->prepare($topSalesQuery);
+    $topSalesStmt->execute();
+
+    // Fetch top sales products
+    $topSalesProducts = $topSalesStmt->fetchAll(PDO::FETCH_ASSOC);
+
+    // Debugging: Check if products are fetched
+    // var_dump($topSalesProducts);
+} catch (PDOException $e) {
+    // Handle database errors
+    echo "Error fetching top sales products: " . $e->getMessage();
+}
 
 ?>
 <style>
@@ -72,6 +97,35 @@ try {
 
 <div class="album py-5 bg-light">
     <div class="row">
+        <!-- Top Sales Products Section -->
+        <div class="col-md-12">
+    <h3 class="my-4">Top 4 Sales Products</h3>
+    <div class="row" style="padding: 10px;">
+        <?php 
+        // Check if $topSalesProducts is set before iterating
+        if(isset($topSalesProducts)) {
+            foreach ($topSalesProducts as $topProduct) : ?>
+                <div class="col-md-3">
+                    <div class="tCol">
+                        <div class="card shadow-sm">
+                            <h6 class="card-title text-center mt-2"><?php echo $topProduct['product_title'] ?></h6>
+                            <div class="card-body d-flex justify-content-center">
+                                <img loading="lazy" src="<?= $topProduct['img1'] ?>" class="card-image" loding="lazy" />
+                            </div>
+                            <p class="mx-0 my-1 text-center px-2 custom-text"><?= $topProduct['product_desc'] ?></p>
+                            <span style="font-size:15px;" class="mx-0 my-1 text-center custom-text">&#8369; <?php echo $topProduct['product_price'] ?></span>
+                            <a href="viewProduct_main.php?itemID=<?php echo $topProduct['product_id'] ?>&slug=<?= $topProduct['product_url'] ?>" style="background-color: black;" class="btn m-2 rounded-pill text-white product_link custom-text">View</a>
+                        </div>
+                    </div>
+                </div>
+            <?php endforeach; 
+        } else {
+            // Handle case where $topSalesProducts is not set
+            echo "<p>No top sales products found.</p>";
+        }
+        ?>
+    </div>
+</div>
         <!-- Categories Section -->
         <div class="col-md-2">
             <div class="list-group" style="padding-left: 10px;">
@@ -83,6 +137,9 @@ try {
             </div>
         </div>
         <div class="col-md-10">
+            <div>
+                <span>test</span>
+            </div>
             <div class="row row-cols-1 row-cols-md-4 g-3" style="padding: 10px;">
                 
                 <?php

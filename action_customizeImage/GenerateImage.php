@@ -26,7 +26,7 @@ if (isset($_SESSION['id_user'])) {
     $quantity = $_POST['quantity'];
     $id = $_POST['id'];
     $size = $_POST['size'];
-    $priceTotal = $_POST['priceTotal'];
+    $priceTotal = 1000;
     $status = 0;
     
     try {
