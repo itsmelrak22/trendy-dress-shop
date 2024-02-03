@@ -254,7 +254,7 @@ if (!isset($_SESSION['admin_email'])) {
 
                 <div class="form-group">
                     <!-- form-group Starts -->
-                    <label class="col-md-3 control-label"> Product Color Image 1 </label>
+                    <label class="col-md-3 control-label"> Product Color Image Front </label>
                     <div class="col-md-6">
                       <input type="file" name="product_img_${counter}_1" id="product_img_${counter}_1" class="form-control" required>
                     </div>
@@ -262,19 +262,10 @@ if (!isset($_SESSION['admin_email'])) {
 
                   <div class="form-group">
                     <!-- form-group Starts -->
-                    <label class="col-md-3 control-label"> Product Color Image 2 </label>
+                    <label class="col-md-3 control-label"> Product Color Image Back </label>
                     <div class="col-md-6">
                       <input type="file" name="product_img_${counter}_2" id="product_img_${counter}_2" class="form-control" required>
                     </div>
-                  </div><!-- form-group Ends -->
-
-                  <div class="form-group">
-                    <!-- form-group Starts -->
-                    <label class="col-md-3 control-label"> Product Color Image 3 </label>
-                    <div class="col-md-6">
-                      <input type="file" name="product_img_${counter}_3" id="product_img_${counter}_3" class="form-control" required>
-                    </div>
-
                   </div><!-- form-group Ends -->
 
                   <div class="form-group">

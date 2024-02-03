@@ -66,11 +66,11 @@ $userDetails_ = $userDetails->fetch();
                         </li>
                     <?php endif ?>
                     <li>
-                        <form class="d-flex">
+                    <form class="d-flex" method="get">
+                        <input class="form-control me-2" type="search" placeholder="Search item here" aria-label="Search" name="search">
+                        <input class="btn btn-light" type="submit" value="Search" >
+                    </form>
 
-                            <input class="form-control me-2" type="search" placeholder="Search item here" aria-label="Search">
-                            <button class="btn  btn-light" type="submit">Search</button>
-                        </form>
                     </li>
 
                 </ul>

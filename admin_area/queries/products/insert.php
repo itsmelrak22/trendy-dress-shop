@@ -5,7 +5,7 @@ spl_autoload_register(function ($class) {
   });
 
     if (isset($_POST['submit'])) {
-      $grouped_files = array_chunk($_FILES, 3, true);
+      $grouped_files = array_chunk($_FILES, 2, true);
       $explodedString = array();
       $colors = array();
       $urls = array();
@@ -96,14 +96,14 @@ spl_autoload_register(function ($class) {
           $number = $value['number'];
           $image1 = $value["product_img_".$number."_1"];
           $image2 = $value["product_img_".$number."_2"];
-          $image3 = $value["product_img_".$number."_3"];
+          // $image3 = $value["product_img_".$number."_3"];
 
           $product_url =  $urls[ "product_url_$number" ];
           $product_desc =  $descs[ "product_desc_$number" ];
           $product_features =  $features[ "product_features_$number" ];
           $product_label =  $labels[ "product_label_$number" ];
 
-          $image_array = array( $image1, $image2, $image3 );
+          $image_array = array( $image1, $image2 );
 
 
           foreach ($image_array as $key => $value) {
@@ -117,7 +117,7 @@ spl_autoload_register(function ($class) {
           }
           $url1 = basename($image1["name"]);
           $url2 = basename($image2["name"]);
-          $url3 = basename($image3["name"]);
+          // $url3 = basename($image3["name"]);
 
           $product->setQuery("INSERT INTO `product_colors` 
                                         (
@@ -125,7 +125,6 @@ spl_autoload_register(function ($class) {
                                           `color_name`, 
                                           `product_img1`, 
                                           `product_img2`, 
-                                          `product_img3`,
                                           `product_url`,
                                           `product_desc`,
                                           `product_features`,
@@ -136,7 +135,6 @@ spl_autoload_register(function ($class) {
                                           '$color',
                                           '$url1',
                                           '$url2',
-                                          '$url3',
                                           '$product_url',
                                           '$product_desc',
                                           '$product_features',

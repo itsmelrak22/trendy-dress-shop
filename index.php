@@ -24,6 +24,17 @@ session_start();
 // echo ("<script>localStorage.clear();window.location.href = './pages/login/login_main.php';</script>");
 // }
 
+
+if( isset( $_REQUEST['search'] ) ){
+    $searchItem = $_REQUEST['search'];
+    $_SESSION['searchItem'] = $searchItem;
+    print_r($_SESSION);
+}else{
+    unset( $_SESSION['searchItem'] );
+    unset( $_REQUEST['search'] );
+}
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">

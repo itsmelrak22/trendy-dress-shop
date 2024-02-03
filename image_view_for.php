@@ -88,7 +88,7 @@ $fetchDetails_ = $fetchDetails->fetch();
             <div class="input-group-prepend">
               <span class="input-group-text">Quantity</span>
             </div>
-            <input value="1" type="number" placeholder="Enter quantity" id="qty" class="form-control" type="number" required/>
+            <input value="1" type="number" placeholder="Enter quantity" id="qty" class="form-control" type="number"  required/>
           </div>
         </div>
 
@@ -113,20 +113,44 @@ $fetchDetails_ = $fetchDetails->fetch();
         <span class="text-muted">Subtotal</span>
         <span class="badge badge-secondary badge-pill">3</span>
       </h4>
-      <ul class="list-group mb-3">
-        <li class="list-group-item d-flex justify-content-between lh-condensed">
-          <div>
-            <h6 class="my-0">Product name</h6>
-            <small class="text-muted" id="product_title"><?= $fetchDetails_["product_title"] ?></small>
-          </div>
-          <span class="text-muted">P <span  id="product_price"><?= $fetchDetails_["product_price"] ?></span> </span>
-        </li>
+      <ul class="list-group mb-3" >
+        <div id="subtotal_list">
+            <li class="list-group-item d-flex justify-content-between lh-condensed">
+                <div>
+                    <h6 class="my-0"><?= $fetchDetails_["product_title"] ?></h6>
+                </div>
+                <span class="text-muted">P <span  id="product_price"><?= $fetchDetails_["product_price"] ?></span> </span>
+                <span class="text-muted"> x </span>
+                <span class="text-muted"> <span id="product_qty"> 1 </span> </span>
+                <span class="text-muted"> = </span>
+                <span class="text-muted">P <span class="price-to-compute"  id="product_qty_price"><?= $fetchDetails_["product_price"] ?></span> </span>
+            </li>
+        </div>
         <li class="list-group-item d-flex justify-content-between">
           <span>Total (PHP)</span>
           <strong>P <span id="total_computation"></span> </strong>
         </li>
       </ul>
     </div>
+</div>
+
+<div class="my-2 border ">
+    <div style="background-color: black">
+        <p style="text-align: center;" class="text-white ">CUSTOMIZATION LIST</p>
+    </div>
+    <table>
+        <thead></thead>
+        <tbody>
+            <tr>
+                <td> <label for="#viewFrontView">FRONT VIEW</label></td>
+                <td> <input type="checkbox" name="" id="viewFrontView" checked /></td>
+            </tr>
+            <tr>
+                <td> <label for="#viewBackView">BACK VIEW</label></td>
+                <td> <input type="checkbox" name="" id="viewBackView" checked /></td>
+            </tr>
+        </tbody>
+    </table>
 </div>
 <div class="tab">
     <button class="btn btn-info btn-dark tablinks" id="front" onclick="openTab(event, 'Front')">Front</button>
@@ -160,7 +184,7 @@ $fetchDetails_ = $fetchDetails->fetch();
                                 <div class="input-group-prepend" style=" width: 200px; ">
                                 <span class="input-group-text">SELECT COLOR: </span>
                                 </div>
-                                <input style="height: 36px;" type="color" id="frontColorPicker" name="frontColorPicker" value="#ffffff" class="form-control" onchange="updateDisplayColorFront(this.value)">
+                                <input style="height: 36px;" type="color" id="frontColorPicker" name="frontColorPicker" value="#000000" class="form-control" onchange="updateDisplayColorFront(this.value)">
                             </div>
                         </div>
                         <div class="mb-3">
@@ -184,22 +208,10 @@ $fetchDetails_ = $fetchDetails->fetch();
                         <div class="mb-3">
                             <div class="input-group">
                                 <div class="input-group-prepend" style=" width: 200px; ">
-                                    <span class="input-group-text">TEXT INPUT: </span>
-                                </div>
-                                <!-- <p id="frontFontDisplay" style="font-size: 20px;"> &nbsp ...</p> -->
-                                <textarea name="text_input" id="frontTextInput" cols="35" rows="4"></textarea>
-
-                            </div>
-                            <button class="btn btn-primary btn-sm my-1" id="frontAddTextBtn">Add Text</button>
-                            <button class="btn btn-danger btn-sm my-1" id="frontRemoveTextBtn">Remove Text</button>
-                        </div>
-                        <div class="mb-3">
-                            <div class="input-group">
-                                <div class="input-group-prepend" style=" width: 200px; ">
                                     <span class="input-group-text">TEXT SIZE (MAX 4X4): </span>
                                 </div>
-                                <input style="height: 36px;" type="number" id="textLength" name="frontColorPicker" class="form-control" min="1" max="4" oninput="validateInput(this)" placeholder="Length">
-                                <input style="height: 36px;" type="number" id="textWidth" name="frontColorPicker" class="form-control" min="1" max="4" oninput="validateInput(this)" placeholder="Width">
+                                <input style="height: 36px;" type="number" id="textLength" name="frontLength" class="form-control" min="1" max="4" oninput="validateInput(this)" placeholder="Length">
+                                <input style="height: 36px;" type="number" id="textWidth" name="frontWidth" class="form-control" min="1" max="4" oninput="validateInput(this)" placeholder="Width">
                             </div>
                         </div>
                         <div class="mb-3">
@@ -207,13 +219,24 @@ $fetchDetails_ = $fetchDetails->fetch();
                                 <div class="input-group-prepend" style=" width: 200px; ">
                                 <span class="input-group-text">CUSTOMIZE BY:  </span>
                                 </div>
-                                <select class="form-control">
+                                <select class="form-control" id="frontTextCustomizeBy">
                                     <option selected disabled readonly>...</option>
                                     <option value="print">PRINT</option>
                                     <option value="embroide">EMBROIDE</option>
                                 </select>
                             </div>
                         </div>
+                        <div class="mb-3">
+                            <div class="input-group">
+                                <span class="input-group-text" style=" width: 200px; ">TEXT INPUT:</span>
+                                <textarea name="text_input" id="frontTextInput" cols="35" rows="4"></textarea>
+                            </div>
+
+                            
+                            <button class="btn btn-primary btn-sm my-1" id="frontAddTextBtn">Add Text</button>
+                            <button class="btn btn-danger btn-sm my-1" id="frontRemoveTextBtn">Remove Text</button>
+                        </div>
+
                     </div>
                    
                     <div>
@@ -221,7 +244,7 @@ $fetchDetails_ = $fetchDetails->fetch();
                     </div>
                     <input accept=".png" class=" form-control" type="file" id="fronImageInput" />
                     <img loading="lazy" class="m-1" id="previewImage" src="#" alt="Preview Image" style="display: none; width:200px">
-                    <button id="frontRemoveBtn" class="btn btn-danger form-control">REMOVE</button>
+                    <button id="frontRemoveBtn" class="btn btn-danger form-control">Front REMOVE</button>
                 </div>
             </div>
 
@@ -255,24 +278,6 @@ $fetchDetails_ = $fetchDetails->fetch();
             </div>
 
 
-            <div class="p-1 border ">
-                <div style="background-color: black">
-                    <p style="text-align: center;" class="text-white ">CUSTOMIZATION LIST</p>
-                </div>
-                <table>
-                    <thead></thead>
-                    <tbody>
-                        <tr>
-                            <td> <label for="#viewFrontView">FRONT VIEW</label></td>
-                            <td> <input type="checkbox" name="" id="viewFrontView" checked /></td>
-                        </tr>
-                        <tr>
-                            <td> <label for="#viewBackView">BACK VIEW</label></td>
-                            <td> <input type="checkbox" name="" id="viewBackView" checked /></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
             <!-- // <img loading="lazy" id="see_generated" alt="" /> -->
         </div>
     </div>
@@ -280,7 +285,82 @@ $fetchDetails_ = $fetchDetails->fetch();
 
 <script src="https://cdn.jsdelivr.net/npm/fontfaceobserver@2.1.0/fontfaceobserver.standalone.js"></script>
 
-<script>
+<script>    
+    window.onload = function() {
+        // document.getElementById('front').click()
+        initiateTab1()
+    };
+
+    function addListItem(productTitle, productPrice) {
+        // Get the div by its id
+        var div = document.getElementById('subtotal_list');
+
+        // Create a new list item
+        var listItem = document.createElement('li');
+        listItem.className = 'list-group-item d-flex justify-content-between lh-condensed price-to-compute';
+
+        // Create the inner div
+        var innerDiv = document.createElement('div');
+        var h6 = document.createElement('h6');
+        h6.className = 'my-0';
+        h6.textContent = 'Customize';
+        var span = document.createElement('span');
+        span.className = 'text-muted';
+        span.id = 'product_title';
+        span.textContent = productTitle;
+        innerDiv.appendChild(h6);
+        innerDiv.appendChild(span);
+
+        // Create the span for the price
+        var span = document.createElement('span');
+        span.className = 'text-muted';
+        span.innerHTML = 'P <span class="price-to-compute" id="product_price">' + productPrice + '</span>';
+
+        // Append the inner div and span to the list item
+        listItem.appendChild(innerDiv);
+        listItem.appendChild(span);
+
+        // Append the list item to the div
+        div.appendChild(listItem);
+
+        computeTotalPrice()
+    }
+
+    function removeListItem(productTitle) {
+        // Get the div by its id
+        var div = document.getElementById('subtotal_list');
+
+        // Get all list items in the div
+        var listItems = div.getElementsByTagName('li');
+
+        // Loop through each list item
+        for (var i = 0; i < listItems.length; i++) {
+            // Get the product title of the list item
+            var listItemProductTitle = listItems[i].getElementsByTagName('span')[0].textContent;
+
+            // If the product title matches the given product title, remove the list item
+            if (listItemProductTitle === productTitle) {
+                div.removeChild(listItems[i]);
+                break;
+            }
+        }
+
+        computeTotalPrice()
+    }
+
+    function computeTotalPrice() {
+        let elements = document.getElementsByClassName("price-to-compute");
+        let total = 0;
+        for(let i = 0; i < elements.length; i++) {
+            let price = parseInt(elements[i].textContent, 10);
+            if(!isNaN(price)) {
+                total += price;
+            }
+        }
+
+        document.getElementById('total_computation').textContent = total;
+    }
+
     function validateInput(input) {
         if(input){
             var value = input.value;
@@ -290,10 +370,6 @@ $fetchDetails_ = $fetchDetails->fetch();
             }
         }
     }
-    window.onload = function() {
-        // document.getElementById('front').click()
-        initiateTab1()
-    };
 
     var canvas = new fabric.Canvas('c');
 
@@ -367,6 +443,7 @@ $fetchDetails_ = $fetchDetails->fetch();
     function initiateTab1(){
         setTimeout(() => {
             document.getElementById('front').click()
+            computeTotalPrice()
         }, 100)
 
         document.getElementById('frontColorPicker').addEventListener('input', function() {
@@ -389,11 +466,26 @@ $fetchDetails_ = $fetchDetails->fetch();
     $(document).ready(function() {
         $('#qty').on('change', function(e) {
             if (Number.parseInt($(this).val()) >= 1) {
-                let num = Number.parseFloat($('#product_price').textContent) * Number.parseInt($(this).val())
+                let num = Number.parseFloat($('#product_price')[0].textContent) * Number.parseInt($(this).val())
                 $('#product_price').value
-                console.log(num)
+                $('#product_qty_price')[0].textContent = num
+                $('#product_qty')[0].textContent = $(this).val()
+
+                computeTotalPrice()
             } else {
                 Number.parseInt($(this).val(1))
+            }
+
+        })
+
+        $('#frontTextCustomizeBy').on('change', function(e) {
+            console.log($(this).val());
+            let value = $(this).val();
+            if( value ){
+                removeListItem(`Customized by print`)
+                removeListItem(`Customized by embroide`)
+
+                addListItem(`Customized by ${value}`, '300')
             }
 
         })
@@ -431,12 +523,26 @@ $fetchDetails_ = $fetchDetails->fetch();
         });
 
         function setText(canvas1, text) {
+            let fontFamily = $('#frontFontFamily').val();
+            let color = $('#selectedColor').val();
+
+            // If no font is selected, use a default one
+            if (!fontFamily) {
+                fontFamily = 'Arial';  // Replace 'Arial' with your default font
+            }
+
+            // If no color is selected, use black
+            if (!color) {
+                color = '#000000';  // Black color
+            }
+
+            
             let canvasTemp = canvas1
             var canvasText = new fabric.IText(text, {
                 left: 10,  // position of text
                 top: 10,
-                fontFamily:  $('#frontFontFamily').val(),
-                fill: $('#frontColorPicker').val(),
+                fontFamily: fontFamily,
+                fill: color,
                 lineHeight: 1.1,
             });
             canvasText.bringToFront();
@@ -444,12 +550,47 @@ $fetchDetails_ = $fetchDetails->fetch();
             canvasTemp.add(canvasText);
             canvasTemp.setActiveObject(canvasText);
             canvasTemp.renderAll();
+
+            if (checkCanvasForText(canvas1)) {
+                document.getElementById('frontAddTextBtn').disabled = true;
+                addListItem("Custom Text", "300")
+
+            }
         }
+
+        function checkCanvasForText(canvas) {
+            var objects = canvas.getObjects();
+            for (var i = 0; i < objects.length; i++) {
+                if (objects[i].type === 'i-text') {
+                    return true;  // Return true as soon as a text object is found
+                }
+            }
+            return false;  // Return false if no text object is found
+        }
+
+        function removeImageFromCanvas(canvas) {
+            var objects = canvas.getObjects();
+            for (var i = 0; i < objects.length; i++) {
+                if (objects[i].type === 'image') {
+                    canvas.remove(objects[i]);  // Remove the image object
+                    break;  // Exit the loop as soon as an image is found and removed
+                }
+            }
+            canvas.renderAll();  // Update the canvas
+        }
+
+
+
 
         $('#frontRemoveTextBtn').on('click', function() {
             var activeObject = canvas1.getActiveObject();
             if (activeObject && activeObject.type === 'i-text') {
                 canvas1.remove(activeObject);
+
+                if (!checkCanvasForText(canvas1)) {
+                    document.getElementById('frontAddTextBtn').disabled = false;
+                    removeListItem('Custom Text');
+                }
             }
         });
 
@@ -521,9 +662,11 @@ $fetchDetails_ = $fetchDetails->fetch();
         });
 
         $('#frontRemoveBtn').on('click', function() {
-            removeSelected(canvas1)
-            // Hide the button after generating the view
-            setBackground(canvas1, bg_1)
+            // removeSelected(canvas1)
+            // // Hide the button after generating the view
+            removeImageFromCanvas(canvas1);
+
+           
         });
         $('#backRemoveBtn').on('click', function() {
             removeSelected(canvas2)
