@@ -80,57 +80,34 @@ $fetchDetails_ = $fetchDetails->fetch();
 
 </style>
 <div class="row">
-    <div class="col-md-8 order-md-1">
-      <h4 class="mb-3">Customize your item:</h4>
-        <div class="mb-3">
-          <!-- <label for="qty">Quantity</label> -->
-          <div class="input-group">
-            <div class="input-group-prepend">
-              <span class="input-group-text">Quantity</span>
-            </div>
-            <input value="1" type="number" placeholder="Enter quantity" id="qty" class="form-control" type="number"  required/>
-          </div>
-        </div>
-
-        <div class="mb-3">
-          <!-- <label for="size_sel">Size</label> -->
-          <div class="input-group">
-            <div class="input-group-prepend">
-              <span class="input-group-text">Size</span>
-            </div>
-            <select class="form-control" name="" id="size_sel" required>
-                    <option  disabled readonly selected>Please Select Size:</option>
-                    <option value="sm" >Small (SM)</option>
-                    <option value="md">Medium (MD)</option>
-                    <option value="lg">Large (LG)</option>
-                    <option value="xl">Extra Large (XL)</option>
-                </select>
-          </div>
-        </div>
-    </div>
+ 
     <div class="col-md-4 order-md-2 mb-4">
-      <h4 class="d-flex justify-content-between align-items-center mb-3">
-        <span class="text-muted">Subtotal</span>
-        <span class="badge badge-secondary badge-pill">3</span>
-      </h4>
-      <ul class="list-group mb-3" >
-        <div id="subtotal_list">
-            <li class="list-group-item d-flex justify-content-between lh-condensed">
-                <div>
-                    <h6 class="my-0"><?= $fetchDetails_["product_title"] ?></h6>
+        <h4 class="mb-3">Customize your item:</h4>
+            <div class="mb-3">
+                <!-- <label for="qty">Quantity</label> -->
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                    <span class="input-group-text">Quantity</span>
+                    </div>
+                    <input value="1" type="number" placeholder="Enter quantity" id="qty" class="form-control" type="number"  required/>
                 </div>
-                <span class="text-muted">P <span  id="product_price"><?= $fetchDetails_["product_price"] ?></span> </span>
-                <span class="text-muted"> x </span>
-                <span class="text-muted"> <span id="product_qty"> 1 </span> </span>
-                <span class="text-muted"> = </span>
-                <span class="text-muted">P <span class="price-to-compute"  id="product_qty_price"><?= $fetchDetails_["product_price"] ?></span> </span>
-            </li>
-        </div>
-        <li class="list-group-item d-flex justify-content-between">
-          <span>Total (PHP)</span>
-          <strong>P <span id="total_computation"></span> </strong>
-        </li>
-      </ul>
+            </div>
+
+            <div class="mb-3">
+            <!-- <label for="size_sel">Size</label> -->
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                    <span class="input-group-text">Size</span>
+                    </div>
+                    <select class="form-control" name="" id="size_sel" required>
+                            <option  disabled readonly selected>Please Select Size:</option>
+                            <option value="sm" >Small (SM)</option>
+                            <option value="md">Medium (MD)</option>
+                            <option value="lg">Large (LG)</option>
+                            <option value="xl">Extra Large (XL)</option>
+                        </select>
+                </div>
+            </div>
     </div>
 </div>
 
@@ -161,17 +138,17 @@ $fetchDetails_ = $fetchDetails->fetch();
     <div class="d-flex m-2">
         <div class="image-container m-4" id="frontView">
             <label for=""><b>FRONT VIEW</b></label>
-            <canvas imgsrc="<?php echo $image1 ?>" class="custom-input" width="600" height="600" id="example1"></canvas>
+            <canvas imgsrc="<?php echo $image1 ?>" class="custom-input" width="400" height="400" id="example1"></canvas>
             <div class="magnifier1"></div>
         </div>
         <div class="image-container m-4" id="backView" >
             <label for=""><b>BACK VIEW</b></label>
-            <canvas imgsrc="<?php echo $image2 ?>" class="custom-input" width="400" height="450" id="example2"></canvas>
+            <canvas imgsrc="<?php echo $image2 ?>" class="custom-input" width="400" height="400" id="example2"></canvas>
             <div class="magnifier2"></div>
         </div>
     </div>
-    <div class="m-4">
-        <div class="col-lg-12">
+    <div class="m-4 row">
+        <div class="col-md-7">
             <div id="Front" class="tabcontent" >
                 <div class="m-2">
                     <div>
@@ -243,7 +220,10 @@ $fetchDetails_ = $fetchDetails->fetch();
                         <label for="#fronImageInput"><b>FRONT LOGO</b></label>
                     </div>
                     <input accept=".png" class=" form-control" type="file" id="fronImageInput" />
-                    <img loading="lazy" class="m-1" id="previewImage" src="#" alt="Preview Image" style="display: none; width:200px">
+                    <div>
+                        <img loading="lazy" class="m-1" id="previewImage" src="#" alt="Preview Image" style="display: none; width:200px">
+                        <input type="hidden" id="customized_image_price" value="300" >
+                    </div>
                     <button id="frontRemoveBtn" class="btn btn-danger form-control">Front REMOVE</button>
                 </div>
             </div>
@@ -279,6 +259,30 @@ $fetchDetails_ = $fetchDetails->fetch();
 
 
             <!-- // <img loading="lazy" id="see_generated" alt="" /> -->
+        </div>
+        <div class="col-md-5 order-md-1">
+            <h4 class="d-flex justify-content-between align-items-center mb-3">
+                <span class="text-muted">Subtotal</span>
+                <span class="badge badge-secondary badge-pill">3</span>
+            </h4>
+            <ul class="list-group mb-3" >
+                <div id="subtotal_list">
+                    <li class="list-group-item d-flex justify-content-between lh-condensed">
+                        <div>
+                            <h6 class="my-0"><?= $fetchDetails_["product_title"] ?></h6>
+                        </div>
+                        <span class="text-muted">P <span  id="product_price"><?= $fetchDetails_["product_price"] ?></span> </span>
+                        <span class="text-muted"> x </span>
+                        <span class="text-muted"> <span id="product_qty"> 1 </span> </span>
+                        <span class="text-muted"> = </span>
+                        <span class="text-muted">P <span class="price-to-compute"  id="product_qty_price"><?= $fetchDetails_["product_price"] ?></span> </span>
+                    </li>
+                </div>
+                <li class="list-group-item d-flex justify-content-between">
+                <span>Total (PHP)</span>
+                <strong>P <span id="total_computation"></span> </strong>
+                </li>
+            </ul>
         </div>
     </div>
 </div>
@@ -665,8 +669,10 @@ $fetchDetails_ = $fetchDetails->fetch();
             // removeSelected(canvas1)
             // // Hide the button after generating the view
             removeImageFromCanvas(canvas1);
-
-           
+            $('#previewImage').attr('src', '').css('display', 'none');
+            $('#fronImageInput').val('');
+            $('#frontRemoveBtn').hide()
+            removeListItem("Customized Logo")
         });
         $('#backRemoveBtn').on('click', function() {
             removeSelected(canvas2)
@@ -765,6 +771,7 @@ $fetchDetails_ = $fetchDetails->fetch();
             canvasTemp.add(img); // Add the logo to the canvas
         });
 
+        addListItem("Customized Logo", "300");
     }
 
     function setBackground(canvas, img) {
