@@ -324,9 +324,9 @@ if (!isset($_SESSION['admin_email'])) {
 
                     <ul id="users" class="collapse">
 
-                        <li>
+                        <!-- <li>
                             <a href="index.php?insert_user"> Insert User </a>
-                        </li>
+                        </li> -->
 
                         <li>
                             <a href="index.php?view_users"> View Users </a>

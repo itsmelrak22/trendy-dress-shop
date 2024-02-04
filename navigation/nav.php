@@ -28,6 +28,9 @@ $userDetails_ = $userDetails->fetch();
                     <li class="nav-item">
                         <a onclick="to_about_us()" style="cursor: pointer;" class="nav-link active text-white" aria-current="page">About Us</a>
                     </li>
+                    <li class="nav-item">
+                        <a onclick="to_customize()" style="cursor: pointer;" class="nav-link active text-white" aria-current="page">Customize</a>
+                    </li>
 
                     <!-- <li class="nav-item">
                         <a id="aboutUsLink" style="cursor: pointer;" class="nav-link active text-white" aria-current="page">About Us</a>

@@ -88,27 +88,26 @@ $new_c_image = $row_edit['cat_image'];
 
 </div><!-- form-group Ends -->
 
-<div class="form-group"><!-- form-group Starts -->
+<!-- <div class="form-group">
 
-<label class="col-md-3 control-label">Show as Category Top</label>
+    <label class="col-md-3 control-label">Show as Category Top</label>
 
-<div class="col-md-6">
+    <div class="col-md-6">
 
-<input type="radio" name="cat_top" value="yes" 
-<?php if($c_top == 'no'){}else{ echo "checked='checked'"; } ?>>
+    <input type="radio" name="cat_top" value="yes" 
+    <?php// if($c_top == 'no'){}else{ echo "checked='checked'"; } ?>>
 
-<label>Yes</label>
+    <label>Yes</label>
 
-<input type="radio" name="cat_top" value="no" 
-<?php if($c_top == 'no'){ echo "checked='checked'"; }else{} ?>>
+    <input type="radio" name="cat_top" value="no" 
+    <?php// if($c_top == 'no'){ echo "checked='checked'"; }else{} ?>>
 
-<label>No</label>
+    <label>No</label>
 
-</div>
+    </div>
 
-</div><!-- form-group Ends -->
-
-<div class="form-group"><!-- form-group Starts -->
+</div> -->
+<!-- <div class="form-group">
 
 <label class="col-md-3 control-label">Select Category Image</label>
 
@@ -118,11 +117,12 @@ $new_c_image = $row_edit['cat_image'];
 
 <br>
 
-<img loading="lazy" src="other_images/<?php echo $c_image; ?>" width="70" height="70" >
+<img loading="lazy" src="other_images/<?php // echo $c_image; ?>" width="70" height="70" >
 
 </div>
 
-</div><!-- form-group Ends -->
+</div> -->
+<!-- form-group Ends -->
 
 
 <div class="form-group"><!-- form-group Starts -->

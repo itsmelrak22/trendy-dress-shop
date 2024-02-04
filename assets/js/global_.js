@@ -30,6 +30,11 @@ function to_aboutus() {
     $("#contents").html(data);
   });
 }
+function to_customize() {
+  $.post("pages/customize/customize_main.php", {}, function (data) {
+    $("#contents").html(data);
+  });
+}
 function to_portfolio() {
   $.post("pages/profile/profile_main.php", {}, function (data) {
     $("#contents").html(data);

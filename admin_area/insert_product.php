@@ -70,10 +70,8 @@ if (!isset($_SESSION['admin_email'])) {
                 <!-- form-group Starts -->
                 <label class="col-md-3 control-label"> Select A Manufacturer </label>
                 <div class="col-md-6">
-                  <select class="form-control" name="manufacturer">
+                  <select class="form-control" name="manufacturer" readonly>
                     <!-- select manufacturer Starts -->
-                    <option> Select A Manufacturer </option>
-
                     <?php
                       $get_manufacturer = "select * from manufacturers";
                       $run_manufacturer = mysqli_query($con, $get_manufacturer);
@@ -81,8 +79,8 @@ if (!isset($_SESSION['admin_email'])) {
                         $manufacturer_id = $row_manufacturer['manufacturer_id'];
                         $manufacturer_title = $row_manufacturer['manufacturer_title'];
 
-                        echo "<option value='$manufacturer_id'>
-                  $manufacturer_title
+                        echo "<option value='$manufacturer_id' selected>
+                    $manufacturer_title
                   </option>";
                       }
 
@@ -97,7 +95,7 @@ if (!isset($_SESSION['admin_email'])) {
                 <!-- form-group Starts -->
                 <label class="col-md-3 control-label"> Product Category </label>
                 <div class="col-md-6">
-                  <select name="product_cat" class="form-control">
+                  <select name="product_cat" class="form-control" required>
                     <option> Select a Product Category </option>
 
                     <?php
@@ -124,7 +122,7 @@ if (!isset($_SESSION['admin_email'])) {
                 <!-- form-group Starts -->
                 <label class="col-md-3 control-label"> Category </label>
                 <div class="col-md-6">
-                  <select name="cat" class="form-control">
+                  <select name="cat" class="form-control" required>
                     <option> Select a Category </option>
                     <?php
 

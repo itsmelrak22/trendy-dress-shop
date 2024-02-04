@@ -60,37 +60,37 @@ else {
 
 </div>
 
-</div><!-- form-group Ends -->
 
-<div class="form-group"><!-- form-group Starts -->
+<div class="form-group">
 
-<label class="col-md-3 control-label">Show as Category Top</label>
+    <!-- <label class="col-md-3 control-label">Show as Category Top</label>
 
-<div class="col-md-6">
+    <div class="col-md-6">
 
-<input type="radio" name="cat_top" value="yes">
+    <input type="radio" name="cat_top" value="yes">
 
-<label>Yes</label>
+    <label>Yes</label>
 
-<input type="radio" name="cat_top" value="no">
+    <input type="radio" name="cat_top" value="no">
 
-<label>No</label>
+    <label>No</label>
 
-</div>
-
-</div><!-- form-group Ends -->
-
-<div class="form-group"><!-- form-group Starts -->
-
-<label class="col-md-3 control-label">Select Category Image</label>
-
-<div class="col-md-6">
-
-<input type="file" name="cat_image" class="form-control">
+    </div> -->
 
 </div>
 
-</div><!-- form-group Ends -->
+ <div class="form-group">
+
+    <!--<label class="col-md-3 control-label">Select Category Image</label>
+
+    <div class="col-md-6">
+
+    <input type="file" name="cat_image" class="form-control">
+
+    </div>  -->
+
+</div>
+
 
 <div class="form-group"><!-- form-group Starts -->
 

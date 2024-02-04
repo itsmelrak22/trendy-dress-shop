@@ -572,59 +572,6 @@ $fetchDetails_ = $fetchDetails->fetch();
         });
     }
 
-    // function submitImages(){
-    //     console.log('Hello');
-    //     // event.stopPropagation();
-
-    //     let backLogo = [];
-    //         canvas2.getObjects().forEach((object) => {
-    //             backLogo.push(object.getSrc())
-    //         })
-    //         //Get MainCanvas
-    //         var backCanvas = canvas2.toDataURL();
-
-
-    //         let frontLogo = [];
-    //         canvas1.getObjects().forEach((object) => {
-    //             if( object.type == "image" ){
-    //                 console.log(object.type)
-    //                 frontLogo.push(object.getSrc())
-    //             }
-    //         })
-
-    //         //Get MainCanvas
-    //         var frontCanvas = canvas1.toDataURL();
-
-    //         $('#see_generated').attr("src", backCanvas)
-
-
-    //         frontViewData.logoInput = frontLogo
-    //         frontViewData.backgroundImage = frontCanvas
-
-    //         backViewData.logoInput = backLogo
-    //         backViewData.backgroundImage = backCanvas
-
-    //         $.post("action_customizeImage/GenerateImage.php", {
-    //                 "basicInfo": basicInfo,
-    //                 "frontViewData": frontViewData,
-    //                 "backViewData": backViewData,
-    //             },
-    //             function(data) {
-    //                 console.log('data', data)
-    //                 // if (data === 'No User') {
-    //                 //     login_()
-    //                 //     $('#modalId').modal('toggle')
-    //                 // } else {
-    //                 //     alert(data)
-    //                 //     // $('#modalId').modal('toggle')
-    //                 // }
-
-    //                 //$('#modalId').modal('hide');
-    //             }
-
-    //         );
-    // }
-
       var basicInfo = {
             id: $('#div_set').attr('id_src'),
             quantity : 0, 
@@ -911,6 +858,108 @@ $fetchDetails_ = $fetchDetails->fetch();
                     alert('font loading failed ' + font);
                 });
         }
+
+        $('#submit_images').off('click').on('click', function(event) {
+            event.stopPropagation();
+
+            let backLogo = [];
+            canvas2.getObjects().forEach((object) => {
+                backLogo.push(object.getSrc())
+            })
+            //Get MainCanvas
+            var backCanvas = canvas2.toDataURL();
+
+
+            let frontLogo = [];
+            canvas1.getObjects().forEach((object) => {
+                if( object.type == "image" ){
+                    console.log(object.type)
+                    frontLogo.push(object.getSrc())
+                }
+            })
+
+            //Get MainCanvas
+            var frontCanvas = canvas1.toDataURL();
+
+            $('#see_generated').attr("src", backCanvas)
+
+
+            frontViewData.logoInput = frontLogo
+            frontViewData.backgroundImage = frontCanvas
+
+            backViewData.logoInput = backLogo
+            backViewData.backgroundImage = backCanvas
+
+            $.post("action_customizeImage/GenerateImage.php", {
+                    "basicInfo": basicInfo,
+                    "frontViewData": frontViewData,
+                    "backViewData": backViewData,
+                },
+                function(data) {
+                    if (data === 'No User') {
+                        login_()
+                        $('#modalId').modal('toggle')
+                    } else {
+                        alert(data)
+                        // $('#modalId').modal('toggle')
+                    }
+
+                    $('#modalId').modal('hide');
+                }
+
+            );
+        });
+        
+        $('#submit_customize_data').off('click').on('click', function(event) {
+            event.stopPropagation();
+
+            let backLogo = [];
+            canvas2.getObjects().forEach((object) => {
+                backLogo.push(object.getSrc())
+            })
+            //Get MainCanvas
+            var backCanvas = canvas2.toDataURL();
+
+
+            let frontLogo = [];
+            canvas1.getObjects().forEach((object) => {
+                if( object.type == "image" ){
+                    console.log(object.type)
+                    frontLogo.push(object.getSrc())
+                }
+            })
+
+            //Get MainCanvas
+            var frontCanvas = canvas1.toDataURL();
+
+            $('#see_generated').attr("src", backCanvas)
+
+
+            frontViewData.logoInput = frontLogo
+            frontViewData.backgroundImage = frontCanvas
+
+            backViewData.logoInput = backLogo
+            backViewData.backgroundImage = backCanvas
+
+            $.post("action_customizeImage/GenerateImage.php", {
+                    "basicInfo": basicInfo,
+                    "frontViewData": frontViewData,
+                    "backViewData": backViewData,
+                },
+                function(data) {
+                    if (data === 'No User') {
+                        login_()
+                        $('#modalId').modal('toggle')
+                    } else {
+                        alert(data)
+                        // $('#modalId').modal('toggle')
+                    }
+
+                    $('#modalId').modal('hide');
+                }
+
+            );
+        });
     });
 
     function removeSelected(canvas) {
@@ -1014,57 +1063,7 @@ $fetchDetails_ = $fetchDetails->fetch();
         this.computeTotalPriceAndAssignBasicInfo()
     });
 
-    $('#submit_images2').on('click', function(event) {
-        // event.stopPropagation();
 
-        let backLogo = [];
-        canvas2.getObjects().forEach((object) => {
-            backLogo.push(object.getSrc())
-        })
-        //Get MainCanvas
-        var backCanvas = canvas2.toDataURL();
-
-
-        let frontLogo = [];
-        canvas1.getObjects().forEach((object) => {
-            if( object.type == "image" ){
-                console.log(object.type)
-                frontLogo.push(object.getSrc())
-            }
-        })
-
-        //Get MainCanvas
-        var frontCanvas = canvas1.toDataURL();
-
-        $('#see_generated').attr("src", backCanvas)
-
-
-        frontViewData.logoInput = frontLogo
-        frontViewData.backgroundImage = frontCanvas
-
-        backViewData.logoInput = backLogo
-        backViewData.backgroundImage = backCanvas
-
-        $.post("action_customizeImage/GenerateImage.php", {
-                "basicInfo": basicInfo,
-                "frontViewData": frontViewData,
-                "backViewData": backViewData,
-            },
-            function(data) {
-                console.log('data', data)
-                // if (data === 'No User') {
-                //     login_()
-                //     $('#modalId').modal('toggle')
-                // } else {
-                //     alert(data)
-                //     // $('#modalId').modal('toggle')
-                // }
-
-                //$('#modalId').modal('hide');
-            }
-
-        );
-    });
 
 
     //---------------------------------END--------------------------------------------------------

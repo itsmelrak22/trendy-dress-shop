@@ -32,8 +32,7 @@
                                 <th>Name</th>
                                 <th>Email</th>
                                 <th>Image</th>
-                                <th>Country</th>
-                                <th>City</th>
+                                <th>Address</th>
                                 <th>Phone Number</th>
                                 <th>Edit</th>
                                 <th>Delete</th>
@@ -49,8 +48,7 @@
                                     $c_name = $row_c['customer_name'];
                                     $c_email = $row_c['customer_email'];
                                     $c_image = $row_c['customer_image'];
-                                    $c_country = $row_c['customer_country'];
-                                    $c_city = $row_c['customer_city'];
+                                    $c_complete_address = $row_c['complete_address'];
                                     $c_contact = $row_c['customer_contact'];
                                     $i++;
                             ?>
@@ -63,8 +61,7 @@
                                             <img loading="lazy" src="../updateUploads/<?php echo $c_image; ?>" width="60" height="60" >
                                         <?php endif; ?>
                                     </td>
-                                    <td><?php echo $c_country; ?></td>
-                                    <td><?php echo $c_city; ?></td>
+                                    <td><?php echo $c_complete_address; ?></td>
                                     <td><?php echo $c_contact; ?></td>
                                     <td>
                                         <a href="edit_customer.php?customer_id=<?php echo $c_id; ?>">

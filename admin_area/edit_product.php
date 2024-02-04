@@ -193,32 +193,11 @@ if (!isset($_SESSION['admin_email'])) {
 
                 <div class="col-md-6">
 
-                  <select name="manufacturer" class="form-control" >
+                  <select name="manufacturer" class="form-control" readonly >
 
-                    <option value="<?php echo $manufacturer_id; ?>">
+                    <option value="<?php echo $manufacturer_id; ?>" selected>
                       <?php echo $manufacturer_title; ?>
                     </option>
-
-                    <?php
-
-                      $get_manufacturer = "select * from manufacturers";
-
-                      $run_manufacturer = mysqli_query($con, $get_manufacturer);
-
-                      while ($row_manfacturer = mysqli_fetch_array($run_manufacturer)) {
-
-                        $manufacturer_id = $row_manfacturer['manufacturer_id'];
-
-                        $manufacturer_title = $row_manfacturer['manufacturer_title'];
-
-                        echo "
-                        <option value='$manufacturer_id'>
-                        $manufacturer_title
-                        </option>
-                        ";
-                      }
-
-                      ?>
 
                   </select>
 
@@ -233,7 +212,7 @@ if (!isset($_SESSION['admin_email'])) {
 
                 <div class="col-md-6">
 
-                  <select name="product_cat" class="form-control" >
+                  <select name="product_cat" class="form-control" required>
 
                     <option value="<?php echo $p_cat; ?>"> <?php echo $p_cat_title; ?> </option>
 
@@ -271,7 +250,7 @@ if (!isset($_SESSION['admin_email'])) {
                 <div class="col-md-6">
 
 
-                  <select name="cat" class="form-control" >
+                  <select name="cat" class="form-control" required>
 
                     <option value="<?php echo $cat; ?>"> <?php echo $cat_title; ?> </option>
 

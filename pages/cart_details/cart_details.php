@@ -9,10 +9,10 @@ if (!isset($_SESSION['id_user'])) {
 } else {
     $userID = $_SESSION['id_user'];
 
-    $fetchCart = $conn->prepare('SELECT a.*,b.*, c.* from cart a 
-    Join products b on a.product_id=b.product_id
-    JOIN customers c ON a.user_id = c.customer_id
-    where a.user_id =? and  a.status=0');
+    $fetchCart = $conn->prepare('SELECT a.*,b.*, c.* FROM cart a 
+                                JOIN products b ON a.product_id=b.product_id
+                                JOIN customers c ON a.user_id = c.customer_id
+                                WHERE a.user_id =? AND  a.status=0');
     $fetchCart->execute([$userID]);
     $fetchCart_ = $fetchCart->fetchAll();
 }
@@ -177,6 +177,9 @@ $paymentMethods = array(
             <?php endif; ?>
         </div> -->
         <?php foreach ($fetchCart_ as $row) : ?>
+            <?php 
+
+            ?>
     <div class="cart-item">
         <input type="checkbox" class="cart-item-checkbox" value="<?php echo $row['p_id']; ?>">
         <div class="cart-item-image">

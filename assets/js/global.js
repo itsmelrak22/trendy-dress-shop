@@ -46,6 +46,11 @@ function to_about_us() {
     $("#contents").html(data);
   });
 }
+function to_customize() {
+  $.post("pages/customize/customize_main.php", {}, function (data) {
+    $("#contents").html(data);
+  });
+}
 function login_() {
   $.post("login.php", {}, function(data) {
     $("#contents").html(data); 
