@@ -257,7 +257,7 @@ endif;
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                    <button id="submit_images" type="button" style="background-color: black;" class="btn text-white" ><i class="fa fa-cart-plus" aria-hidden="true"></i>Add To Cart</button>
+                                    <button id="submit_images2" type="button" style="background-color: black;" class="btn text-white" ><i class="fa fa-cart-plus" aria-hidden="true"></i>Add To Cart</button>
                                 </div>
                             </div>
                         </div>

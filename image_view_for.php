@@ -102,7 +102,7 @@ $fetchDetails_ = $fetchDetails->fetch();
                     <span class="input-group-text">Size</span>
                     </div>
                     <select class="form-control" name="" id="size_sel" required>
-                            <option  disabled readonly selected>Please Select Size:</option>
+                            <option  disabled readonly selected></option>
                             <option value="sm" >Small (SM)</option>
                             <option value="md">Medium (MD)</option>
                             <option value="lg">Large (LG)</option>
@@ -179,7 +179,7 @@ $fetchDetails_ = $fetchDetails->fetch();
                                         <span class="input-group-text">SELECT FONT: </span>
                                         </div>
                                         <select id="frontFontFamily" onchange="updateDisplayFront(this.value)" class="form-control">
-                                            <option selected disabled readonly> Select a font </option>option>
+                                            <option selected disabled readonly></option>option>
                                         </select>
                                     </div>
                                 </div>
@@ -198,7 +198,7 @@ $fetchDetails_ = $fetchDetails->fetch();
                                         <span class="input-group-text">CUSTOMIZE BY:  </span>
                                         </div>
                                         <select class="form-control" id="frontTextCustomizeBy">
-                                            <option selected disabled readonly>...</option>
+                                            <option selected disabled readonly></option>
                                             <option value="print">PRINT</option>
                                             <option value="embroide">EMBROIDE</option>
                                         </select>
@@ -264,7 +264,7 @@ $fetchDetails_ = $fetchDetails->fetch();
                                         <span class="input-group-text">SELECT FONT: </span>
                                         </div>
                                         <select id="backFontFamily" onchange="updateDisplayBack(this.value)" class="form-control">
-                                            <option selected disabled readonly> Select a font </option>option>
+                                            <option selected disabled readonly></option>option>
                                         </select>
                                     </div>
                                 </div>
@@ -283,7 +283,7 @@ $fetchDetails_ = $fetchDetails->fetch();
                                         <span class="input-group-text">CUSTOMIZE BY:  </span>
                                         </div>
                                         <select class="form-control" id="backTextCustomizeBy">
-                                            <option selected disabled readonly>...</option>
+                                            <option selected disabled readonly></option>
                                             <option value="print">PRINT</option>
                                             <option value="embroide">EMBROIDE</option>
                                         </select>
@@ -367,30 +367,6 @@ $fetchDetails_ = $fetchDetails->fetch();
 <script src="https://cdn.jsdelivr.net/npm/fontfaceobserver@2.1.0/fontfaceobserver.standalone.js"></script>
 
 <script>    
-
-    const frontViewData = {
-        selectedColor : '',
-        selectedFont : '',
-        selectedCustomizeBy : '',
-        lengthInput : '',
-        widthInput : '',
-        textInput : '',
-    }
-
-    window.onload = function() {
-        var viewFrontView = document.getElementById('viewFrontView');
-        var viewBackView = document.getElementById('viewBackView');
-
-        viewFrontView.onchange = function() {
-            console.log('Front View checkbox has been', this.checked ? 'checked' : 'unchecked');
-        };
-
-        viewBackView.onchange = function() {
-            console.log('Back View checkbox has been', this.checked ? 'checked' : 'unchecked');
-        };
-
-    };
-
     function addListItem(productTitle, productPrice, id) {
         // Get the div by its id
         var div = document.getElementById(id);
@@ -419,7 +395,7 @@ $fetchDetails_ = $fetchDetails->fetch();
         // Append the list item to the div
         div.appendChild(listItem);
 
-        computeTotalPrice()
+        computeTotalPriceAndAssignBasicInfo()
     }
 
     function removeListItem(productTitle, id) {
@@ -441,10 +417,10 @@ $fetchDetails_ = $fetchDetails->fetch();
             }
         }
 
-        computeTotalPrice()
+        computeTotalPriceAndAssignBasicInfo()
     }
 
-    function computeTotalPrice() {
+    function computeTotalPriceAndAssignBasicInfo() {
         let elements = document.getElementsByClassName("price-to-compute");
         let total = 0;
         for(let i = 0; i < elements.length; i++) {
@@ -456,9 +432,39 @@ $fetchDetails_ = $fetchDetails->fetch();
 
         let product_qty = document.getElementById("product_qty");
         let total_computation = document.getElementById('total_computation');
+        let size = document.getElementById('size_sel');
 
         total_computation.textContent = total;
         document.getElementById('multiplied_total_computation').textContent = total * Number(product_qty.textContent);
+
+        // Basic
+        basicInfo.priceTotal = total * Number(product_qty.textContent);
+        basicInfo.quantity = Number(product_qty.textContent);
+        basicInfo.size = size.value
+
+        if(basicInfo.frontViewChecked){
+            // Front
+            frontViewData.selectedColor = document.getElementById("frontSelectedColor").value,
+            frontViewData.selectedFont = document.getElementById("frontFontFamily").value,
+            frontViewData.selectedCustomizeBy = document.getElementById("frontTextCustomizeBy").value,
+            frontViewData.lengthInput = document.getElementById("frontTextLength").value,
+            frontViewData.widthInput = document.getElementById("frontTextWidth").value,
+            frontViewData.textInput = document.getElementById("frontTextInput").value
+        }
+
+        if(basicInfo.backViewChecked){
+            // Back
+            backViewData.selectedColor = document.getElementById("backSelectedColor").value,
+            backViewData.selectedFont = document.getElementById("backFontFamily").value,
+            backViewData.selectedCustomizeBy = document.getElementById("backTextCustomizeBy").value,
+            backViewData.lengthInput = document.getElementById("backTextLength").value,
+            backViewData.widthInput = document.getElementById("backTextWidth").value,
+            backViewData.textInput = document.getElementById("backTextInput").value
+        }
+
+        console.log('basicInfo', basicInfo)
+        console.log('frontViewData', frontViewData)
+        console.log('backViewData', backViewData)
     }
 
     function validateInput(input) {
@@ -554,7 +560,7 @@ $fetchDetails_ = $fetchDetails->fetch();
     function initiateTab1(){
         setTimeout(() => {
             document.getElementById('front').click()
-            computeTotalPrice()
+            computeTotalPriceAndAssignBasicInfo()
         }, 100)
 
         document.getElementById('frontColorPicker').addEventListener('input', function() {
@@ -566,14 +572,89 @@ $fetchDetails_ = $fetchDetails->fetch();
         });
     }
 
+    // function submitImages(){
+    //     console.log('Hello');
+    //     // event.stopPropagation();
+
+    //     let backLogo = [];
+    //         canvas2.getObjects().forEach((object) => {
+    //             backLogo.push(object.getSrc())
+    //         })
+    //         //Get MainCanvas
+    //         var backCanvas = canvas2.toDataURL();
 
 
+    //         let frontLogo = [];
+    //         canvas1.getObjects().forEach((object) => {
+    //             if( object.type == "image" ){
+    //                 console.log(object.type)
+    //                 frontLogo.push(object.getSrc())
+    //             }
+    //         })
 
-    
+    //         //Get MainCanvas
+    //         var frontCanvas = canvas1.toDataURL();
 
-</script>
+    //         $('#see_generated').attr("src", backCanvas)
 
-<script>
+
+    //         frontViewData.logoInput = frontLogo
+    //         frontViewData.backgroundImage = frontCanvas
+
+    //         backViewData.logoInput = backLogo
+    //         backViewData.backgroundImage = backCanvas
+
+    //         $.post("action_customizeImage/GenerateImage.php", {
+    //                 "basicInfo": basicInfo,
+    //                 "frontViewData": frontViewData,
+    //                 "backViewData": backViewData,
+    //             },
+    //             function(data) {
+    //                 console.log('data', data)
+    //                 // if (data === 'No User') {
+    //                 //     login_()
+    //                 //     $('#modalId').modal('toggle')
+    //                 // } else {
+    //                 //     alert(data)
+    //                 //     // $('#modalId').modal('toggle')
+    //                 // }
+
+    //                 //$('#modalId').modal('hide');
+    //             }
+
+    //         );
+    // }
+
+      var basicInfo = {
+            id: $('#div_set').attr('id_src'),
+            quantity : 0, 
+            size: null,
+            priceTotal : 0,
+            frontViewChecked: true,
+            backViewChecked: true,
+        }
+
+        var frontViewData = {
+            selectedColor : '',
+            selectedFont : '',
+            selectedCustomizeBy : '',
+            lengthInput : '',
+            widthInput : '',
+            textInput : '',
+            logoInput: '',
+            backgroundImage : ''
+        }
+
+        var backViewData = {
+            selectedColor : '',
+            selectedFont : '',
+            selectedCustomizeBy : '',
+            lengthInput : '',
+            widthInput : '',
+            textInput : '',
+            logoInput: '',
+            backgroundImage : ''
+        }
     $(document).ready(function() {
         $('#qty').on('change', function(e) {
             if (Number.parseInt($(this).val()) >= 1) {
@@ -581,7 +662,7 @@ $fetchDetails_ = $fetchDetails->fetch();
                 $('#product_price').value
                 $('#product_qty')[0].textContent = $(this).val()
 
-                computeTotalPrice()
+                computeTotalPriceAndAssignBasicInfo()
             } else {
                 Number.parseInt($(this).val(1))
             }
@@ -818,56 +899,6 @@ $fetchDetails_ = $fetchDetails->fetch();
             removeListItem("Back Customized Logo")
         });
 
-        $('#submit_images').off('click').on('click', function(event) {
-            event.stopPropagation();
-            let tempBack = [];
-            canvas2.getObjects().forEach((object) => {
-                tempBack.push(object.getSrc())
-            })
-            //Get MainCanvas
-            var dataURLtempBack = canvas2.toDataURL();
-
-
-            let tempFront = [];
-            canvas1.getObjects().forEach((object) => {
-                if( object.type == "image" ){
-                    console.log(object.type)
-                    tempFront.push(object.getSrc())
-                }
-            })
-
-            //Get MainCanvas
-            var dataURLtempFront = canvas1.toDataURL();
-
-            $('#see_generated').attr("src", dataURLtempBack)
-
-            $.post("action_customizeImage/GenerateImage.php", {
-                    dataURLtempFront,
-                    tempFront,
-                    dataURLtempBack,
-                    tempBack,
-                    quantity: $('#qty').val(),
-                    id: $('#div_set').attr('id_src'),
-                    priceTotal: $('#multiplied_total_computation').textContent,
-                    size: $('#size_sel').val()
-                },
-                function(data) {
-                    if (data === 'No User') {
-                        login_()
-                        $('#modalId').modal('toggle')
-                    } else {
-                        alert(data)
-                        // $('#modalId').modal('toggle')
-                    }
-
-                    //$('#modalId').modal('hide');
-                }
-
-            );
-
-        });
-
-
         function loadAndUse(font) {
             var myfont = new FontFaceObserver(font)
             myfont.load()
@@ -879,7 +910,7 @@ $fetchDetails_ = $fetchDetails->fetch();
                     console.log(e)
                     alert('font loading failed ' + font);
                 });
-            }
+        }
     });
 
     function removeSelected(canvas) {
@@ -891,8 +922,6 @@ $fetchDetails_ = $fetchDetails->fetch();
         canvas.requestRenderAll();
 
     }
-
-
 
     function addlogo(canvas, img1, bg_image, position) {
         var canvasTemp = canvas
@@ -948,29 +977,94 @@ $fetchDetails_ = $fetchDetails->fetch();
             $('#backRemoveBtn').hide();
         }
     });
-    $('#viewFrontView, #viewBackView').on('change', function() {
-    if ($('#viewFrontView').is(':checked')) {
-        $('#frontView').show();
-    } else {
-        $('#frontView').hide();
-        // If front view is unchecked, ensure back view is checked
-        if (!$('#viewBackView').is(':checked')) {
-            $('#viewBackView').prop('checked', true);
-            $('#backView').show();
-        }
-    }
 
-    if ($('#viewBackView').is(':checked')) {
-        $('#backView').show();
-    } else {
-        $('#backView').hide();
-        // If back view is unchecked, ensure front view is checked
-        if (!$('#viewFrontView').is(':checked')) {
-            $('#viewFrontView').prop('checked', true);
+    $('#viewFrontView, #viewBackView').on('change', () => {
+        if ($('#viewFrontView').is(':checked')) {
             $('#frontView').show();
+            basicInfo.frontViewChecked = true
+        } else {
+            $('#frontView').hide();
+            basicInfo.frontViewChecked = false
+
+            // If front view is unchecked, ensure back view is checked
+            if (!$('#viewBackView').is(':checked')) {
+                $('#viewBackView').prop('checked', true);
+                $('#backView').show();
+                basicInfo.backViewChecked = true
+
+            }
         }
-    }
-});
+
+        if ($('#viewBackView').is(':checked')) {
+            $('#backView').show();
+            basicInfo.backViewChecked = true
+
+        } else {
+            $('#backView').hide();
+            basicInfo.backViewChecked = false
+            // If back view is unchecked, ensure front view is checked
+            if (!$('#viewFrontView').is(':checked')) {
+                $('#viewFrontView').prop('checked', true);
+                $('#frontView').show();
+                basicInfo.frontViewChecked = true
+
+            }
+        }
+
+        this.computeTotalPriceAndAssignBasicInfo()
+    });
+
+    $('#submit_images2').on('click', function(event) {
+        // event.stopPropagation();
+
+        let backLogo = [];
+        canvas2.getObjects().forEach((object) => {
+            backLogo.push(object.getSrc())
+        })
+        //Get MainCanvas
+        var backCanvas = canvas2.toDataURL();
+
+
+        let frontLogo = [];
+        canvas1.getObjects().forEach((object) => {
+            if( object.type == "image" ){
+                console.log(object.type)
+                frontLogo.push(object.getSrc())
+            }
+        })
+
+        //Get MainCanvas
+        var frontCanvas = canvas1.toDataURL();
+
+        $('#see_generated').attr("src", backCanvas)
+
+
+        frontViewData.logoInput = frontLogo
+        frontViewData.backgroundImage = frontCanvas
+
+        backViewData.logoInput = backLogo
+        backViewData.backgroundImage = backCanvas
+
+        $.post("action_customizeImage/GenerateImage.php", {
+                "basicInfo": basicInfo,
+                "frontViewData": frontViewData,
+                "backViewData": backViewData,
+            },
+            function(data) {
+                console.log('data', data)
+                // if (data === 'No User') {
+                //     login_()
+                //     $('#modalId').modal('toggle')
+                // } else {
+                //     alert(data)
+                //     // $('#modalId').modal('toggle')
+                // }
+
+                //$('#modalId').modal('hide');
+            }
+
+        );
+    });
 
 
     //---------------------------------END--------------------------------------------------------

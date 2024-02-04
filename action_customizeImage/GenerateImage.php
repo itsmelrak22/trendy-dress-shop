@@ -10,10 +10,10 @@ if (isset($_SESSION['id_user'])) {
     // $dataURLtempFront = $_POST['dataURLtempFront'];
     // $dataURLtempBack = $_POST['dataURLtempBack'];
 
-    // echo '<pre>';
-    //     print_r($dataURLtempBack);
-    // echo '</pre>';
-    // exit();
+    echo 'test';
+       
+    
+    exit();
 
     if (isset($_POST['tempFront'])) {
         $tempFront = $_POST['tempFront'];
