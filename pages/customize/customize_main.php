@@ -46,8 +46,16 @@ if (isset($getUserDetails_['account_status'])) {
 </div>
 
 <script>
-    let customizeCurrentPage = 1;
-    let customizeTotalPages = $('#paginationData').data('total-pages');
+
+    if( typeof customizeCurrentPage != 'undefined' ){
+        customizeCurrentPage = 1;
+        customizeTotalPages = $('#paginationData').data('total-pages');
+    }else{
+        var customizeCurrentPage = 1;
+        var customizeTotalPages = $('#paginationData').data('total-pages');
+    }
+    
+    console.log('customizeCurrentPage', customizeCurrentPage)
 
     $(document).ready(function() {
 
