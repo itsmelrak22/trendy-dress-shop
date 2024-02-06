@@ -7,7 +7,21 @@ $userDetails = $conn->prepare('SELECT a.* from customers a where a.customer_id=?
 $userDetails->execute([$userID]);
 $userDetails_ = $userDetails->fetch();
 
-$user_order = $conn->prepare('SELECT a.* from pending_orders a where a.customer_id=?');
+$user_order = $conn->prepare('SELECT 
+                                    A.*, 
+                                    B.Total_p_price,
+                                    B.size,
+                                    B.mop,
+                                    B.qty,
+                                    C.product_title,
+                                    C.product_price
+                                FROM pending_orders A 
+                                LEFT JOIN cart B
+                                ON A.cartItems = B.p_id
+                                INNER JOIN products C
+                                ON B.product_id = C.product_id
+                                WHERE A.customer_id = ?
+                                ');
 $user_order->execute([$userID]);
 $user_order_ = $user_order->fetchall();
 
@@ -36,7 +50,7 @@ $user_order_ = $user_order->fetchall();
             </div>
         </div>
         <div class="row my-2">
-            <div class="col-sm-12 col-md-6 col-lg-5">
+            <div class="col-sm-12 col-md-12 col-lg-12">
                 <div class="card">
                     <div style="background-color: black;" class="card-head">
                         <h5 class="text-center text-white"> Checked Out Invoices </h5>
@@ -47,7 +61,13 @@ $user_order_ = $user_order->fetchall();
                                 <tr>
                                     <th>Invoice Created</th>
                                     <th>Invoice No.</th>
+                                    <th>Product</th>
+                                    <th>Size</th>
+                                    <th>Price</th>
+                                    <th>Quantity</th>
+                                    <th>Total</th>
                                     <th>Status</th>
+                                    <th>Mode Of Payment</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -55,7 +75,13 @@ $user_order_ = $user_order->fetchall();
                                     <tr>
                                         <td><?php echo $row['dateTimeAdded'] ?></td>
                                         <td><?php echo $row['invoice_no'] ?></td>
+                                        <td><?php echo $row['product_title'] ?></td>
+                                        <td><?php echo $row['size'] ?></td>
+                                        <td><?php echo $row['product_price'] ?></td>
+                                        <td><?php echo $row['qty'] ?></td>
+                                        <td><?php echo $row['Total_p_price'] ?></td>
                                         <td><?php echo strtoupper($row['order_status']) ?></td>
+                                        <td><?php echo $row['mop'] == 1 ? "Online Payment" : "COD" ?></td>
                                     </tr>
                                 <?php endforeach ?>
                             </tbody>

@@ -181,7 +181,7 @@ $paymentMethods = array(
 
             ?>
     <div class="cart-item">
-        <input type="checkbox" class="cart-item-checkbox" value="<?php echo $row['p_id']; ?>">
+        <input type="checkbox" class="cart-item-checkbox" value="<?php echo $row['p_id']; ?>" onclick="checkIfValueIsTrue(this);">
         <div class="cart-item-image">
             <?php $image = 'data:image/png;base64,' . $row['frontImage'] ?>
             <img loading="lazy" src="<?php echo $image ?>" alt="Product Image">
@@ -206,7 +206,7 @@ $paymentMethods = array(
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button onclick="toCheckOut(<?php echo $row['p_id'] ?>)" style="background-color: black;" type="button" class="btn  text-white">Checkout</button>
+        <button disabled onclick="toCheckOut(<?php echo $row['p_id'] ?>)" style="background-color: black;" type="button" class="btn  text-white" id="checkoutBtn">Checkout</button>
     </div>
     
     <div id="checkoutConfirmation" style="display: none;">
@@ -270,7 +270,7 @@ $paymentMethods = array(
 
 
 <script>
-    let transaction = {};
+    // let transaction = {};
 
     paypal.Buttons({
         // style: {
@@ -299,6 +299,24 @@ $paymentMethods = array(
             });
         }
     }).render('#paypal-button-container');
+
+    function checkIfValueIsTrue(instance){
+        let checkboxes = document.querySelectorAll('.cart-item-checkbox:checked');
+        if(!checkboxes.length) {
+            checkoutBtn.disabled = true;
+            return
+        }
+
+        checkboxes.forEach(function(checkbox) {
+            if (checkbox.value){
+                const checkoutBtn = document.getElementById("checkoutBtn");
+                checkoutBtn.disabled = false;
+                return;
+            }
+        });
+
+
+    }
 
     function togglePaypalDiv() {
         var x = document.getElementById("paypalDiv");
