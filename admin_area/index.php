@@ -229,6 +229,11 @@ if(isset($_GET['view_customers'])){
 include("view_customers.php");
 
 }
+if(isset($_GET['edit_customers'])){
+
+include("edit_customer.php");
+
+}
 
 if(isset($_GET['customer_delete'])){
 
@@ -240,6 +245,11 @@ include("customer_delete.php");
 if(isset($_GET['view_orders'])){
 
 include("view_orders.php");
+
+}
+if(isset($_GET['edit_orders'])){
+
+include("edit_order.php");
 
 }
 
@@ -531,6 +541,18 @@ include("delete_store.php");
 if(isset($_GET['edit_store'])){
 
 include("edit_store.php");
+
+}
+
+if(isset($_GET['view_sales'])){
+
+include("view_sales.php");
+
+}
+
+if(isset($_GET['view_transaction'])){
+
+include("view_transaction.php");
 
 }
 

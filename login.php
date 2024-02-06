@@ -66,6 +66,20 @@ if (isset($_SESSION['id_user'])) {
                 <input id="customer_image" class="form-control" type="file" accept="image/*" /> -->
                 <label for="name_text">NAME</label>
                 <input id="name_text" class="form-control" type="text" placeholder="Enter your name here" />
+                <input type="hidden" id="gender" name="gender"/>
+                <label for="gender" >Gender</label>
+                <div class="form-check" id="maleH">
+                    <input class="form-check-input" onclick="test('male')" type="radio" name="gender" id="male" value="male">
+                    <label class="form-check-label" for="male">
+                        Male
+                    </label>
+                </div>
+                <div class="form-check" >
+                    <input class="form-check-input"  onclick="test('female')" type="radio" name="gender" id="female" value="female">
+                    <label class="form-check-label" for="female">
+                        Female
+                    </label>
+                </div>
                 <label for="username1_text">Email</label>
                 <input id="username1_text" class="form-control" type="email" placeholder="Enter your email here" />
                 <label for="pass1_text">Password</label>
@@ -82,12 +96,17 @@ if (isset($_SESSION['id_user'])) {
 </div>
 
 <script>
+    function test(val){
+        $('#gender'). prop("value", val);
+    }
+
     function registerAccount() {
         var formData = new FormData();
         formData.append('customer_name', $("#name_text").val());
         formData.append('customer_email', $("#username1_text").val());
         formData.append('customer_password', $("#pass1_text").val());
         formData.append('complete_address', $("#complete_add").val());
+        formData.append('gender', $("#gender").val());
         // formData.append('customer_image', $("#customer_image")[0].files[0]);
 
         $.ajax({

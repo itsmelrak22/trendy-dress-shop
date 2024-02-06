@@ -1,6 +1,6 @@
 <?php
     if(!isset($_SESSION['admin_email'])){
-        echo "<script>window.open('index.php?view_customers','_self')</script>";
+        echo "<script>window.open('index.php','_self')</script>";
     }
     else {
 ?>
@@ -64,7 +64,7 @@
                                     <td><?php echo $c_complete_address; ?></td>
                                     <td><?php echo $c_contact; ?></td>
                                     <td>
-                                        <a href="edit_customer.php?customer_id=<?php echo $c_id; ?>">
+                                        <a href="index.php?edit_customers=<?php echo $c_id; ?>">
                                             <i class="fa fa-pencil"></i> Edit
                                         </a>
                                     </td>

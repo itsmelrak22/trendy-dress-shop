@@ -313,6 +313,31 @@ if (!isset($_SESSION['admin_email'])) {
                 <li>
                     <!-- li Starts -->
 
+                    <a href="#" data-toggle="collapse" data-target="#sales">
+
+                        <i class="fa fa-fw fa-gear"></i> Sales
+
+                        <i class="fa fa-fw fa-caret-down"></i>
+
+
+                    </a>
+
+                    <ul id="sales" class="collapse">
+
+                        <li>
+                            <a href="index.php?view_sales"> Sales Record </a>
+                        </li>
+
+                        <li>
+                            <a href="index.php?view_transaction"> Transactions </a>
+                        </li>
+
+                    </ul>
+
+                </li><!-- li Ends -->
+                <li>
+                    <!-- li Starts -->
+
                     <a href="#" data-toggle="collapse" data-target="#users">
 
                         <i class="fa fa-fw fa-gear"></i> Users

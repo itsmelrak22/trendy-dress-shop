@@ -266,6 +266,7 @@ try {
                         </div>
                     <?php endforeach ?>
                 </div>
+                <div id="noResultsMessage" style="display: none; padding: 150px; text-align: center; justify-content: center; align-items: center; height: 100%;">No Available Products.</div>
             </div>
             <div id="paginationData" data-total-pages="<?php echo $totalPages; ?>"></div>
             <nav class="mx-auto mt-3" aria-label="...">
@@ -305,6 +306,8 @@ try {
 <script>
     function applyFilter(selectedCategory) {
         var categories = document.querySelectorAll('.list-group-item');
+        var noResultsMessage = document.getElementById('noResultsMessage');
+        var itemsToShow = [];
 
         categories.forEach(function(category) {
             category.classList.remove('active');
@@ -319,29 +322,85 @@ try {
 
             var items = document.querySelectorAll('.tCol');
             items.forEach(function(item) {
-                item.style.display = 'block';
+                itemsToShow.push(item);
+            });
+        } else {
+            categories.forEach(function(category) {
+                if (category.getAttribute('onclick').includes(selectedCategory)) {
+                    category.classList.add('active');
+                }
             });
 
-            return;
+            var items = document.querySelectorAll('.tCol');
+
+            items.forEach(function(item) {
+                var category = item.getAttribute('cat-id');
+
+                if (selectedCategory === category) {
+                    itemsToShow.push(item);
+                }
+            });
         }
 
-        categories.forEach(function(category) {
-            if (category.getAttribute('onclick').includes(selectedCategory)) {
-                category.classList.add('active');
-            }
+        // Show or hide no results message
+        if (itemsToShow.length === 0) {
+            noResultsMessage.style.display = 'block';
+        } else {
+            noResultsMessage.style.display = 'none';
+        }
+
+        // Show or hide items
+        itemsToShow.forEach(function(item) {
+            item.style.display = 'block';
         });
 
-        var items = document.querySelectorAll('.tCol');
-
-        items.forEach(function(item) {
-            var category = item.getAttribute('cat-id');
-
-            if (selectedCategory === category) {
-                item.style.display = 'block';
-            } else {
+        // Hide non-matching items
+        var allItems = document.querySelectorAll('.tCol');
+        allItems.forEach(function(item) {
+            if (!itemsToShow.includes(item)) {
                 item.style.display = 'none';
             }
         });
     }
+    // function applyFilter(selectedCategory) {
+    //     var categories = document.querySelectorAll('.list-group-item');
+
+    //     categories.forEach(function(category) {
+    //         category.classList.remove('active');
+    //     });
+
+    //     if (selectedCategory === 'all') {
+    //         categories.forEach(function(category) {
+    //             if (category.textContent.trim() === 'All') {
+    //                 category.classList.add('active');
+    //             }
+    //         });
+
+    //         var items = document.querySelectorAll('.tCol');
+    //         items.forEach(function(item) {
+    //             item.style.display = 'block';
+    //         });
+
+    //         return;
+    //     }
+
+    //     categories.forEach(function(category) {
+    //         if (category.getAttribute('onclick').includes(selectedCategory)) {
+    //             category.classList.add('active');
+    //         }
+    //     });
+
+    //     var items = document.querySelectorAll('.tCol');
+
+    //     items.forEach(function(item) {
+    //         var category = item.getAttribute('cat-id');
+
+    //         if (selectedCategory === category) {
+    //             item.style.display = 'block';
+    //         } else {
+    //             item.style.display = 'none';
+    //         }
+    //     });
+    // }
 
 </script>

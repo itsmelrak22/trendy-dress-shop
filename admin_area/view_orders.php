@@ -96,10 +96,20 @@ if (!isset($_SESSION['admin_email'])) {
                                         <?php
                                         if ($order_status == 'pending') {
                                             echo '<div style="color:red;">Pending</div>';
-                                        } else {
-                                            echo 'Completed';
+                                        } else if ($order_status == 'transit') {
+                                            echo '<div style="color:orange;">Transit</div>';
+                                        }else if($order_status == 'delivered'){
+                                            echo '<div style="color:blue;">Delivered</div>';
+                                        }else{
+                                            echo '<div style="color:green;">Cancelled</div>';
                                         }
+                                            
                                         ?>
+                                    </td>
+                                    <td>
+                                        <a href="index.php?edit_orders=<?php echo $order_id; ?>">
+                                            <i class="fa fa-edit"></i> Edit
+                                        </a>
                                     </td>
                                     <td>
                                         <a href="index.php?order_delete=<?php echo $order_id; ?>">
