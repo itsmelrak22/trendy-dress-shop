@@ -52,30 +52,6 @@ $fetchDetails_ = $fetchDetails->fetch();
             /* Adjust the background size for zoom */
     }
 
-    @font-face {
-        font-family: 'Fonstars';
-        src: url('./assets/fonts/fonstars/fonstars.otf') format('truetype');
-    }
-
-    @font-face {
-        font-family: 'Operation Napalm';
-        src: url('./assets/fonts/operation-napalm/operation-napalm.ttf') format('truetype');
-    }
-
-    @font-face {
-        font-family: 'Unitblock';
-        src: url('./assets/fonts/unitblock/unitblock.ttf') format('truetype');
-    }
-
-    @font-face {
-        font-family: 'OSerif';
-        src: url('./assets/fonts/oserif/oserif.ttf') format('truetype');
-    }
-
-    @font-face {
-        font-family: 'Public Pixel';
-        src: url('./assets/fonts/public-pixel/public-pixel.ttf') format('truetype');
-    }
 
 
 </style>
@@ -102,8 +78,8 @@ $fetchDetails_ = $fetchDetails->fetch();
                     <span class="input-group-text">Size</span>
                     </div>
                     <select class="form-control" name="" id="size_sel" required>
-                            <option  disabled readonly selected></option>
-                            <option value="sm" >Small (SM)</option>
+                            <!-- <option  disabled readonly selected></option> -->
+                            <option value="sm" selected>Small (SM)</option>
                             <option value="md">Medium (MD)</option>
                             <option value="lg">Large (LG)</option>
                             <option value="xl">Extra Large (XL)</option>
@@ -113,7 +89,7 @@ $fetchDetails_ = $fetchDetails->fetch();
     </div>
 
     <div class="col-md-6 mb-4">
-        <div class=" border ">
+        <div class="border">
             <div style="background-color: black">
                 <p style="text-align: center;" class="text-white ">CUSTOMIZATION LIST</p>
             </div>
