@@ -48,8 +48,16 @@ if (isset($getUserDetails_['account_status'])) {
 </div>
 
 <script>
-    let currentPage = 1;
-    let totalPages = $('#paginationData').data('total-pages');
+    // let currentPage = 1;
+    // let totalPages = $('#paginationData').data('total-pages');
+
+    if( typeof currentPage != 'undefined' ){
+        currentPage = 1;
+        totalPages = $('#paginationData').data('total-pages');
+    }else{
+        var currentPage = 1;
+        var totalPages = $('#paginationData').data('total-pages');
+    }
 
     $(document).ready(function() {
 

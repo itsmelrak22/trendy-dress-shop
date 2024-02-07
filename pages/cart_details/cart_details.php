@@ -181,7 +181,7 @@ $paymentMethods = array(
 
             ?>
     <div class="cart-item">
-        <input type="checkbox" class="cart-item-checkbox" value="<?php echo $row['p_id']; ?>" onclick="checkIfValueIsTrue(this);">
+        <input type="checkbox" class="cart-item-checkbox" value="<?php echo $row['p_id']; ?>">
         <div class="cart-item-image">
             <?php $image = 'data:image/png;base64,' . $row['frontImage'] ?>
             <img loading="lazy" src="<?php echo $image ?>" alt="Product Image">
@@ -206,7 +206,7 @@ $paymentMethods = array(
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button disabled onclick="toCheckOut(<?php echo $row['p_id'] ?>)" style="background-color: black;" type="button" class="btn  text-white" id="checkoutBtn">Checkout</button>
+        <button onclick="toCheckOut(<?php echo $row['p_id'] ?>)" style="background-color: black;" type="button" class="btn  text-white">Checkout</button>
     </div>
     
     <div id="checkoutConfirmation" style="display: none;">
@@ -270,7 +270,7 @@ $paymentMethods = array(
 
 
 <script>
-    // let transaction = {};
+    let transaction = {};
 
     paypal.Buttons({
         // style: {
@@ -299,24 +299,6 @@ $paymentMethods = array(
             });
         }
     }).render('#paypal-button-container');
-
-    function checkIfValueIsTrue(instance){
-        let checkboxes = document.querySelectorAll('.cart-item-checkbox:checked');
-        if(!checkboxes.length) {
-            checkoutBtn.disabled = true;
-            return
-        }
-
-        checkboxes.forEach(function(checkbox) {
-            if (checkbox.value){
-                const checkoutBtn = document.getElementById("checkoutBtn");
-                checkoutBtn.disabled = false;
-                return;
-            }
-        });
-
-
-    }
 
     function togglePaypalDiv() {
         var x = document.getElementById("paypalDiv");
@@ -393,7 +375,6 @@ $paymentMethods = array(
     document.getElementById('confirmation').style.display = 'block';
 }
 
-
     function populateOrderSummary() {
     let orderSummaryContainer = document.querySelector('.order-summary');
     orderSummaryContainer.innerHTML = "";
@@ -409,27 +390,217 @@ $paymentMethods = array(
     addressElement.className = 'user-address';
 
     // Check if address is available
-    <?php if (!empty($fetchCart_[0]['complete_address'])) : ?>
+    <?php if (!empty($fetchCart_[0]['complete_address']) && !empty($fetchCart_[0]['province']) && !empty($fetchCart_[0]['customer_city'])) : ?>
         let addressParagraph = document.createElement('p');
-        addressParagraph.textContent = '<?php echo $fetchCart_[0]['complete_address']; ?>';
-        addressElement.appendChild(addressParagraph);
-    <?php else : ?>
-        let addressForm = document.createElement('form');
-        addressForm.id = 'addressForm';
+        addressParagraph.textContent += '<?php echo $fetchCart_[0]['complete_address']; ?>, ';
         
-        let addressTextarea = document.createElement('textarea');
-        addressTextarea.name = 'newAddress';
-        addressTextarea.placeholder = 'Enter your address';
-        addressForm.appendChild(addressTextarea);
 
-        let updateButton = document.createElement('button');
-        updateButton.type = 'button';
-        updateButton.textContent = 'Update Address';
-        updateButton.onclick = updateAddress;
-        addressForm.appendChild(updateButton);
+    $(document).ready(function() {
+        $.ajax({
+            url: `https://psgc.gitlab.io/api/provinces/<?php echo $fetchCart_[0]['province']; ?>/cities-municipalities.json`,
+            type: 'GET',
+            success: function(data) {
+                let a = data.find( item => item.code == '<?php echo $fetchCart_[0]['customer_city']; ?>')
+                addressParagraph.textContent += `${a.name}, `;
+            },
+            error: function(xhr, status, error) {
+                console.error('Error fetching cities/municipalities: ' + error);
+            }
+        });
+    })
 
-        addressElement.appendChild(addressForm);
+    $(document).ready(function() {
+        $.ajax({
+                url: 'https://psgc.gitlab.io/api/provinces.json',
+                type: 'GET',
+                success: function(data) {
+                    let a = data.find( (item) => {
+                        return item.code =='<?php echo $fetchCart_[0]['province']; ?>'
+                    } )
+                    addressParagraph.textContent += a.name;
+                },
+                error: function(xhr, status, error) {
+                    console.error('Error fetching provinces: ' + error);
+                }
+        });
+    });
+
+        addressElement.appendChild(addressParagraph);
+<?php else : ?>
+    // let childElement = document.createElement('div');
+    // childElement.textContent = 'testtt'
+    // parentElement.appendChild(childElement);
+    // The address is incomplete, so provide input fields for updating
+    // Create address form
+    let addressForm = document.createElement('form');
+    addressForm.classList.add('mb-3');
+
+    // Add province dropdown
+    let provinceSelectWrapper = document.createElement('div');
+    provinceSelectWrapper.classList.add('mb-3');
+    addressForm.appendChild(provinceSelectWrapper);
+
+    let provinceLabel = document.createElement('label');
+    provinceLabel.htmlFor = 'provinceSelect';
+    provinceLabel.classList.add('form-label');
+    provinceLabel.textContent = 'Province';
+    provinceSelectWrapper.appendChild(provinceLabel);
+
+    let provinceSelect = document.createElement('select');
+    provinceSelect.id = 'provinceSelect';
+    provinceSelect.name = 'province';
+    provinceSelect.classList.add('form-select');
+    provinceSelectWrapper.appendChild(provinceSelect);
+
+    // Add city dropdown
+    let citySelectWrapper = document.createElement('div');
+    citySelectWrapper.classList.add('mb-3');
+    addressForm.appendChild(citySelectWrapper);
+
+    let cityLabel = document.createElement('label');
+    cityLabel.htmlFor = 'citySelect';
+    cityLabel.classList.add('form-label');
+    cityLabel.textContent = 'City';
+    citySelectWrapper.appendChild(cityLabel);
+
+    let citySelect = document.createElement('select');
+    citySelect.id = 'citySelect';
+    citySelect.name = 'city';
+    citySelect.classList.add('form-select');
+    citySelect.disabled = true;
+    citySelectWrapper.appendChild(citySelect);
+
+    // Add address textarea
+    let addressTextareaWrapper = document.createElement('div');
+    addressTextareaWrapper.classList.add('mb-3');
+    addressForm.appendChild(addressTextareaWrapper);
+
+    let addressTextareaLabel = document.createElement('label');
+    addressTextareaLabel.htmlFor = 'addressTextarea';
+    addressTextareaLabel.classList.add('form-label');
+    addressTextareaLabel.textContent = 'Address';
+    addressTextareaWrapper.appendChild(addressTextareaLabel);
+
+    let addressTextarea = document.createElement('textarea');
+    addressTextarea.id = 'addressTextarea';
+    addressTextarea.name = 'newAddress';
+    addressTextarea.classList.add('form-control');
+    addressTextarea.placeholder = 'Enter your address';
+    addressTextareaWrapper.appendChild(addressTextarea);
+
+    // Add update button
+    let updateButton = document.createElement('button');
+    updateButton.type = 'button';
+    updateButton.classList.add('btn', 'btn-primary');
+    updateButton.textContent = 'Update Address';
+    updateButton.addEventListener('click', updateAddress);
+    addressForm.appendChild(updateButton);
+
+    // Append address form to address element
+    addressElement.appendChild(addressForm);
+
+    // AJAX call to fetch province data and populate dropdown options
+    $(document).ready(function() {
+        $.ajax({
+            url: 'https://psgc.gitlab.io/api/provinces.json',
+            type: 'GET',
+            success: function(data) {
+                data.forEach(function(province) {
+                    let option = new Option(province.name, province.code);
+                    provinceSelect.appendChild(option);
+                });
+            },
+            error: function(xhr, status, error) {
+                console.error('Error fetching provinces: ' + error);
+            }
+        });
+    });
+
+    // When province is selected, fetch city data and populate city dropdown options
+    provinceSelect.addEventListener('change', function() {
+        let selectedProvinceCode = this.value;
+        citySelect.innerHTML = ''; // Clear existing options
+        if (selectedProvinceCode !== '') {
+            citySelect.disabled = false; // Enable city dropdown
+            // AJAX call to fetch city data based on selected province
+            $.ajax({
+                url: `https://psgc.gitlab.io/api/provinces/${selectedProvinceCode}/cities-municipalities.json`,
+                type: 'GET',
+                success: function(data) {
+                    data.forEach(function(city) {
+                        let option = new Option(city.name, city.code);
+                        citySelect.appendChild(option);
+                    });
+                },
+                error: function(xhr, status, error) {
+                    console.error('Error fetching cities/municipalities: ' + error);
+                }
+            });
+        } else {
+            citySelect.disabled = true; // Disable city dropdown if no province is selected
+        }
+    });
+
     <?php endif; ?>
+
+
+    // <?php if (!empty($fetchCart_[0]['complete_address']) && !empty($fetchCart_[0]['province']) && !empty($fetchCart_[0]['customer_city'])) : ?>
+
+    //     let addressParagraph = document.createElement('p');
+    //     addressParagraph.textContent += '<?php echo $fetchCart_[0]['complete_address']; ?>';
+        
+    // $(document).ready(function() {
+    //     $.ajax({
+    //             url: 'https://psgc.gitlab.io/api/provinces.json',
+    //             type: 'GET',
+    //             success: function(data) {
+    //                 console.log(data, 'data p')
+    //                 let a = data.find( (item) => {
+    //                     return item.code =='<?php echo $fetchCart_[0]['province']; ?>'
+    //                 } )
+    //                 console.log(a, 'p')
+    //                 addressParagraph.textContent += a.name;
+    //             },
+    //             error: function(xhr, status, error) {
+    //                 console.error('Error fetching provinces: ' + error);
+    //             }
+    //     });
+    // });
+
+    // $(document).ready(function() {
+    //     $.ajax({
+    //         url: `https://psgc.gitlab.io/api/provinces/<?php echo $fetchCart_[0]['province']; ?>/cities-municipalities.json`,
+    //         type: 'GET',
+    //         success: function(data) {
+    //             console.log(data, 'data c')
+    //             let a = data.find( item => item.code == '<?php echo $fetchCart_[0]['customer_city']; ?>')
+    //             console.log(a, 'C')
+    //             addressParagraph.textContent += a.name;
+    //         },
+    //         error: function(xhr, status, error) {
+    //             console.error('Error fetching cities/municipalities: ' + error);
+    //         }
+    //     });
+    // })
+
+    //     addressElement.appendChild(addressParagraph);
+    // <?php else : ?>
+    //     let addressForm = document.createElement('form');
+    //     addressForm.id = 'addressForm';
+        
+    //     let addressTextarea = document.createElement('textarea');
+    //     addressTextarea.name = 'newAddress';
+    //     addressTextarea.placeholder = 'Enter your address';
+    //     addressForm.appendChild(addressTextarea);
+
+    //     let updateButton = document.createElement('button');
+    //     updateButton.type = 'button';
+    //     updateButton.textContent = 'Update Address';
+    //     updateButton.onclick = updateAddress;
+    //     addressForm.appendChild(updateButton);
+
+    //     addressElement.appendChild(addressForm);
+    // <?php endif; ?>
 
     // Append address section to order summary container
     orderSummaryContainer.appendChild(addressElement);
@@ -469,22 +640,15 @@ $paymentMethods = array(
 }
 
 
-
-
-
-
-
-
-
-
-
     function updateAddress() {
         // fetchCartDetails_();
         let newAddress = document.querySelector('textarea[name="newAddress"]').value;
-        $.post("pages/cart_details/actions/update_address.php", { newAddress },
+        let province = document.querySelector('select[name="province"]').value;
+        let city = document.querySelector('select[name="city"]').value;
+        $.post("pages/cart_details/actions/update_address.php", { newAddress, province, city },
             function(data) {
                 if (data && data !== 'Failed to update address') {
-                    updateAddressInModal(data);
+                    updateAddressInModal(JSON.parse(data));
                     disableAddressInput()
                 } else {
                     alert(data);
@@ -494,10 +658,40 @@ $paymentMethods = array(
     }
 
     function updateAddressInModal(newAddress) {
-        let addressElement = document.querySelector('.user-address p');
+        let addressElement = document.querySelector('.user-address');
         
         if (addressElement) {
-            addressElement.textContent = newAddress;
+            addressElement.textContent = `${newAddress[0]}, `;
+
+        $(document).ready(function() {
+        $.ajax({
+                url: 'https://psgc.gitlab.io/api/provinces.json',
+                type: 'GET',
+                success: function(data) {
+                    let a = data.find( (item) => {
+                        return item.code == newAddress[1]
+                    } )
+                    addressElement.textContent += `${a.name}, `;
+                },
+                error: function(xhr, status, error) {
+                    console.error('Error fetching provinces: ' + error);
+                }
+        });
+    });
+
+    $(document).ready(function() {
+        $.ajax({
+            url: `https://psgc.gitlab.io/api/provinces/${newAddress[1]}/cities-municipalities.json`,
+            type: 'GET',
+            success: function(data) {
+                let a = data.find( item => item.code == newAddress[2])
+                addressElement.textContent += a.name;
+            },
+            error: function(xhr, status, error) {
+                console.error('Error fetching cities/municipalities: ' + error);
+            }
+        });
+    })
         }
     }
 

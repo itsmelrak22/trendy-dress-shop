@@ -116,8 +116,24 @@ $user_order_ = $user_order->fetchall();
                     <input id="name" name="name" class="form-control" type="text" placeholder="Enter your name here" value="<?php echo $userDetails_['customer_name']; ?>" />
                     <label for="email">Email</label>
                     <input id="email" name="email" class="form-control" type="email" placeholder="Enter your email here" value="<?php echo $userDetails_['customer_email']; ?>" />
-                    <label for="complete_address">Complete Address</label>
-                    <textarea id="complete_address" name="complete_address" class="form-control" placeholder="Enter your complete address here"><?php echo $userDetails_['complete_address']; ?></textarea>
+                    
+                    <label for="provinceDropdown">Province</label>
+                    <select id="provinceDropdown" name="provinceDropdown" class="form-control">
+                        <option value="" disabled selected readonly>Select Province</option>
+                    </select>
+
+                    <label for="cityDropdown">City/Municipality</label>
+                    <select id="cityDropdown" name="cityDropdown" class="form-control">
+                        <option value="" disabled selected readonly>Select City/Municipality</option>
+                    </select>
+
+                    <label for="barangayDropdown">Barangay</label>
+                    <select id="barangayDropdown" name="barangayDropdown" class="form-control">
+                        <option value="" disabled selected readonly>Select Barangay</option>
+                    </select>
+
+                    <label for="complete_address"> Subdivision/ Street / Building Number / House Number </label>
+                    <textarea id="complete_address" name="complete_address" class="form-control" placeholder="Subdivision/ Street / Building Number / House Number"><?php echo $userDetails_['complete_address']; ?></textarea>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -129,13 +145,113 @@ $user_order_ = $user_order->fetchall();
 </div>
 
 <script>
-    document.getElementById('editProfileForm').addEventListener('submit', function(event) {
+    $(document).ready(function() {
+
+        <?php $jsonArray = json_encode($userDetails_); ?>;
+        var userDetails = <?php echo $jsonArray; ?>;
+        console.log('userDetails', userDetails)
+    // Fetch provinces and populate the province dropdown
+    $.ajax({
+        url: 'https://psgc.gitlab.io/api/provinces.json',
+        type: 'GET',
+        success: function(data) {
+            var provinces = data;
+            var provinceDropdown = $('#provinceDropdown');
+            // provinceDropdown.empty(); // Clear existing options
+            // provinceDropdown.append($('<option></option>').val('').text('Select Province')); // Add default option
+               
+            $.each(provinces, function(index, province) {
+                provinceDropdown.append($('<option></option>').val(province.code).text(province.name));
+            });
+
+
+            if( typeof userDetails.province != 'undefined' && userDetails.province ){
+                $('#provinceDropdown').val(userDetails.province);
+                populateCitiesMunicipalities(userDetails.province);
+            }
+        },
+        error: function(xhr, status, error) {
+            console.error('Error fetching provinces: ' + error);
+        }
+    });
+
+    // Function to fetch and populate cities/municipalities based on the selected province
+    function populateCitiesMunicipalities(provinceCode) {
+        $.ajax({
+            url: `https://psgc.gitlab.io/api/provinces/${provinceCode}/cities-municipalities.json`,
+            type: 'GET',
+            success: function(data) {
+                var citiesMunicipalities = data;
+                var cityDropdown = $('#cityDropdown');
+                cityDropdown.empty(); // Clear existing options
+                cityDropdown.append($('<option></option>').val('').text('Select City/Municipality')); // Add default option
+                $.each(citiesMunicipalities, function(index, cityMunicipality) {
+                    cityDropdown.append($('<option></option>').val(cityMunicipality.code).text(cityMunicipality.name));
+                });
+
+                if( typeof userDetails.customer_city != 'undefined' && userDetails.customer_city ){
+                    $('#cityDropdown').val(userDetails.customer_city);
+                    populateBarangays(userDetails.customer_city)
+                    console.log($('#cityDropdown'))
+                }
+
+            },
+            error: function(xhr, status, error) {
+                console.error('Error fetching cities/municipalities: ' + error);
+            }
+        });
+    }
+
+    function populateBarangays(cityCode){
+        $.ajax({
+            url: `https://psgc.gitlab.io/api/cities-municipalities/${cityCode}/barangays.json`,
+            type: 'GET',
+            success: function(data) {
+                var barangays = data;
+                var barangayDropdown = $('#barangayDropdown');
+                barangayDropdown.empty(); // Clear existing options
+                barangayDropdown.append($('<option></option>').val('').text('Select Barangay')); // Add default option
+                $.each(barangays, function(index, barangay) {
+                    barangayDropdown.append($('<option></option>').val(barangay.code).text(barangay.name));
+                });
+
+                if( typeof userDetails.customer_barangay != 'undefined' && userDetails.customer_barangay ){
+                    $('#barangayDropdown').val(userDetails.customer_barangay);
+                    console.log($('#barangayDropdown'))
+                }
+
+            },
+            error: function(xhr, status, error) {
+                console.error('Error fetching cities/municipalities: ' + error);
+            }
+        });
+    }
+
+    // Event listener for province dropdown change
+    $('#provinceDropdown').change(function() {
+        var selectedProvinceCode = $(this).val();
+        if (selectedProvinceCode) {
+            populateCitiesMunicipalities(selectedProvinceCode);
+        } else {
+            // Clear cities/municipalities dropdown if no province is selected
+            $('#cityDropdown').empty();
+        }
+    });
+});
+
+document.getElementById('editProfileForm').addEventListener('submit', function(event) {
     event.preventDefault();
     var name = document.getElementById('name').value;
     var email = document.getElementById('email').value;
     var complete_address = document.getElementById('complete_address').value;
+    var province = document.getElementById('provinceDropdown').value;
+    var city = document.getElementById('cityDropdown').value;
+    var barangay = document.getElementById('barangayDropdown').value;
 
     var formData = new FormData(this);
+    formData.append('province', province);
+    formData.append('city', city);
+    formData.append('barangay', barangay);
 
     fetch('pages/profile/update_profile_main.php', {
         method: 'POST',
@@ -145,11 +261,36 @@ $user_order_ = $user_order->fetchall();
         if (response.ok) {
             $('#modalId3').modal('hide');
         } else {
+            // Handle error
+            console.log('response', response)
         }
     })
     .catch(error => {
         console.error('Error:', error);
     });
 });
+
+//     document.getElementById('editProfileForm').addEventListener('submit', function(event) {
+//     event.preventDefault();
+//     var name = document.getElementById('name').value;
+//     var email = document.getElementById('email').value;
+//     var complete_address = document.getElementById('complete_address').value;
+
+//     var formData = new FormData(this);
+
+//     fetch('pages/profile/update_profile_main.php', {
+//         method: 'POST',
+//         body: formData
+//     })
+//     .then(response => {
+//         if (response.ok) {
+//             $('#modalId3').modal('hide');
+//         } else {
+//         }
+//     })
+//     .catch(error => {
+//         console.error('Error:', error);
+//     });
+// });
 
 </script>

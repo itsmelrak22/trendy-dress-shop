@@ -49,6 +49,9 @@
                                     $c_email = $row_c['customer_email'];
                                     $c_image = $row_c['customer_image'];
                                     $c_complete_address = $row_c['complete_address'];
+                                    $province_code = $row_c['province']; // Assuming this is the column in your database table for province code
+                                    $city_code = $row_c['customer_city'];
+                                    $barangay_code = $row_c['customer_barangay'];
                                     $c_contact = $row_c['customer_contact'];
                                     $i++;
                             ?>
@@ -61,7 +64,31 @@
                                             <img loading="lazy" src="../updateUploads/<?php echo $c_image; ?>" width="60" height="60" >
                                         <?php endif; ?>
                                     </td>
-                                    <td><?php echo $c_complete_address; ?></td>
+                                    <td>
+                                        <span>
+                                            <?php echo $c_complete_address; ?>
+                                        </span>
+                                        <?php
+                                            // Check if city/municipality code is not null
+                                            if (!is_null($barangay_code)) {
+                                                echo ', <span id="barangay_' . $c_id . '"></span>';
+                                            }
+
+                                            // Check if city/municipality code is not null
+                                            if (!is_null($city_code)) {
+                                                echo ', <span id="city_' . $c_id . '"></span>';
+                                            }
+
+                                            // Check if province code is not null
+                                            if (!is_null($province_code)) {
+                                                echo ', <span id="province_' . $c_id . '"></span>';
+                                            }
+
+                                            
+                                            
+                                        ?>
+                                        
+                                    </td>
                                     <td><?php echo $c_contact; ?></td>
                                     <td>
                                         <a href="index.php?edit_customers=<?php echo $c_id; ?>">
@@ -84,3 +111,92 @@
 </div><!-- 2 row Ends -->
 
 <?php } ?>
+
+
+<script>
+    function fetchProvinceName(provinceCode, customerId) {
+        console.log('provinceCode', provinceCode)
+        var xhr = new XMLHttpRequest();
+        var url = `https://psgc.gitlab.io/api/provinces/${provinceCode}.json`;
+
+        xhr.open('GET', url, true);
+
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                var provinceData = JSON.parse(xhr.responseText);
+                document.getElementById(`province_${customerId}`).innerText = provinceData.name;
+            }
+        };
+
+        xhr.send();
+    }
+
+    function fetchCityMunicipalityName(cityCode, customerId) {
+        console.log('cityCode', cityCode)
+        var xhr = new XMLHttpRequest();
+        var url = `https://psgc.gitlab.io/api/cities-municipalities/${cityCode}.json`;
+
+        xhr.open('GET', url, true);
+
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                var cityData = JSON.parse(xhr.responseText);
+                document.getElementById(`city_${customerId}`).innerText = cityData.name;
+            }
+        };
+
+        xhr.send();
+    }
+    function fetchCityBarangayName(barangayCode, customerId) {
+        console.log('barangayCode', barangayCode)
+        var xhr = new XMLHttpRequest();
+        var url = `https://psgc.gitlab.io/api/barangays/${barangayCode}.json`;
+
+        xhr.open('GET', url, true);
+
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                var barangayData = JSON.parse(xhr.responseText);
+                console.log('barangayData', barangayData)
+                document.getElementById(`barangay_${customerId}`).innerText = barangayData.name;
+            }
+        };
+
+        xhr.send();
+    }
+
+    window.onload = function() {
+    <?php
+        $run_c = mysqli_query($con,$get_c);
+        while($row_c=mysqli_fetch_array($run_c)){
+            $province_code = $row_c['province'];
+            $city_code = $row_c['customer_city'];
+            $barangay_code = $row_c['customer_barangay'];
+            $c_id = $row_c['customer_id'];
+
+            // Check if province code is not null
+            if (!is_null($province_code) && $province_code) {
+    ?>
+                fetchProvinceName('<?php echo $province_code; ?>', '<?php echo $c_id; ?>');
+    <?php
+            }
+            
+            // Check if city/municipality code is not null
+            if (!is_null($city_code) && $city_code) {
+    ?>
+                fetchCityMunicipalityName('<?php echo $city_code; ?>', '<?php echo $c_id; ?>');
+    <?php
+            }
+
+            if (!is_null($barangay_code ) && $barangay_code) {
+            ?>
+                fetchCityBarangayName('<?php echo $barangay_code; ?>', '<?php echo $c_id; ?>');
+            <?php
+            }
+        }
+    ?>
+
+
+};
+
+</script>

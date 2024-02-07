@@ -84,8 +84,21 @@ if (isset($_SESSION['id_user'])) {
                 <input id="username1_text" class="form-control" type="email" placeholder="Enter your email here" />
                 <label for="pass1_text">Password</label>
                 <input id="pass1_text" class="form-control" type="password" placeholder="Enter your password here" />
-                <label for="complete_add">Complete Address</label>
-                <textarea id="complete_add" class="form-control" placeholder="Enter your complete address here"></textarea>
+                <label for="provinceDropdown">Province</label>
+                <select id="provinceDropdown" class="form-control" onchange="populateCitiesMunicipalities(this.value)">
+                    <option value="" selected disabled readonly>Select Province</option>
+                </select>
+
+                <label for="cityDropdown">City/Municipality</label>
+                <select id="cityDropdown" class="form-control" onchange="populateBarangays(this.value)">
+                    <option value="" selected disabled readonly>Select City/Municipality</option>
+                </select>
+                <label for="barangayDropdown">Barangay</label>
+                <select id="barangayDropdown" class="form-control">
+                    <option value="" selected disabled readonly>Select Barangay</option>
+                </select>
+                <label for="complete_add">Street Name/Barangay/Sbdv/Lot/Block/</label>
+                <textarea id="complete_add" class="form-control" placeholder="Street Name/Brgy./Sbdv/Lot/Blk"></textarea>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -96,42 +109,164 @@ if (isset($_SESSION['id_user'])) {
 </div>
 
 <script>
+
+function populateCitiesMunicipalities(provinceCode) {
+        
+        $.ajax({
+            url: `https://psgc.gitlab.io/api/provinces/${provinceCode}/cities-municipalities.json`,
+            type: 'GET',
+            success: function(data) {
+                
+                var citiesMunicipalities = data;
+                var cityDropdown = $('#cityDropdown');
+                cityDropdown.empty(); // Clear existing options
+                cityDropdown.append($('<option></option>').val('').text('Select City/Municipality')); // Add default option
+                $.each(citiesMunicipalities, function(index, cityMunicipality) {
+                    cityDropdown.append($('<option></option>').val(cityMunicipality.code).text(cityMunicipality.name));
+                });
+
+
+            },
+            error: function(xhr, status, error) {
+                console.error('Error fetching cities/municipalities: ' + error);
+            }
+        });
+    }
+
+    function populateBarangays(cityCode){
+        $.ajax({
+            url: `https://psgc.gitlab.io/api/cities-municipalities/${cityCode}/barangays.json`,
+            type: 'GET',
+            success: function(data) {
+                var barangays = data;
+                var barangayDropdown = $('#barangayDropdown');
+                barangayDropdown.empty(); // Clear existing options
+                barangayDropdown.append($('<option></option>').val('').text('Select Barangay')); // Add default option
+                $.each(barangays, function(index, barangay) {
+                    barangayDropdown.append($('<option></option>').val(barangay.code).text(barangay.name));
+                });
+
+            },
+            error: function(xhr, status, error) {
+                console.error('Error fetching cities/municipalities: ' + error);
+            }
+        });
+    }
+    $(document).ready(function() {
+    // Fetch provinces and populate the province dropdown
+    $.ajax({
+        url: 'https://psgc.gitlab.io/api/provinces.json',
+        type: 'GET',
+        success: function(data) {
+            var provinces = data;
+            var provinceDropdown = $('#provinceDropdown');
+            provinceDropdown.empty(); // Clear existing options
+            provinceDropdown.append($('<option></option>').val('').text('Select Province')); // Add default option
+            $.each(provinces, function(index, province) {
+                provinceDropdown.append($('<option></option>').val(province.code).text(province.name));
+            });
+        },
+        error: function(xhr, status, error) {
+            console.error('Error fetching provinces: ' + error);
+        }
+    });
+    // Function to fetch and populate cities/municipalities based on the selected province
+
+
+    // Event listener for province dropdown change
+    $('#provinceDropdown').change(function() {
+        var selectedProvinceCode = $(this).val();
+        if (selectedProvinceCode) {
+            populateCitiesMunicipalities(selectedProvinceCode);
+        } else {
+            // Clear cities/municipalities dropdown if no province is selected
+            $('#cityDropdown').empty();
+        }
+    });
+});
+
+
     function test(val){
         $('#gender'). prop("value", val);
     }
 
     function registerAccount() {
-        var formData = new FormData();
-        formData.append('customer_name', $("#name_text").val());
-        formData.append('customer_email', $("#username1_text").val());
-        formData.append('customer_password', $("#pass1_text").val());
-        formData.append('complete_address', $("#complete_add").val());
-        formData.append('gender', $("#gender").val());
-        // formData.append('customer_image', $("#customer_image")[0].files[0]);
+    // Check if all required fields are filled out
+    if ($("#name_text").val() === '' || $("#username1_text").val() === '' || $("#pass1_text").val() === '' || $("#complete_add").val() === '' || $("#provinceDropdown").val() === '' || $("#cityDropdown").val() === '' || $("#barangayDropdown").val() === '')   {
+        alert('Please fill out all required fields.');
+        return;
+    }
 
-        $.ajax({
-            type: 'POST',
-            url: './assets/register_acc.php',
-            data: formData,
-            contentType: false,
-            processData: false,
-            success: function(data) {
-                console.log(data, 'data');
+    var formData = new FormData();
+    formData.append('customer_name', $("#name_text").val());
+    formData.append('customer_email', $("#username1_text").val());
+    formData.append('customer_password', $("#pass1_text").val());
+    formData.append('complete_address', $("#complete_add").val());
+    formData.append('gender', $("#gender").val());
+    formData.append('province', $("#provinceDropdown").val());
+    formData.append('customer_city', $("#cityDropdown").val());
+    formData.append('customer_barangay', $("#barangayDropdown").val());
 
-                if (data == 'success') {
-                    alert('Account is not created');
-                } else {
-                    
-                    alert('Account Created Successfully');
-                    $("#modalId4").modal('hide');
-                }
-            },
-            error: function(jqXHR, textStatus, errorThrown) {
-                console.error('AJAX Request Failed:', textStatus, errorThrown);
+    $.ajax({
+        type: 'POST',
+        url: './assets/register_acc.php',
+        data: formData,
+        contentType: false,
+        processData: false,
+        success: function(data) {
+            console.log(data, 'data');
+            if (data.trim() === 'success') {
+                alert('Account Created Successfully');
+                $("#modalId4").modal('hide');
+            } else {
                 alert('Failed to create account. Please try again.');
             }
-        });
-    }
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            console.error('AJAX Request Failed:', textStatus, errorThrown);
+            alert('Failed to create account. Please try again.');
+        }
+    });
+}
+
+
+
+    // function registerAccount() {
+    //     var formData = new FormData();
+    //     formData.append('customer_name', $("#name_text").val());
+    //     formData.append('customer_email', $("#username1_text").val());
+    //     formData.append('customer_password', $("#pass1_text").val());
+    //     formData.append('complete_address', $("#complete_add").val());
+    //     formData.append('gender', $("#gender").val());
+    //     formData.append('province', $("#provinceDropdown").val());
+    //     formData.append('city', $("#cityDropdown").val());
+    //     // formData.append('#provinceDropdown option:selected').text()
+    //     // formData.append('#cityDropdown option:selected').text()
+    //     // formData.append('customer_image', $("#customer_image")[0].files[0]);
+
+    //     $.ajax({
+    //         type: 'POST',
+    //         url: './assets/register_acc.php',
+    //         data: formData,
+    //         contentType: false,
+    //         processData: false,
+    //         success: function(data) {
+    //             console.log(data, 'data');
+
+    //             if (data == 'success') {
+    //                 alert('Account is not created');
+    //             } else {
+                    
+    //                 alert('Account Created Successfully');
+    //                 $("#modalId4").modal('hide');
+    //             }
+    //         },
+    //         error: function(jqXHR, textStatus, errorThrown) {
+    //             console.error('AJAX Request Failed:', textStatus, errorThrown);
+    //             alert('Failed to create account. Please try again.');
+    //         }
+    //     });
+    // }
 
 
 </script>
