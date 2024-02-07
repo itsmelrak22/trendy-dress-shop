@@ -3,14 +3,16 @@ require_once '../../connection.php';
 session_start();
 $name = null;
 $getUserDetails_ = array();
-$userID = $_SESSION['id_user'];
-$getUserDetails = $conn->prepare('SELECT a.*  from customers a where a.customer_id=?;');
-$getUserDetails->execute([$userID]);
-$getUserDetails_ = $getUserDetails->fetch();
-if (isset($getUserDetails_['lastname'])) {
-    $name = $getUserDetails_['lastname'] . ', ' . $getUserDetails_['firstname'];
-} 
+$userID = isset($_SESSION['id_user']) ? $_SESSION['id_user'] : null;
+if($userID){
+    $getUserDetails = $conn->prepare('SELECT a.*  from customers a where a.customer_id=?;');
+    $getUserDetails->execute([$userID]);
+    $getUserDetails_ = $getUserDetails->fetch();
+    if (isset($getUserDetails_['lastname'])) {
+        $name = $getUserDetails_['lastname'] . ', ' . $getUserDetails_['firstname'];
+    } 
 
+}
 // echo "<pre>" ;
 // // echo print_r($_POST["customNote"]);
 // echo print_r($getUserDetails_);
@@ -60,7 +62,7 @@ if (isset($getUserDetails_['lastname'])) {
 </style>
 <div class="container">
     <!-- <h1>WELCOME! <span class="primary_text"><b><?php echo $name ?></b></span></h1> -->
-    <?php if (!$name) : ?>
+    <?php if (!$userID) : ?>
         <div class="d-flex">
             <!-- <h4 class="mx-2">UNVERIFIED</h4>
             <p class="m-0">Not yet verified? </p> -->
@@ -74,7 +76,7 @@ if (isset($getUserDetails_['lastname'])) {
     
     <div id="custom_item">
         <!-- Button trigger modal -->
-        <?php if($getUserDetails_['customer_id']){
+        <?php if($userID){
 
             echo '<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#customizeItemModal">
                 Customize your Item
