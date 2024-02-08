@@ -252,6 +252,11 @@ if(isset($_GET['edit_orders'])){
 include("edit_order.php");
 
 }
+if(isset($_GET['view_custom_orders'])){
+
+include("view_custom_orders.php");
+
+}
 
 if(isset($_GET['order_delete'])){
 
@@ -553,6 +558,11 @@ include("view_sales.php");
 if(isset($_GET['view_transaction'])){
 
 include("view_transaction.php");
+
+}
+if(isset($_GET['edit_custom_order'])){
+
+include("edit_custom_order.php");
 
 }
 

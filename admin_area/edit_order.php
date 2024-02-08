@@ -73,6 +73,12 @@ if(isset($_GET['edit_orders'])) {
                             </select>
                         </div>
                     </div><!-- form-group Ends -->
+                    <div class="form-group" ><!-- form-group Starts -->
+                        <label class="col-md-3 control-label" >Send Email to customer?</label>
+                        <div class="col-md-9" >
+                            <input type="checkbox" name="send_email" class="form-control" value="true" >
+                        </div>
+                    </div><!-- form-group Ends -->
 
                     <div class="form-group" ><!-- form-group Starts -->
                         <label class="col-md-8 control-label" ></label>

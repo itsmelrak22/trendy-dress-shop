@@ -1,16 +1,20 @@
 <?php
-require("PHPMailer/src/PHPMailer.php");
-require("PHPMailer/src/SMTP.php");
+// require("PHPMailer/src/PHPMailer.php");
+// require("PHPMailer/src/SMTP.php");
 
 
-function sendCustomerEmail($MAIL_TO, $PASSWORD, $RECEIVER_NAME, $STATUS, $SUBJECT){
+function sendCustomerEmail($MAIL_TO, $RECEIVER_NAME, $STATUS, $SUBJECT){
 
     $statusMessages = array(
-        "PLACED_ORDER" => "We have received your order! We're currently preparing your items. You'll receive an update when your order is ready to ship. Thank you for choosing our store!",
+        "CONFIRMED" => "We have confirmed your order! We're currently preparing your items. You'll receive an update when your order is ready to ship. Thank you for choosing our store!",
         "TO_SHIP" => "Your order has been processed and is now ready to be shipped. We'll update you once your package is on its way. Thank you for shopping with us!",
-        "TRANSIT" => "Good news! Your order is on its way. You can track your package with the tracking number provided. We hope you're as excited as we are!",
+        "TRANSIT" => "Good news! Your order is on its way. We hope you're as excited as we are!",
         "DELIVERED" => "Your package has been delivered! We hope you love your new clothes. Thank you for shopping with us and we look forward to serving you again.",
-        "CANCELLED" => "Your order has been cancelled as per your request. If you have any questions or need further assistance, feel free to contact us. We're here to help!"
+        "CANCELLED" => "Your order has been cancelled as per your request. If you have any questions or need further assistance, feel free to contact us. We're here to help!
+        <br> https://www.facebook.com/SlayAndWearItFashionable?mibextid=LQQJ4d <br>
+                        Email: mailto:trendythreadsapparel30@gmail.com <br>
+                        Phone: 0963-609-9067 or 0951-927-3835 <br>
+                        "
     );
 
     $mailTo = $MAIL_TO;
@@ -32,7 +36,7 @@ function sendCustomerEmail($MAIL_TO, $PASSWORD, $RECEIVER_NAME, $STATUS, $SUBJEC
 
     $mail->isHTML('true');
     $mail->Subject = $SUBJECT;
-    $mail->Body = $body;
+    $mail->Body = $statusMessages[$STATUS];
     $mail->AltBody = "Alt Body";
 
     if(!$mail->send()){

@@ -7,8 +7,6 @@ if (!isset($_SESSION['admin_email'])) {
 } else {
 
 
-
-
     ?>
 
     <nav class="navbar navbar-inverse navbar-fixed-top">
@@ -305,6 +303,15 @@ if (!isset($_SESSION['admin_email'])) {
                     <a href="index.php?view_orders">
 
                         <i class="fa fa-fw fa-list"></i> View Orders
+
+                    </a>
+
+                </li>
+                <li>
+
+                    <a href="index.php?view_custom_orders">
+
+                        <i class="fa fa-fw fa-list"></i> View Custom Orders
 
                     </a>
 

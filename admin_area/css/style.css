@@ -12,6 +12,31 @@ Version : 1.0
 
 /* Global Styles */
 
+@font-face {
+    font-family: 'Fonstars';
+    src: url('../../assets/fonts/fonstars/fonstars.otf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Operation Napalm';
+    src: url('../../assets/fonts/operation-napalm/operation-napalm.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Unitblock';
+    src: url('../../assets/fonts/unitblock/unitblock.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'OSerif';
+    src: url('../../assets/fonts/oserif/oserif.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Public Pixel';
+    src: url('../../assets/fonts/public-pixel/public-pixel.ttf') format('truetype');
+}
+
 body {
 
 margin-top:100px;
