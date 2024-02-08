@@ -62,6 +62,7 @@ else {
                                     $status = $value['status'];
                                     $imgLink = "./custom_request_images/$id/$generated_image";
                                     echo '
+                                        <tr>
                                         <td> '.$customer_name.' </td>
                                         <td>'.$customer_email.' </td>
                                         <td> <img src="'.$generated_image.'" width="250" height="250"> </td>
@@ -71,7 +72,7 @@ else {
                                                  View
                                             </a>
                                         </td>
-
+                                        </tr>
                                     ';
                                 } ?>
                             </tbody>
