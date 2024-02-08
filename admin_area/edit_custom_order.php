@@ -197,7 +197,7 @@ if(isset($_POST['update'])) {
     // Check if the update query was successful
     if($run_update_order) {
         if($send_email){
-            sendCustomerEmail($customer_email, $customer_name, $status, "$status confirmation.");
+            sendCustomerEmail($customer_email, $customer_name, $status, "Custom Order: $status confirmation.");
         }
         echo "<script>alert('Custom Order has been updated successfully')</script>";
         echo "<script>window.open('index.php?view_custom_orders','_self')</script>";
