@@ -16,17 +16,27 @@ else {
 
 if(isset($_GET['delete_product'])){
 
-$delete_id = $_GET['delete_product'];
+    $delete_id = $_GET['delete_product'];
 
-$delete_pro = "delete from products where product_id='$delete_id'";
+    // $delete_pro1 = "
+    //     UPDATE cart SET `product_id` = 0 WHERE `product_id` = $delete_id;
+    // ";
+    // $run_delete1 = mysqli_query($con,$delete_pro1);
 
-$run_delete = mysqli_query($con,$delete_pro);
+    $delete_pro2 = "
+        DELETE FROM products WHERE `product_id` = $delete_id;
+    ";
+
+    $run_delete = mysqli_query($con,$delete_pro2);
 
 if($run_delete){
 
-echo "<script>alert('One Product Has been deleted')</script>";
+    echo "<script>alert('One Product Has been deleted')</script>";
 
-echo "<script>window.open('index.php?view_products','_self')</script>";
+    echo "<script>window.open('index.php?view_products','_self')</script>";
+
+}else{
+    echo "<script>alert('Something Went wrong')</script>";
 
 }
 

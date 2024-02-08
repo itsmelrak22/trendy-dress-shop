@@ -292,7 +292,7 @@ if (!isset($_SESSION['admin_email'])) {
                                     <th>Order #</th>
                                     <th>Customer</th>
                                     <th>Invoice No</th>
-                                    <th>Product ID</th>
+                                    <th>Product Name</th>
                                     <th>Qty</th>
                                     <th>Size</th>
                                     <th>Status</th>
@@ -309,25 +309,30 @@ if (!isset($_SESSION['admin_email'])) {
 
                                     $i = 0;
 
-                                    $get_order = "select * from pending_orders order by 1 DESC LIMIT 0,5";
+                                    $get_order = "SELECT C.size,  A.order_id, A.dateTimeAdded, A.mop, A.invoice_no, B.customer_id, B.customer_name, B.customer_email, C.qty, C.Total_p_price, C.status, D.product_id, D.product_title, D.product_price, A.order_status
+                                    FROM pending_orders A 
+                                    INNER JOIN customers B 
+                                    ON A.customer_id = B.customer_id 
+                                    INNER JOIN cart C
+                                    ON A.cartItems = C.p_id
+                                    INNER JOIN products D
+                                    ON C.product_id = D.product_id
+                                    ORDER BY A.dateTimeAdded DESC  ";
+
                                     $run_order = mysqli_query($con, $get_order);
 
                                     while ($row_order = mysqli_fetch_array($run_order)) {
 
 
                                         $order_id = $row_order['order_id'];
-
                                         $c_id = $row_order['customer_id'];
-
                                         $invoice_no = $row_order['invoice_no'];
-
-                                        // $product_id = $row_order['product_id'];
-
-                                        // $qty = $row_order['qty'];
-
-                                        // $size = $row_order['size'];
-
+                                        $product_id = $row_order['product_id'];
+                                        $product_title = $row_order['product_title'];
+                                        $qty = $row_order['qty'];
+                                        $size = $row_order['size'];
                                         $order_status = $row_order['order_status'];
+                                        $customer_email = $row_order['customer_email'];
 
 
                                         $i++;
@@ -335,37 +340,13 @@ if (!isset($_SESSION['admin_email'])) {
                                         ?>
 
                                     <tr>
-
-                                        <td><?php echo $i; ?></td>
-
-                                        <td>
-                                            <?php
-
-                                                    $get_customer = "select * from customers where customer_id='$c_id'";
-                                                    $run_customer = mysqli_query($con, $get_customer);
-                                                    $row_customer = mysqli_fetch_array($run_customer);
-                                                    $customer_email = $row_customer['customer_email'];
-                                                    echo $customer_email;
-                                                    ?>
-                                        </td>
-
-                                        <td><?php echo $invoice_no; ?></td>
-                                        <!-- <td><?php echo $product_id; ?></td> -->
-                                        <!-- <td><?php echo $qty; ?></td> -->
-                                        <!-- <td><?php echo $size; ?></td> -->
-                                        <td>
-                                            <?php
-                                                    if ($order_status == 'pending') {
-
-                                                        echo $order_status = 'pending';
-                                                    } else {
-
-                                                        echo $order_status = 'Complete';
-                                                    }
-
-                                                    ?>
-                                        </td>
-
+                                        <td> <?= $order_id; ?></td>
+                                        <td> <?= $customer_email; ?> </td>
+                                        <td> <?= $invoice_no; ?> </td>
+                                        <td> <?= $product_title; ?> </td>
+                                        <td> <?= $qty; ?> </td>
+                                        <td> <?= $size; ?> </td>
+                                        <td> <?= $order_status; ?> </td>
                                     </tr>
 
                                 <?php } ?>
