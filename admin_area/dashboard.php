@@ -361,11 +361,11 @@ if (!isset($_SESSION['admin_email'])) {
                     <div class="text-right">
                         <!-- text-right Starts -->
 
-                        <a href="index.php?view_orders">
+                        <!-- <a href="index.php?view_orders">
 
                             View All Orders <i class="fa fa-arrow-circle-right"></i>
 
-                        </a>
+                        </a> -->
 
                     </div><!-- text-right Ends -->
 

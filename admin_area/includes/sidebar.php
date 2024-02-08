@@ -298,7 +298,7 @@ if (!isset($_SESSION['admin_email'])) {
 
                 </li>
 
-                <li>
+                <!-- <li>
 
                     <a href="index.php?view_orders">
 
@@ -306,7 +306,7 @@ if (!isset($_SESSION['admin_email'])) {
 
                     </a>
 
-                </li>
+                </li> -->
                 <li>
 
                     <a href="index.php?view_custom_orders">
