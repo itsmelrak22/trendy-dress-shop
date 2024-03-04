@@ -97,6 +97,25 @@ endif;
 
 
     <title><?php echo $slug_ ?></title>
+    <style>
+        .text-wrapped {
+            font-size: 16px; /* default font size */
+        }
+
+        /* When the screen (viewport) is 600px or less, set the font size to 14px */
+        @media screen and (max-width: 600px) {
+            .text-wrapped {
+                font-size: 14px;
+            }
+        }
+
+        /* When the screen (viewport) is 400px or less, set the font size to 12px */
+        @media screen and (max-width: 400px) {
+            .text-wrapped {
+                font-size: 12px;
+            }
+        }
+    </style>
 </head>
 
 <body>
@@ -155,15 +174,11 @@ endif;
                                 <tbody>
                                     <tr>
 
-                                        <td colspan="10">Price: </td>
-                                        <td> <span style="font-size: 20px;font-weight:bold">&#8369; <?php echo $product_data['product_price'] ?></span> </td>
+                                        <td >Price: <pre style="font-size: 20px;font-weight:bold">&#8369; <?php echo $product_data['product_price'] ?></pre></td>
                                     </tr>
                                     <tr>
 
-                                        <td colspan="10">Item Description: </td>
-                                        <td>
-                                            <p class="m-0"><?php echo $desc ?></p>
-                                        </td>
+                                        <td >Item Description: <span class="text-wrapped"><?php echo $desc ?></span></td>
                                    
                                     </tr>
                                     <tr>

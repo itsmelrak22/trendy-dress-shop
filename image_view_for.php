@@ -55,6 +55,30 @@ $fetchDetails_ = $fetchDetails->fetch();
 
 
 </style>
+<style>
+        /* Basic styling for the container */
+        .image-selection-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+
+            border: 2px solid #ccc;
+        }
+
+        /* Style for individual image items */
+        .image-item {
+            width: 100px;
+            height: 100px;
+            background-color: #f0f0f0;
+            border: 1px solid #ccc;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .image-item:hover {
+            background-color: #e0e0e0;
+        }
+    </style>
 <div class="row">
 
 
@@ -335,6 +359,17 @@ $fetchDetails_ = $fetchDetails->fetch();
             </li>
         </ul>
 
+    </div>
+
+    <div class="col-lg-3 col-md-12 order-md-1" style="border">
+    <h3>ClipArt Selection</h3>
+    <div class="image-selection-container">
+        <!-- Replace with your actual image URLs -->
+        <div class="image-item" onclick="selectImage('image1.jpg')"></div>
+        <div class="image-item" onclick="selectImage('image2.jpg')"></div>
+        <div class="image-item" onclick="selectImage('image3.jpg')"></div>
+        <!-- Add more image items as needed -->
+    </div>
     </div>
 </div>
 
