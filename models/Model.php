@@ -6,9 +6,9 @@ class Model
 
     protected $table;
     protected $host = "localhost";
-    protected $database = "ecomm_store";
+    protected $database = "trendy";
     protected $username = "root";
-    protected $password = "admin";
+    protected $password = "";
     protected $servername = "localhost";
 
     // > Actual

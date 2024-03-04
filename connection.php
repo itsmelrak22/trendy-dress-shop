@@ -1,8 +1,8 @@
 <?php
 $servername = "localhost";
 $username = "root";
-$password = "admin";
-$dbname = "ecomm_store"; //Change this one base on the database name you have
+$password = "";
+$dbname = "trendy"; //Change this one base on the database name you have
 
 try {
     $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
