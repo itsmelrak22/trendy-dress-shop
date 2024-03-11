@@ -77,7 +77,7 @@
   <header class="navbar bg-dark flex-md-nowrap p-0 shadow" data-bs-theme="dark">
     <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3 fs-6 text-white" href="index.php?dashboard">Admin Panel</a>
     <div style="padding-right: 10px;" class="dropdown fs-6 text-white">
-      <a class="dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+      <a class="dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" id="accountDropdownToggle">
         <i class="fa fa-user"></i>
         <?php echo $admin_name; ?> <span class="caret"></span>
       </a>
@@ -87,7 +87,7 @@
         <li><a class="dropdown-item" href="index.php?view_customers"><i class="fa fa-fw fa-gear"></i> Customers <span class="badge"><?php echo $count_customers; ?></span></a></li>
         <li><a class="dropdown-item" href="index.php?view_p_cats"><i class="fa fa-fw fa-gear"></i> Product Categories <span class="badge"><?php echo $count_p_categories; ?></span></a></li>
         <li><hr class="dropdown-divider"></li>
-        <li><a class="dropdown-item" href="logout.php"><i class="fa fa-fw fa-power-off"></i> Log Out</a></li>
+        <li><a class="dropdown-item" href="logout.php" id="logoutBtn"><i class="fa fa-fw fa-power-off"></i> Log Out</a></li>
       </ul>
     </div>
 

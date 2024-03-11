@@ -1,7 +1,7 @@
 <?php
 $servername = "localhost";
 $username = "root";
-$password = "";
+$password = "admin";
 $dbname = "trendy"; //Change this one base on the database name you have
 
 try {

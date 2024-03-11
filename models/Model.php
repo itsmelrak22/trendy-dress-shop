@@ -8,7 +8,7 @@ class Model
     protected $host = "localhost";
     protected $database = "trendy";
     protected $username = "root";
-    protected $password = "";
+    protected $password = "admin";
     protected $servername = "localhost";
 
     // > Actual
